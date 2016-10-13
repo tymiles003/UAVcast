@@ -10,6 +10,7 @@ fi
 echo $GCS_adress
 echo APM starting:: stream adress: $ip
 if [ $secondary_tele == "Yes" ]; then
+echo Using Secondary telemetry $sec_ip_address : $sec_port
 sudo $APM_type -A udp:$ip:$port -C udp:$sec_ip_address:$sec_port
 else
 sudo $APM_type -A udp:$ip:14550
