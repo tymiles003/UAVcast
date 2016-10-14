@@ -1,8 +1,43 @@
-#!/bin/bash
- 
+#!/bin/bash 
 # Create a log file of the build as well as displaying the build on the tty as it runs
 exec > >(tee build_UAV.log)
 exec 2>&1
+
+# Get current Directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+#Get Parrent Directory
+Basefolder="$(cd ../; pwd)"
+
+# Create systemctl for easy stop/start/restart
+Systemd=$DIR/"systemd"
+if [ ! -d "$Systemd" ] 
+then
+ mkdir systemd
+fi
+
+FILE=$DIR/"systemd/UAVcast.services"
+
+/bin/cat <<EOM >$FILE
+[Unit]
+Description=UAVcast Drone Software
+After=network.target user.slice
+
+[Service]
+ExecStart=$Basefolder/DroneStart.sh > $Basefolder/log/DroneStart.log
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+Alias=UAVcast.service
+EOM
+
+cp $FILE /lib/systemd/system/
+sudo systemctl daemon-reload
+#sudo systemctl enable $FILE
+
+#Navio Options
 Navio=$1
 echo Installing UAVcast $Navio
 ################# COMPILE UAV software ############
@@ -60,3 +95,4 @@ cd ..
 cd uqmi
 sudo cmake CMakeLists.txt
 sudo make install
+
