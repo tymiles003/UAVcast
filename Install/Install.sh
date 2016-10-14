@@ -11,12 +11,13 @@ Basefolder="$(cd ../; pwd)"
 
 # Create systemctl for easy stop/start/restart
 Systemd=$DIR/"systemd"
+main="$MAINPID"
 if [ ! -d "$Systemd" ] 
 then
  mkdir systemd
 fi
 
-FILE=$DIR/"systemd/UAVcast.services"
+FILE=$DIR/"systemd/UAVcast.service"
 
 /bin/cat <<EOM >$FILE
 [Unit]
@@ -24,13 +25,14 @@ Description=UAVcast Drone Software
 After=network.target user.slice
 
 [Service]
+Type=forking
 ExecStart=$Basefolder/DroneStart.sh
-ExecReload=/bin/kill -HUP $MAINPID
+#ExecReload=/bin/kill -HUP "$MAINPID"
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
-Alias=UAVcast.service
+Alias=UAVcast.services
 EOM
 
 cp $FILE /lib/systemd/system/
