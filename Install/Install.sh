@@ -24,7 +24,7 @@ Description=UAVcast Drone Software
 After=network.target user.slice
 
 [Service]
-ExecStart=$Basefolder/DroneStart.sh > $Basefolder/log/DroneStart.log
+ExecStart=$Basefolder/DroneStart.sh
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 
