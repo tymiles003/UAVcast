@@ -23,9 +23,6 @@ If there is any problems during startup, then please check the logfile located i
 ``` 
 UAVcast/DroneConfig.cfg
 
-```
-
-```
 This file conatins the configuration parameters for UAVcast scripts. Simply set your desired options and save the file.
  
 ###################################################################################################################
@@ -101,6 +98,42 @@ secondary_tele="Yes"
 sec_ip_address="10.0.0.211"
 sec_port="14550"
 ```
+
+##UAVcast Usage
+
+```
+Start
+sudo systemctl start UAVcast
+
+Stop
+sudo systemctl stop UAVcast
+
+Restart
+sudo systemctl restart UAVcast
+
+Start on boot 
+sudo systemctl enable UAVcast
+
+Not run on boot (for troubleshooting or other tasks)
+sudo systemctl disable UAVcast
+
+```
+ 
+
+Troubleshooting
+
+Start UAVcast/DroneStart.sh if you want a more verbose output of what exactly going on when UAVcast is started.
+Also check the logfiles located in the /UAVcast/log folder.
+
+```
+./DroneStart.sh
+```
+
+If you are using PiCam, remember to enable the camera in Raspi-Config
+```
+raspi-config
+```
+
 
 ## Authors
 
