@@ -1,122 +1,92 @@
+# UAVcast
 
-Installation
- 
-sudo apt-get install git
+Complete Drone casting software for Raspberry PI in conjuction with 3G / 4G or WiFi. Can be used with Ardupilot or Navio boards (Emlid.com)
+
+## Getting Started
+
+These instructions will get you a copy of UAVcast. 
+
+```
 sudo git clone https://github.com/UAVmatrix/UAVcast.git
 cd UAVcast/Install
-sudo ./Install.sh
- 
-How it works
- 
-UAVcast uses regular software such as wvdial, inadyn. gstreamer, uqmi, and will fire up each program in the correct order users has defined in the DroneConfig.cfg file. 
- 
-After you have successfully installed UAVcast and edited DroneConfig, you could simply start UAVcast by running ./DroneStart.sh or sudo systemctl start UAVcast
-If there is any problems during startup, then please check the logfile located in the UAVcast/log category.
- 
- 
- 
-Configuration
- 
-UAVcast/DroneConfig.cfg
- 
- 
-This file conatins the configuration parameters for UAVcast scripts. Simply set your desired options and save the file.
- 
-All parameters are Case Sensistive. Please type carefully.
-Do not comment out any paramters, as they are essential for the UAVcast proccess. Just change the parameter with the option value.
- 
-FlightController type. Arguments; Navio, APM(Any Ardupilot boards such as APM2,x  Pixhawk)
-Cntrl="Navio"
- 
-Use udp_redirect(TTL to Ethernet converter)?. #Options; Yes, No
-udp_redirect="No"
- 
-GCS_adress; Set your DynDns or IP of Ground Control Station.
-GCS_adress="10.0.0.211"
- 
-Ground Control Station Telemetry Port APM or Navio should start streaming to.
-NOTE! You need to open this port on your GCS network.
-PORT="14550"
- 
-Options; uqmi, wvdial, Ethernet
-GSM_Connect="Ethernet"
- 
-wvdial configuration. These are standard values, and should not be changed.
-However, some operators uses diffrent Phone number and credentials. 
-wv_Phone="*99#"
-wv_Modem="/dev/ttyUSB0"
-wv_Username="{test}"
-wv_Password="{test}"
-wv_Baud="460800"
- 
-Access Point Name given by your operator. Make sure you use a APN with public ip.
-#Set your Cell operators APN name. Example, Telenor Norway use "internet.public"
-APN_name="internet.public"
- 
-#Use WebCamera?. Options; Yes, No
-UseCam="Yes"
- 
-#Options; picam, C920, C615
-CameraType="picam"
- 
-#gStreamer Settings.
-WIDTH="1280"
-HEIGHT="720"
-UDP_PORT="5000"
-BITRATE="1500000"
-FPS="20"
- 
-#Use Inadyn DynDNS Client?
-UseDns="No"
-Username=""
-Password=""
-Alias=""
-dyndns_system="default@no-ip.com"
- 
-#Run continuously DroneCheck. If Online connection fails, it will try to reconnect. Options; "Yes", "No"
-DroneCheck="No"
- 
-##############################################
-#Navio Boards ONLY. Used if Cntrl="Navio"    #
-##############################################
- 
-#Args; APMrover2, ArduPlane, ArduCopter-quad,ArduCopter-tri, ArduCopter-hexa, ArduCopter-y6, ArduCopter-octa, ArduCopter-octa-quad, ArduCopter-heli, ArduCopter-single
-APM_type="ArduPlane"
- 
-#Use secondary telemetry?  Options; Yes, No 
-secondary_tele="Yes"
-sec_ip_address="10.0.0.211"
-sec_port="14550"
- 
+```
 
-UAVcast Usage
+### Prerequisities
 
-Start
-sudo systemctl start UAVcast
+What things you need to install the software and how to install them
 
-Stop
-sudo systemctl stop UAVcast
+```
+Give examples
+```
 
-Restart
-sudo systemctl restart UAVcast
+### Installing
 
-Start on boot 
-sudo systemctl enable UAVcast
+A step by step series of examples that tell you have to get a development env running
 
-Not run on boot (for troubleshooting or other tasks)
-sudo systemctl disable UAVcast
+Say what the step will be
 
- 
+```
+Give the example
+```
 
-Troubleshooting
+And repeat
 
-Start UAVcast/DroneStart.sh if you want a more verbose output of what exactly going on when UAVcast is started.
-Also check the logfiles located in the /UAVcast/log folder.
+```
+until finished
+```
 
-./DroneStart.sh
- 
+End with an example of getting some data out of the system or using it for a little demo
 
-If you are using PiCam, remember to enable the camera in Raspi-Config
+## Running the tests
 
-raspi-config
- 
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+### And coding style tests
+
+Explain what these tests test and why
+
+```
+Give an example
+```
+
+## Deployment
+
+Add additional notes about how to deploy this on a live system
+
+## Built With
+
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone who's code was used
+* Inspiration
+* etc
