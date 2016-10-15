@@ -2,30 +2,137 @@
 Read more at:
 http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/Ready-made-UAVcast-image-for-RPI2
 
+
+ 
+ 
+ NOTE!  If you want to use UAVcast for Navio boards, you will need to download UAVcast after you have installed the RTK image from Emlid.com
+ 
+
+Installation
+ 
+sudo apt-get install git
+sudo git clone https://github.com/UAVmatrix/UAVcast.git
+cd UAVcast/Install
+sudo ./Install.sh
+ 
+How it works
+ 
 UAVcast uses regular software such as wvdial, inadyn. gstreamer, uqmi, and will fire up each program in the correct order users has defined in the DroneConfig.cfg file. 
  
-After you have successfully installed UAVcast and edited DroneConfig, you could simply start UAVcast by running DroneStart.sh
-If there is any problems during startup, then please check the logfile located in the /log category.
+After you have successfully installed UAVcast and edited DroneConfig, you could simply start UAVcast by running ./DroneStart.sh or sudo systemctl start UAVcast
+If there is any problems during startup, then please check the logfile located in the UAVcast/log category.
  
  
-UAVcast Usage
-nano /home/pi/UAVcast/DroneConfig.cfg
+ 
+Configuration
+ 
+UAVcast/DroneConfig.cfg
+ 
+ 
 This file conatins the configuration parameters for UAVcast scripts. Simply set your desired options and save the file.
  
-
-Run UAVcast/DroneStart.sh
-sudo /home/pi/UAVcast/./DroneStart.sh
+###################################################################################################################
+#                                                 UAVcast for Drones                                              #
+#  This script package will start various programs defined in this config file to simplify the startup proccess.  #
+#  Create by Bernt Christian Egeland. Further information can be found at                                         #             
+#  http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/Ready-made-UAVcast-image-for-RPI2                       #
+###################################################################################################################
+ 
+#All parameters are Case Sensistive. Please type carefully.
+#Do not comment out any paramters, as they are essential for the UAVcast proccess. Just change the parameter with the option value.
+ 
+#FlightController type. Arguments; Navio, APM(Any Ardupilot boards such as APM2,x  Pixhawk)
+Cntrl="Navio"
+ 
+#Use udp_redirect(TTL to Ethernet converter)?. #Options; Yes, No
+udp_redirect="No"
+ 
+#GCS_adress; Set your DynDns or IP of Ground Control Station.
+GCS_adress="10.0.0.211"
+ 
+#Ground Control Station Telemetry Port APM or Navio should start streaming to.
+#NOTE! You need to open this port on your GCS network.
+PORT="14550"
+ 
+#Options; uqmi, wvdial, Ethernet
+GSM_Connect="Ethernet"
+ 
+#wvdial configuration. These are standard values, and should not be changed.
+#However, some operators uses diffrent Phone number and credentials. 
+wv_Phone="*99#"
+wv_Modem="/dev/ttyUSB0"
+wv_Username="{test}"
+wv_Password="{test}"
+wv_Baud="460800"
+ 
+#Access Point Name given by your operator. Make sure you use a APN with public ip.
+#Set your Cell operators APN name. Example, Telenor Norway use "internet.public"
+APN_name="internet.public"
+ 
+#Use WebCamera?. Options; Yes, No
+UseCam="Yes"
+ 
+#Options; picam, C920, C615
+CameraType="picam"
+ 
+#gStreamer Settings.
+WIDTH="1280"
+HEIGHT="720"
+UDP_PORT="5000"
+BITRATE="1500000"
+FPS="20"
+ 
+#Use Inadyn DynDNS Client?
+UseDns="No"
+Username=""
+Password=""
+Alias=""
+dyndns_system="default@no-ip.com"
+ 
+#Run continuously DroneCheck. If Online connection fails, it will try to reconnect. Options; "Yes", "No"
+DroneCheck="No"
+ 
+##############################################
+#Navio Boards ONLY. Used if Cntrl="Navio"    #
+##############################################
+ 
+#Args; APMrover2, ArduPlane, ArduCopter-quad,ArduCopter-tri, ArduCopter-hexa, ArduCopter-y6, ArduCopter-octa, ArduCopter-octa-quad, ArduCopter-heli, ArduCopter-single
+APM_type="ArduPlane"
+ 
+#Use secondary telemetry?  Options; Yes, No 
+secondary_tele="Yes"
+sec_ip_address="10.0.0.211"
+sec_port="14550"
  
 
-If you want to start the script automatically during bootup
-nano /etc/rc.local
+UAVcast Usage
+
+Start
+sudo systemctl start UAVcast
+
+Stop
+sudo systemctl stop UAVcast
+
+Restart
+sudo systemctl restart UAVcast
+
+Start on boot 
+sudo systemctl enable UAVcast
+
+Not run on boot (for troubleshooting or other tasks)
+sudo systemctl disable UAVcast
+
  
 
-add these lines to rc.local
-sleep 20 
-sudo /home/pi/UAVcast/./DroneStart.sh
+Troubleshooting
+
+Start UAVcast/DroneStart.sh if you want a more verbose output of what exactly going on when UAVcast is started.
+Also check the logfiles located in the /UAVcast/log folder.
+
+./DroneStart.sh
  
 
 If you are using PiCam, remember to enable the camera in Raspi-Config
+
 raspi-config
  
