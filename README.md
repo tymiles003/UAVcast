@@ -2,8 +2,8 @@
 
 Complete Drone casting software for Raspberry PI in conjuction with 3G / 4G or WiFi. Can be used with Ardupilot or Navio boards (Emlid.com)
 
-Discussion thread
-[UAVcast](http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/UAVcast.-Casting-software-for-Raspberry-PI.-Supports-3G-/-4G-/-WiFi.)
+Discussion forum thread
+[UAVcast. Casting software for Raspberry PI. Supports 3G / 4G / WiFi](http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/UAVcast.-Casting-software-for-Raspberry-PI.-Supports-3G-/-4G-/-WiFi.)
 
 ### Installation
 
