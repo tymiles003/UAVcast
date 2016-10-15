@@ -5,6 +5,10 @@ Complete Drone casting software for Raspberry PI in conjuction with 3G / 4G or W
 Discussion forum thread
 [UAVcast. Casting software for Raspberry PI. Supports 3G / 4G / WiFi](http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/UAVcast.-Casting-software-for-Raspberry-PI.-Supports-3G-/-4G-/-WiFi.)
 
+
+[![UAVcast get started](https://img.youtube.com/vi/bz7Jlo1rRl0/0.jpg)](https://www.youtube.com/watch?v=bz7Jlo1rRl0)
+
+
 ### Installation
 
 ```
