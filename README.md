@@ -1,9 +1,3 @@
-# UAVcast
-Read more at:
-http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/Ready-made-UAVcast-image-for-RPI2
-
-NOTE!  If you want to use UAVcast for Navio boards, you will need to download UAVcast after you have installed the RTK image from Emlid.com
- 
 
 Installation
  
