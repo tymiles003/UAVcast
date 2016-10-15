@@ -120,19 +120,13 @@ sudo systemctl disable UAVcast
 ```
  
 
-Troubleshooting
+##Troubleshooting
 
 Start ```UAVcast/DroneStart.sh ``` if you want a more verbose output of what exactly going on when UAVcast is started.
 Also check the logfiles located in the /UAVcast/log folder.
 
-```
-./DroneStart.sh
-```
 
-If you are using PiCam, remember to enable the camera in Raspi-Config
-```
-raspi-config
-```
+If you are using PiCam, remember to enable the camera in ```Raspi-Config```
 
 
 ## Authors
