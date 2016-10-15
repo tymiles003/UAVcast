@@ -119,11 +119,11 @@ Stupid Mode = 1
 MessageEndPoint = "0x01"
 Modem Type = Analog Modem
 ISDN = 0
-Phone = *99#
-Modem = /dev/ttyUSB0
-Username = {test}
-Password = {test}
-Baud = 460800
+Phone = $wv_Phone
+Modem = $wv_Modem
+Username = $wv_Username
+Password = $wv_Password
+Baud = $wv_Baud
 Auto Reconnect = on
 EOM
    if ps ax | grep -v grep | grep $GSM_Connect > /dev/null
