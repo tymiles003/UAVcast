@@ -22,41 +22,34 @@ UAVcast/DroneConfig.cfg
  
 This file conatins the configuration parameters for UAVcast scripts. Simply set your desired options and save the file.
  
-###################################################################################################################
-#                                                 UAVcast for Drones                                              #
-#  This script package will start various programs defined in this config file to simplify the startup proccess.  #
-#  Create by Bernt Christian Egeland. Further information can be found at                                         #             
-#  http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/Ready-made-UAVcast-image-for-RPI2                       #
-###################################################################################################################
+All parameters are Case Sensistive. Please type carefully.
+Do not comment out any paramters, as they are essential for the UAVcast proccess. Just change the parameter with the option value.
  
-#All parameters are Case Sensistive. Please type carefully.
-#Do not comment out any paramters, as they are essential for the UAVcast proccess. Just change the parameter with the option value.
- 
-#FlightController type. Arguments; Navio, APM(Any Ardupilot boards such as APM2,x  Pixhawk)
+FlightController type. Arguments; Navio, APM(Any Ardupilot boards such as APM2,x  Pixhawk)
 Cntrl="Navio"
  
-#Use udp_redirect(TTL to Ethernet converter)?. #Options; Yes, No
+Use udp_redirect(TTL to Ethernet converter)?. #Options; Yes, No
 udp_redirect="No"
  
-#GCS_adress; Set your DynDns or IP of Ground Control Station.
+GCS_adress; Set your DynDns or IP of Ground Control Station.
 GCS_adress="10.0.0.211"
  
-#Ground Control Station Telemetry Port APM or Navio should start streaming to.
-#NOTE! You need to open this port on your GCS network.
+Ground Control Station Telemetry Port APM or Navio should start streaming to.
+NOTE! You need to open this port on your GCS network.
 PORT="14550"
  
-#Options; uqmi, wvdial, Ethernet
+Options; uqmi, wvdial, Ethernet
 GSM_Connect="Ethernet"
  
-#wvdial configuration. These are standard values, and should not be changed.
-#However, some operators uses diffrent Phone number and credentials. 
+wvdial configuration. These are standard values, and should not be changed.
+However, some operators uses diffrent Phone number and credentials. 
 wv_Phone="*99#"
 wv_Modem="/dev/ttyUSB0"
 wv_Username="{test}"
 wv_Password="{test}"
 wv_Baud="460800"
  
-#Access Point Name given by your operator. Make sure you use a APN with public ip.
+Access Point Name given by your operator. Make sure you use a APN with public ip.
 #Set your Cell operators APN name. Example, Telenor Norway use "internet.public"
 APN_name="internet.public"
  
