@@ -122,7 +122,7 @@ sudo systemctl disable UAVcast
 
 Troubleshooting
 
-Start UAVcast/DroneStart.sh if you want a more verbose output of what exactly going on when UAVcast is started.
+Start ```UAVcast/DroneStart.sh ``` if you want a more verbose output of what exactly going on when UAVcast is started.
 Also check the logfiles located in the /UAVcast/log folder.
 
 ```
