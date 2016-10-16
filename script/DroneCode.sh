@@ -112,10 +112,11 @@ function wvdial {
 FILE="$DIR/./wvdial.conf"
 /bin/cat <<EOM >$FILE
 [Dialer Defaults]
-Init1 = ATZ
-Init2 = ATE1
-Init3 = AT+CGDCONT=1,"IP", "$APN_name"
+Init1 = $wv_init1
+Init2 = $wv_init2
+Init3 = $wv_init3 ,"IP", "$APN_name"
 Stupid Mode = 1
+Carrier Check = $wv_carrier_check
 MessageEndPoint = "0x01"
 Modem Type = Analog Modem
 ISDN = 0
@@ -124,7 +125,7 @@ Modem = $wv_Modem
 Username = $wv_Username
 Password = $wv_Password
 Baud = $wv_Baud
-Auto Reconnect = on
+Auto Reconnect = $wv_Auto_Reconnect
 EOM
    if ps ax | grep -v grep | grep $GSM_Connect > /dev/null
 			then

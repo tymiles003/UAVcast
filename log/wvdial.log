@@ -6,8 +6,8 @@ OK
 --> Sending: ATE1
 ATE1
 OK
---> Sending: AT+CGDCONT=1,"IP", "internet.public"
-AT+CGDCONT=1,"IP", "internet.public"
+--> Sending: AT+CGDCONT=1 ,"IP", "internet.public"
+AT+CGDCONT=1 ,"IP", "internet.public"
 OK
 --> Modem initialized.
 --> Sending: ATDT*99#
@@ -15,21 +15,30 @@ OK
 ATDT*99#
 CONNECT
 --> Carrier detected.  Starting PPP immediately.
---> Starting pppd at Sat Oct 15 18:08:27 2016
---> Pid of pppd: 1269
+--> Starting pppd at Sun Oct 16 14:17:52 2016
+--> Pid of pppd: 1158
 --> Using interface ppp0
---> pppd: Ðé–
---> pppd: Ðé–
---> pppd: Ðé–
---> pppd: Ðé–
---> pppd: Ðé–
---> pppd: Ðé–
---> local  IP address 46.66.186.134
---> pppd: Ðé–
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> local  IP address 77.16.31.125
+--> pppd: °QðvPÍl[01]@Íl[01]
 --> remote IP address 10.64.64.64
---> pppd: Ðé–
+--> pppd: °QðvPÍl[01]@Íl[01]
 --> primary   DNS address 193.213.112.4
---> pppd: Ðé–
+--> pppd: °QðvPÍl[01]@Íl[01]
 --> secondary DNS address 130.67.15.198
---> pppd: Ðé–
+--> pppd: °QðvPÍl[01]@Íl[01]
 Caught signal 15:  Attempting to exit gracefully...
+--> Terminating on signal 15
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> Connect time 0.8 minutes.
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> Terminating on signal 15
+--> pppd: °QðvPÍl[01]@Íl[01]
+--> Disconnecting at Sun Oct 16 14:18:40 2016
