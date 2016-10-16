@@ -126,6 +126,14 @@ sudo systemctl disable UAVcast
 
 ```
  
+###Video
+If you are using UAVcast with camera, its highly recommended to use gstreamer on the receiver end to achieve minimal latency.
+Download [gstreamer](https://gstreamer.freedesktop.org/download/)
+
+Use this client pipeline to receive video feed from UAVcast.
+``` 
+gst-launch-1.0.exe -e -v udpsrc port=5000 ! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! fpsdisplaysink sync=false text-overlay=false 
+```
 
 ##Troubleshooting
 
