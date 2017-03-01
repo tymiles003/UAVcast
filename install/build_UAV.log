@@ -134,4 +134,4 @@ WARNING: 'aclocal-1.15' is missing on your system.
          <http://www.perl.org/>
 Makefile:396: recipe for target 'aclocal.m4' failed
 make: *** [aclocal.m4] Error 127
-./Install.sh: line 115: cd..: command not found
+./install.sh: line 115: cd..: command not found

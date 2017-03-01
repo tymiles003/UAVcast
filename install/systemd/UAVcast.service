@@ -4,7 +4,7 @@ After=network.target user.slice
 
 [Service]
 Type=forking
-ExecStart=/home/UAVcast/DroneStart.sh
+ExecStart=/home/pi/UAVcast/DroneStart.sh
 #ExecReload=/bin/kill -HUP ""
 Restart=always
 

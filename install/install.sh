@@ -56,11 +56,11 @@ echo Installing UAVcast $Navio
  
 # # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
  
-# sudo apt-get update -y --force-yes
+sudo apt-get update -y --force-yes
 
-# # Get the required libraries
-# sudo apt-get install -y --force-yes build-essential dnsutils inadyn usb-modeswitch \
-#                                     cmake dh-autoreconf wvdial gstreamer1.0
+# Get the required libraries
+sudo apt-get install -y --force-yes build-essential dnsutils inadyn usb-modeswitch \
+                                    cmake dh-autoreconf wvdial gstreamer1.0
                                     
 cd /home/pi
 Lower=$(echo "$Navio" | tr '[:upper:]' '[:lower:]')
@@ -81,31 +81,31 @@ esac
 mkdir packages
 cd packages
 
-	# git clone https://github.com/UAVmatrix/libubox.git libubox
-	# git clone git://nbd.name/uqmi.git
+	git clone https://github.com/UAVmatrix/libubox.git libubox
+	git clone git://nbd.name/uqmi.git
   git clone https://github.com/UAVmatrix/ser2net.git
 
-# wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
-# tar -xvf json-c-0.12.tar.gz
-# cd json-c-0.12
-# sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
-# make install
-# cd ..
+wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
+tar -xvf json-c-0.12.tar.gz
+cd json-c-0.12
+sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
+make install
+cd ..
 
 
-# cd libubox
-# cmake CMakeLists.txt -DBUILD_LUA=OFF
-# make
-# sudo make install
-# mkdir -p /usr/include/libubox
-# cp *.h /usr/include/libubox
-# cp libubox.so /usr/lib
-# cp libblobmsg_json.so /usr/lib
-# cd ..
+cd libubox
+cmake CMakeLists.txt -DBUILD_LUA=OFF
+make
+sudo make install
+mkdir -p /usr/include/libubox
+cp *.h /usr/include/libubox
+cp libubox.so /usr/lib
+cp libblobmsg_json.so /usr/lib
+cd ..
 
-# cd uqmi
-# sudo cmake CMakeLists.txt
-# sudo make install
+cd uqmi
+sudo cmake CMakeLists.txt
+sudo make install
 
 cd ser2net
 sudo ./configure
