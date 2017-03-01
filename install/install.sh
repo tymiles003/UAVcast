@@ -110,6 +110,7 @@ cd ..
 
 cd ser2net
 autoreconf -f -i
+sudo autoreconf -f -i
 sudo ./configure && make
 sudo make install
 sudo make clean
