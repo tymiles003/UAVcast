@@ -106,12 +106,11 @@ cd ..
 cd uqmi
 sudo cmake CMakeLists.txt
 sudo make install
+cd ..
 
 cd ser2net
-sudo ./configure
-sudo make
+autoreconf -f -i
+sudo ./configure && make
 sudo make install
 sudo make clean
-cd..
-
-
+cd ..
