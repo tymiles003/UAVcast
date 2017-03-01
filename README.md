@@ -45,11 +45,11 @@ This file conatins the configuration parameters for UAVcast scripts. Simply set 
 #FlightController type. Arguments; Navio, APM(Any Ardupilot boards such as APM2,x  Pixhawk)
 Cntrl="Navio"
  
-#Use udp_redirect(TTL to Ethernet converter)?. #Options; Yes, No
-udp_redirect="No"
- 
+#Set your telemetry connection. Options:: (gpio, ttl)  // gpio = pin 8_tx & 10_rx. ttl = ttl_Ethernet converter.
+Telemetry_Type="gpio"
+
 #GCS_adress; Set your DynDns or IP of Ground Control Station.
-GCS_adress="10.0.0.211"
+GCS_address="10.0.0.212"
  
 #Ground Control Station Telemetry Port APM or Navio should start streaming to.
 #NOTE! You need to open this port on your GCS network.
