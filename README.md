@@ -39,6 +39,7 @@ This file conatins the configuration parameters for UAVcast scripts. Simply set 
 #  http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi                      #
 ###################################################################################################################
  
+ 
 #All parameters are Case Sensistive. Please type carefully.
 #Do not comment out any paramters, as they are essential for the UAVcast proccess. Just change the parameter with the option value.
  
