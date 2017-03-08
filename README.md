@@ -36,7 +36,7 @@ This file conatins the configuration parameters for UAVcast scripts. Simply set 
 #                                                 UAVcast for Drones                                              #
 #  This script package will start various programs defined in this config file to simplify the startup proccess.  #
 #  Create by Bernt Christian Egeland. Further information can be found at                                         #             
-#  http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi/131                  #
+#  http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi                      #
 ###################################################################################################################
  
 #All parameters are Case Sensistive. Please type carefully.
