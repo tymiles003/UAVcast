@@ -1,10 +1,11 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/../DroneConfig.cfg
+#source $DIR/../DroneConfig.cfg
 source $DIR/./DroneCode.sh
+CONF=$DIR/../DroneConfig.txt
 pidof -x DroneCode.sh >/dev/null
 	if [[ $? -ne 0 ]] ; then 		
-    	if [ $DroneCheck == "Yes" ]; then
+    	if [ $(jq -r '.DroneCheck' $CONF) == "Yes" ]; then
 			LOCKFILE=/tmp/lock.txt
 					if [ -e ${LOCKFILE} ] && kill -0 `cat ${LOCKFILE}`; then
 						exit
@@ -18,9 +19,9 @@ pidof -x DroneCode.sh >/dev/null
 								wget -q --tries=10 --timeout=20 --spider http://google.com
 								if [[ $? -ne 0 ]]; then
 									 echo "RPI is offline, run DroneCode"
-									 case $GSM_Connect in
+									 case $(jq -r '.GSM_connect' $CONF) in
 										"uqmi")
-											pidof -x $GSM_Connect >/dev/null
+											pidof -x $(jq -r '.GSM_connect' $CONF) >/dev/null
 											if [[ $? -ne 0 ]] ; then 	
 													echo "Trying to start UQMI"
 													uqmi
@@ -41,6 +42,6 @@ pidof -x DroneCode.sh >/dev/null
 					
 		fi			
 	else
-		echo "DroneCode running."
+		echo "UAVcast running."
 		exit
 	fi	

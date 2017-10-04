@@ -1,0 +1,12 @@
+Wed Oct  4 11:11:52 2017: Inadyn version 1.99.4 -- Dynamic DNS update client.
+Wed Oct  4 11:11:52 2017: Resolving hostname uavcast.no-ip.info => IP# 77.16.10.97
+Wed Oct  4 11:11:52 2017: Checking for IP# change, connecting to ip1.dynupdate.no-ip.com(34.196.162.199)
+Wed Oct  4 11:11:52 2017: Update needed for alias uavcast.no-ip.info, new IP# 88.90.174.53
+Wed Oct  4 11:11:52 2017: Sending IP# update to DDNS server, connecting to dynupdate.no-ip.com(8.23.224.120)
+Wed Oct  4 11:11:52 2017: Successful alias table update for uavcast.no-ip.info => new IP# 88.90.174.53
+Wed Oct  4 11:21:53 2017: Checking for IP# change, connecting to ip1.dynupdate.no-ip.com(52.20.172.222)
+Wed Oct  4 11:21:54 2017: No IP# change detected, still at 88.90.174.53
+Wed Oct  4 11:31:54 2017: Checking for IP# change, connecting to ip1.dynupdate.no-ip.com(52.73.154.76)
+Wed Oct  4 11:31:54 2017: No IP# change detected, still at 88.90.174.53
+Wed Oct  4 11:41:54 2017: Checking for IP# change, connecting to ip1.dynupdate.no-ip.com(34.200.153.135)
+Wed Oct  4 11:41:54 2017: No IP# change detected, still at 88.90.174.53

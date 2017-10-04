@@ -1,6 +1,5 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/../DroneConfig.cfg
 pidof -x runCode.sh >/dev/null
 	if [[ $? -ne 0 ]] ; then 		
 	LOCKFILE=/tmp/lock.txt
@@ -21,14 +20,14 @@ pidof -x runCode.sh >/dev/null
 							 sudo $DIR/./runCode.sh &
 					
 							else
-									echo "RPI Online"
+									echo "Raspberry is Online"
 							fi
 				else
-					echo "RPI Online"
+					echo "Raspberry is Online"
 				fi
 
 			rm -f ${LOCKFILE}
 	else
-		echo "CellDrone running."
+		echo "UAVcast running."
 		exit
 	fi	

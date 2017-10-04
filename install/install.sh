@@ -26,10 +26,11 @@ Description=UAVcast Drone Software
 After=network.target user.slice
 
 [Service]
+WorkingDirectory=/home/pi/UAVcast
 Type=forking
-ExecStart=$Basefolder/DroneStart.sh
-#ExecReload=/bin/kill -HUP "$MAINPID"
-Restart=always
+GuessMainPID=no
+ExecStart=/bin/bash DroneStart.sh start
+KillMode=control-group
 
 [Install]
 WantedBy=multi-user.target
@@ -77,13 +78,16 @@ case $Lower in
           sudo dpkg -i apm.deb
         ;;
 esac
+#node and npm
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs 
 
 mkdir packages
 cd packages
 
 	git clone https://github.com/UAVmatrix/libubox.git libubox
 	git clone git://nbd.name/uqmi.git
-  git clone https://github.com/UAVmatrix/ser2net.git
+  git clone https://github.com/UAVmatrix/ser2net-3.4.git
 
 wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
 tar -xvf json-c-0.12.tar.gz
@@ -108,9 +112,18 @@ sudo cmake CMakeLists.txt
 sudo make install
 cd ..
 
+ if [is_pione == false] then
 cd ser2net
 sudo autoreconf -f -i
 sudo ./configure && make
 sudo make install
 sudo make clean
 cd ..
+ fi
+
+cd web
+sudo npm install
+sudo pm2 startup
+cd ..
+
+echo "Installastion completed. Reboot RPI and access UAVcast webinterface by opening your browser and type the IP of RPI."
