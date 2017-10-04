@@ -78,9 +78,7 @@ case $Lower in
           sudo dpkg -i apm.deb
         ;;
 esac
-#node and npm
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs 
+
 
 mkdir packages
 cd packages
@@ -112,16 +110,22 @@ sudo cmake CMakeLists.txt
 sudo make install
 cd ..
 
- if [is_pione == false] then
 cd ser2net
 sudo autoreconf -f -i
 sudo ./configure && make
 sudo make install
 sudo make clean
 cd ..
- fi
 
+# WEB SERVICES INSTALLATION
 cd web
+#node and npm
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs 
+
+#install pm2 web server
+sudo npm i -g pm2
+
 sudo npm install
 sudo pm2 startup
 cd ..
