@@ -28,7 +28,10 @@ is_pione() {
       return 1
    fi
 }
-
+is_pione_w() {
+   grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]0c[0-9a-fA-F]$" /proc/cpuinfo
+   return $?
+}
 is_pitwo() {
    grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]04[0-9a-fA-F]$" /proc/cpuinfo
    return $?
@@ -45,6 +48,8 @@ is_pizero() {
 get_pi_type() {
    if is_pione; then
       echo "RPI 1 Detected"
+   elif is_pione_w; then
+      echo "RPI 0w Detected"
    elif is_pitwo; then
       echo "RPI 2 Detected"
    elif is_pithree; then

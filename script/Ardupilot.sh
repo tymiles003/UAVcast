@@ -1,17 +1,20 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/../DroneConfig.cfg
-if [[ $GCS_address =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]];
+CONF=$DIR/../DroneConfig.txt
+#source $DIR/../DroneConfig.cfg
+gcs_ip=$(jq -r '.GCS_address' $CONF)
+if [[ $gcs_ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]];
  then
-    ip=$GCS_address
+    ip=$gcs_ip
   else
-  ip=`dig +short $GCS_address`
+  ip=`dig +short $gcs_ip`
 fi
-echo $GCS_address
-echo APM starting:: stream adress: $ip
-if [ $secondary_tele == "Yes" ]; then
-echo Using Secondary telemetry $sec_ip_address : $sec_port
-sudo $APM_type -A udp:$ip:$PORT -C udp:$sec_ip_address:$sec_port
+
+echo $ip
+echo APM starting -> stream pointing to address: $ip
+if [ $(jq -r '.secondary_tele' $CONF) == "Yes" ]; then
+echo Using Secondary telemetry $(jq -r '.sec_ip_address' $CONF) : $(jq -r '.sec_port' $CONF)
+sudo $(jq -r '.APM_type' $CONF) -A udp:$ip:$(jq -r '.PORT' $CONF)-C udp:$(jq -r '.sec_ip_address' $CONF):$(jq -r '.sec_port' $CONF)
 else
-sudo $APM_type -A udp:$ip:$PORT
+sudo $(jq -r '.APM_type' $CONF) -A udp:$ip:$(jq -r '.PORT' $CONF)
 fi
