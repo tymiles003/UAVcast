@@ -1,6 +1,6 @@
 {
-  "name": "web",
-  "version": "0.1.0",
+  "name": "uavcast",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "bluebird": "^3.5.0",

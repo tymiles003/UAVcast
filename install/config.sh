@@ -44,7 +44,6 @@ is_pizero() {
    grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]0[9cC][0-9a-fA-F]$" /proc/cpuinfo
    return $?
 }
-REVCODE=$(sudo cat /proc/cpuinfo | grep 'Revision' | awk '{print $3}' | sed 's/^ *//g' | sed 's/ *$//g')
 
 get_pi_type() {
    if is_pione; then
@@ -59,6 +58,7 @@ get_pi_type() {
       echo 0
    fi
 }
+
 
 get_init_sys() {
   if command -v systemctl > /dev/null && systemctl | grep -q '\-\.mount'; then
@@ -146,7 +146,6 @@ get_serial_hw() {
     echo 1
   fi
 }
-
 set_dtoverlay_pi_three(){
   if is_pithree; then
       # echo "Adding 'dtoverlay=pi3-miniuart-bt' to /boot/config.txt (RPi3)"
@@ -156,7 +155,6 @@ set_dtoverlay_pi_three(){
       fi
     fi
 }
-
 do_serial() {
   DEFAULTS=--defaultno
   DEFAULTH=--defaultno
@@ -173,7 +171,6 @@ do_serial() {
 
   get_init_sys
   #Removes the Serial from cmdline.txt
-
   RET=1
   if [[ $RET -eq 0 ]] ; then
     if [ $SYSTEMD -eq 0 ]; then
