@@ -86,7 +86,9 @@ sudo apt-get install -y nodejs
 #install pm2 web server
 sudo npm install --production
 sudo npm install pm2@latest -g
+sudo pm2 start process.json --env production
 sudo pm2 startup
+sudo pm2 save
 
 #UAVcast dependencies
 mkdir $Basefolder/packages
@@ -116,7 +118,7 @@ cd $Basefolder/packages/uqmi
 sudo cmake CMakeLists.txt
 sudo make install
 
-cd $Basefolder/packages/ser2net
+cd $Basefolder/packages/ser2net-3.4
 sudo autoreconf -f -i
 sudo ./configure && make
 sudo make install
