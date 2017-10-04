@@ -98,12 +98,12 @@ git clone https://github.com/UAVmatrix/ser2net-3.4.git
 
 wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
 tar -xvf json-c-0.12.tar.gz
-cd $Basefolder/json-c-0.12
+cd $Basefolder/packages/json-c-0.12
 sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
 make install
 
 
-cd $Basefolder/libubox
+cd $Basefolder/packages/libubox
 cmake CMakeLists.txt -DBUILD_LUA=OFF
 make
 sudo make install
@@ -112,11 +112,11 @@ cp *.h /usr/include/libubox
 cp libubox.so /usr/lib
 cp libblobmsg_json.so /usr/lib
 
-cd $Basefolder/uqmi
+cd $Basefolder/packages/uqmi
 sudo cmake CMakeLists.txt
 sudo make install
 
-cd $Basefolder/ser2net
+cd $Basefolder/packages/ser2net
 sudo autoreconf -f -i
 sudo ./configure && make
 sudo make install
