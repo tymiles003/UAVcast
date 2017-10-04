@@ -1,14 +1,15 @@
-#!/bin/bash 
+#!/bin/bash
 . config.sh
+
 # Create a log file of the build as well as displaying the build on the tty as it runs
-exec > >(tee build_UAV.log)
-exec 2>&1
+# exec > >(tee build_UAV.log)
+# exec 2>&1
 
 # Get current Directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Get Parrent Directory
-Basefolder="$(cd ../; pwd)"
+Basefolder="$(cd ../; pwd)" 
 
 # Create systemctl for easy stop/start/restart
 Systemd=$DIR/"systemd"
@@ -24,14 +25,12 @@ FILE=$DIR/"systemd/UAVcast.service"
 [Unit]
 Description=UAVcast Drone Software
 After=network.target user.slice
-
 [Service]
 WorkingDirectory=/home/pi/UAVcast
 Type=forking
 GuessMainPID=no
 ExecStart=/bin/bash DroneStart.sh start
 KillMode=control-group
-
 [Install]
 WantedBy=multi-user.target
 Alias=UAVcast.services
@@ -56,12 +55,11 @@ echo Installing UAVcast $Navio
  
  
 # # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
- 
 sudo apt-get update -y --force-yes
 
 # Get the required libraries
-sudo apt-get install -y --force-yes build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0
+sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
+                                    cmake dh-autoreconf wvdial gstreamer1.0-tools
                                     
 cd /home/pi
 Lower=$(echo "$Navio" | tr '[:upper:]' '[:lower:]')
@@ -79,23 +77,33 @@ case $Lower in
         ;;
 esac
 
+# WEB SERVICES INSTALLATION
+cd $Basefolder/web
+#node and npm
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs 
 
-mkdir packages
-cd packages
+#install pm2 web server
+sudo npm install --production
+sudo npm install pm2@latest -g
+sudo pm2 startup
 
-	git clone https://github.com/UAVmatrix/libubox.git libubox
-	git clone git://nbd.name/uqmi.git
-  git clone https://github.com/UAVmatrix/ser2net-3.4.git
+#UAVcast dependencies
+mkdir $Basefolder/packages
+cd $Basefolder/packages
+
+git clone https://github.com/UAVmatrix/libubox.git libubox
+git clone git://nbd.name/uqmi.git
+git clone https://github.com/UAVmatrix/ser2net-3.4.git
 
 wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
 tar -xvf json-c-0.12.tar.gz
-cd json-c-0.12
+cd $Basefolder/json-c-0.12
 sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
 make install
-cd ..
 
 
-cd libubox
+cd $Basefolder/libubox
 cmake CMakeLists.txt -DBUILD_LUA=OFF
 make
 sudo make install
@@ -103,31 +111,17 @@ mkdir -p /usr/include/libubox
 cp *.h /usr/include/libubox
 cp libubox.so /usr/lib
 cp libblobmsg_json.so /usr/lib
-cd ..
 
-cd uqmi
+cd $Basefolder/uqmi
 sudo cmake CMakeLists.txt
 sudo make install
-cd ..
 
-cd ser2net
+cd $Basefolder/ser2net
 sudo autoreconf -f -i
 sudo ./configure && make
 sudo make install
 sudo make clean
-cd ..
 
-# WEB SERVICES INSTALLATION
-cd web
-#node and npm
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs 
 
-#install pm2 web server
-sudo npm i -g pm2
-
-sudo npm install
-sudo pm2 startup
-cd ..
 
 echo "Installastion completed. Reboot RPI and access UAVcast webinterface by opening your browser and type the IP of RPI."

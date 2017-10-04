@@ -4,7 +4,7 @@
   "Telemetry_Type": "gpio",
   "GCS_address": "uavmatrix.com",
   "PORT": "14550",
-  "GSM_Connect": "wvdial",
+  "GSM_Connect": "Ethernet",
   "DroneCheck": "No",
   "APN_name": "internet.public",
   "wv_Phone": "*99#",
