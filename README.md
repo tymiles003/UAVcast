@@ -37,14 +37,10 @@ UAVcast uses systemd process handler. use the below commands if you want to star
 ```sudo systemctl start UAVcast```
 
 ### Stop
-```
-sudo systemctl stop UAVcast
-```
+```sudo systemctl stop UAVcast```
 
 ### Restart
-```
-sudo systemctl restart UAVcast
-```
+```sudo systemctl restart UAVcast```
 
 ### Start on boot 
 ```
