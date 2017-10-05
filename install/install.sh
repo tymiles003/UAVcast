@@ -24,7 +24,7 @@ FILE=$DIR/"systemd/UAVcast.service"
 /bin/cat <<EOM >$FILE
 [Unit]
 Description=UAVcast Drone Software
-After=network.target user.slice
+After=network.target
 [Service]
 WorkingDirectory=/home/pi/UAVcast
 Type=forking
@@ -32,8 +32,7 @@ GuessMainPID=no
 ExecStart=/bin/bash DroneStart.sh start
 KillMode=control-group
 [Install]
-WantedBy=multi-user.target
-Alias=UAVcast.services
+WantedBy=uavcast-user.target
 EOM
 
 cp $FILE /lib/systemd/system/
