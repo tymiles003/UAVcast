@@ -19,7 +19,7 @@ module.exports = {
     saveDroneConfig: function (config, clb) {
         try {
             let _json = JSON.stringify(config, null, 2)
-            console.log(_json);
+            let date = new Date()
             fs.writeFile('../DroneConfig.txt', _json, function (err) {
                 return clb(true)
             });
