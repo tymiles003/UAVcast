@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 80
 
 var server = app.listen(PORT, ()=>{
-    console.log('App listen at: ' + PORT)
+    console.log('Backend server listen at: ' + PORT)
 })
 
 var io = module.exports.io = require('socket.io')(server)
