@@ -15,7 +15,7 @@ Discussion forum thread
 sudo apt-get install git
 sudo git clone https://github.com/UAVmatrix/UAVcast.git
 cd UAVcast/Install
-sudo ./Install.sh
+sudo ./Install.sh web
 ```
 
 ##How it works
