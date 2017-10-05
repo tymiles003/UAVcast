@@ -8,7 +8,6 @@ Discussion forum thread
 
 [![UAVcast get started](https://img.youtube.com/vi/bz7Jlo1rRl0/0.jpg)](https://www.youtube.com/watch?v=bz7Jlo1rRl0)
 
-
 ### Installation
 
 ```
