@@ -37,16 +37,24 @@ Start
 ```sudo systemctl start UAVcast```
 
 Stop
-```sudo systemctl stop UAVcast```
+```
+sudo systemctl stop UAVcast
+```
 
 Restart
-```sudo systemctl restart UAVcast```
+```
+sudo systemctl restart UAVcast
+```
 
 Start on boot 
-```sudo systemctl enable UAVcast```
+```
+sudo systemctl enable UAVcast
+```
 
 Not run on boot (for troubleshooting or other tasks)
-```sudo systemctl disable UAVcast```
+```
+sudo systemctl disable UAVcast
+```
 
 
  
