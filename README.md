@@ -12,103 +12,26 @@ Discussion forum thread
 ### Installation
 
 ```
+sudo apt-get update
 sudo apt-get install git
-sudo git clone https://github.com/UAVmatrix/UAVcast.git
-cd UAVcast/Install
-sudo ./Install.sh web
+sudo git clone -b Web_UI https://github.com/UAVmatrix/UAVcast.git
+cd UAVcast/install
+sudo ./install.sh web (notice the web argument)
 ```
 
 ##How it works
 UAVcast uses regular software such as wvdial, inadyn. gstreamer, uqmi, and will fire up each program in the correct order users has defined in the DroneConfig.cfg file. 
  
-After you have successfully installed UAVcast and edited DroneConfig, you could simply start UAVcast by running ``` ./DroneStart.sh ``` or ``` sudo systemctl start UAVcast ```
-If there is any problems during startup, then please check the logfile located in the ```UAVcast/log ``` category.
+After you have successfully installed UAVcast, reboot Raspberry and you should be able to access the web portal by opening your browser
+and type the rpi IP address.
+
+```
+http://ip_to_rpi
+```
  
- 
+
 ##Configuration
  
-``` 
-UAVcast/DroneConfig.cfg
-
-This file conatins the configuration parameters for UAVcast scripts. Simply set your desired options and save the file.
- 
-###################################################################################################################
-#                                                 UAVcast for Drones                                              #
-#  This script package will start various programs defined in this config file to simplify the startup proccess.  #
-#  Create by Bernt Christian Egeland. Further information can be found at                                         #             
-#  http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/Ready-made-UAVcast-image-for-RPI2                       #
-###################################################################################################################
- 
-#All parameters are Case Sensistive. Please type carefully.
-#Do not comment out any paramters, as they are essential for the UAVcast proccess. Just change the parameter with the option value.
- 
-#FlightController type. Arguments; Navio, APM(Any Ardupilot boards such as APM2,x  Pixhawk)
-Cntrl="Navio"
- 
-#Use udp_redirect(TTL to Ethernet converter)?. #Options; Yes, No
-udp_redirect="No"
- 
-#GCS_adress; Set your DynDns or IP of Ground Control Station.
-GCS_adress="10.0.0.211"
- 
-#Ground Control Station Telemetry Port APM or Navio should start streaming to.
-#NOTE! You need to open this port on your GCS network.
-PORT="14550"
- 
-#Options; uqmi, wvdial, Ethernet
-GSM_Connect="Ethernet"
- 
-#wvdial configuration. These are standard values, and should not be changed.
-#However, some operators uses diffrent Phone number and credentials. 
-wv_Phone="*99#"
-wv_Modem="/dev/ttyUSB0"
-wv_Username="{test}"
-wv_Password="{test}"
-wv_Baud="460800"
- 
-#Access Point Name given by your operator. Make sure you use a APN with public ip.
-#Set your Cell operators APN name. Example, Telenor Norway use "internet.public"
-APN_name="internet.public"
- 
-#Use WebCamera?. Options; Yes, No
-UseCam="Yes"
- 
-#Options; picam, C920, C615
-CameraType="picam"
- 
-#gStreamer Settings.
-WIDTH="1280"
-HEIGHT="720"
-UDP_PORT="5000"
-BITRATE="1500000"
-FPS="20"
- 
-#Use Inadyn DynDNS Client?
-UseDns="No"
-Username=""
-Password=""
-Alias=""
-dyndns_system="default@no-ip.com"
- 
-#Run continuously DroneCheck. If Online connection fails, it will try to reconnect. Options; "Yes", "No"
-DroneCheck="No"
- 
-##############################################
-#Navio Boards ONLY. Used if Cntrl="Navio"    #
-##############################################
- 
-#Args; APMrover2, ArduPlane, ArduCopter-quad,ArduCopter-tri, ArduCopter-hexa, ArduCopter-y6, ArduCopter-octa, ArduCopter-octa-quad, ArduCopter-heli, ArduCopter-single
-APM_type="ArduPlane"
- 
-#Use secondary telemetry?  Options; Yes, No 
-secondary_tele="Yes"
-sec_ip_address="10.0.0.211"
-sec_port="14550"
-```
-
-##UAVcast Usage
-
-```
 Start
 sudo systemctl start UAVcast
 
