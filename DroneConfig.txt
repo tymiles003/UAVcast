@@ -1,5 +1,5 @@
 {
-  "UseCam": "No",
+  "UseCam": "Yes",
   "Cntrl": "APM",
   "Telemetry_Type": "gpio",
   "GCS_address": "uavmatrix.com",
@@ -18,7 +18,7 @@
   "UDP_PORT": "5000",
   "BITRATE": "1500000",
   "FPS": "20",
-  "UseDns": "No",
+  "UseDns": "Yes",
   "Username": "",
   "Password": "",
   "Alias": "",

@@ -58,7 +58,7 @@ sudo apt-get update -y --force-yes
 
 # Get the required libraries
 sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0-tools
+                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
                                     
 cd /home/pi
 Lower=$(echo "$Navio" | tr '[:upper:]' '[:lower:]')

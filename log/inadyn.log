@@ -1,0 +1,2 @@
+Thu Oct  5 09:47:31 2017: No DDNS provider setup in configuration.
+Thu Oct  5 09:47:31 2017: Failed starting daemon: RC_DYNDNS_INVALID_OR_MISSING_PARAMETERS
