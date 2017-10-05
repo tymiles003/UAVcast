@@ -1,8 +1,4 @@
-#!/bin/sh
-# Part of raspi-config https://github.com/RPi-Distro/raspi-config
-#
-# See LICENSE file for copyright and license details
-
+#!/bin/bash
 INTERACTIVE=false
 ASK_TO_REBOOT=0
 BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
@@ -43,20 +39,6 @@ is_pithree() {
 is_pizero() {
    grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]0[9cC][0-9a-fA-F]$" /proc/cpuinfo
    return $?
-}
-
-get_pi_type() {
-   if is_pione; then
-      echo "RPI 1 Detected"
-   elif is_pione_w; then
-      echo "RPI 0w Detected"
-   elif is_pitwo; then
-      echo "RPI 2 Detected"
-   elif is_pithree; then
-      echo "RPI 3 Detected"
-   else
-      echo 0
-   fi
 }
 
 
