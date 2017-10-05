@@ -19,7 +19,7 @@ cd UAVcast/install
 sudo ./install.sh web (notice the web argument)
 ```
 
-##How it works
+## How it works
 UAVcast uses regular software such as wvdial, inadyn. gstreamer, uqmi, and will fire up each program in the correct order users has defined in the DroneConfig.cfg file. 
  
 After you have successfully installed UAVcast, reboot Raspberry and you should be able to access the web portal by opening your browser
@@ -30,7 +30,7 @@ http://ip_to_rpi
 ```
  
 
-##Configuration
+## Configuration
  
 Start
 sudo systemctl start UAVcast
@@ -47,18 +47,19 @@ sudo systemctl enable UAVcast
 Not run on boot (for troubleshooting or other tasks)
 sudo systemctl disable UAVcast
 
-```
+
  
-###Video
+### Video
 If you are using UAVcast with camera, its highly recommended to use gstreamer on the receiver end to achieve minimal latency.
 Download [gstreamer](https://gstreamer.freedesktop.org/download/)
 
 Use this client pipeline to receive video feed from UAVcast.
+
 ``` 
 gst-launch-1.0.exe -e -v udpsrc port=5000 ! application/x-rtp, payload=96 ! rtpjitterbuffer ! rtph264depay ! avdec_h264 ! fpsdisplaysink sync=false text-overlay=false 
 ```
 
-##Troubleshooting
+## Troubleshooting
 
 Start ```UAVcast/DroneStart.sh ``` if you want a more verbose output of what exactly going on when UAVcast is started.
 Also check the logfiles located in the /UAVcast/log folder.
