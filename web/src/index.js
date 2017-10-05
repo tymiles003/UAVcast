@@ -12,6 +12,10 @@ import Modem from './pages/modem';
 import Camera from './pages/camera';
 import Dns from './pages/dns';
 import './index.css'
+import ReactGA from 'react-ga';
+
+// Google Analytics
+ReactGA.initialize('UA-107582726-1');
 
 function extractHostname(url) {
   var hostname;
@@ -79,7 +83,7 @@ var CameraWrapper = React.createClass({
 const app = document.getElementById('root')
 ReactDOM.render(
   <MuiThemeProvider>
-    <BrowserRouter>
+    <BrowserRouter >
       <Layout socket={socket}>
         <Route exact path='/' component={HomesWrapper} ></Route>
         <Route path="/fc" component={FcWrapper} ></Route>

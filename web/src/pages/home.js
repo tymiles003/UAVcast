@@ -71,7 +71,6 @@ class Home extends Component {
     }
     checkPort(){
         this.state.socket.emit(DESTINATION_INFORMATION, this.state.config.GCS_address, {telem_port:this.state.config.PORT, vid_port:this.state.config.UDP_PORT}, (status) => {
-            console.log(status);
             this.setState({destination:{telem_portIsOpen:status.telem_port, video_portIsOpen:status.video_port}})
         })
     }

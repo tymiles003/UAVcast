@@ -11,13 +11,14 @@
     "material-ui": "^0.19.2",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
+    "react-ga": "^2.3.5",
     "react-router-dom": "^4.2.2",
     "react-scripts": "0.9.5",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
     "toastr": "^2.1.2",
     "uuid": "^3.1.0"
-    },
+  },
   "devDependencies": {
     "nodemon": "^1.12.1",
     "concurrently": "^3.5.0"

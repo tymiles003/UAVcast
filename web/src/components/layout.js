@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import Menu from '../modules/menu';
 import {GET_UPTIME} from '../Events.js'
+import PropTypes from 'prop-types';
+import ReactGA from 'react-ga';
 
 // toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
 class Layout extends Component {
+    static contextTypes = {
+        router: PropTypes.object
+      };
     constructor(props) {
         super(props)
 
@@ -19,7 +24,14 @@ class Layout extends Component {
     componentDidMount(){
         setInterval(()=>{this.getUptime();},30000)
         this.getUptime();
+        this.sendPageView(this.context.router.history.location);
+        this.context.router.history.listen(this.sendPageView);
     }
+    sendPageView(location) {
+        ReactGA.set({ page: location.pathname });
+        ReactGA.pageview(location.pathname);
+      }
+    
     initSocket(){
         let socket = this.props.socket
         socket.on('connect', () => {
