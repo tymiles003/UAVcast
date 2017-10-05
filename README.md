@@ -30,22 +30,23 @@ http://ip_to_rpi
 ```
  
 
-## Configuration
- 
+## Commands
+UAVcast uses systemd process handler. use the below commands if you want to start stopp service from comand line.
+
 Start
-sudo systemctl start UAVcast
+```sudo systemctl start UAVcast```
 
 Stop
-sudo systemctl stop UAVcast
+```sudo systemctl stop UAVcast```
 
 Restart
-sudo systemctl restart UAVcast
+```sudo systemctl restart UAVcast```
 
 Start on boot 
-sudo systemctl enable UAVcast
+```sudo systemctl enable UAVcast```
 
 Not run on boot (for troubleshooting or other tasks)
-sudo systemctl disable UAVcast
+```sudo systemctl disable UAVcast```
 
 
  
