@@ -56,45 +56,45 @@ case $argsToLower in
         ;;
 esac
 
-################# COMPILE UAV software ############
-# # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
-sudo apt-get update -y --force-yes
+# ################# COMPILE UAV software ############
+# # # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
+# sudo apt-get update -y --force-yes
 
-# Get the required libraries
-sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+# # Get the required libraries
+# sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
+#                                     cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
 
-#UAVcast dependencies
-mkdir $Basefolder/packages
-cd $Basefolder/packages
+# #UAVcast dependencies
+# mkdir $Basefolder/packages
+# cd $Basefolder/packages
 
-git clone https://github.com/UAVmatrix/libubox.git libubox
-git clone git://nbd.name/uqmi.git
-git clone https://github.com/UAVmatrix/ser2net-3.4.git
+# git clone https://github.com/UAVmatrix/libubox.git libubox
+# git clone git://nbd.name/uqmi.git
+# git clone https://github.com/UAVmatrix/ser2net-3.4.git
 
-wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
-tar -xvf json-c-0.12.tar.gz
-cd $Basefolder/packages/json-c-0.12
-sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
-make install
+# wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
+# tar -xvf json-c-0.12.tar.gz
+# cd $Basefolder/packages/json-c-0.12
+# sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
+# make install
 
-cd $Basefolder/packages/libubox
-cmake CMakeLists.txt -DBUILD_LUA=OFF
-make
-sudo make install
-mkdir -p /usr/include/libubox
-cp *.h /usr/include/libubox
-cp libubox.so /usr/lib
-cp libblobmsg_json.so /usr/lib
+# cd $Basefolder/packages/libubox
+# cmake CMakeLists.txt -DBUILD_LUA=OFF
+# make
+# sudo make install
+# mkdir -p /usr/include/libubox
+# cp *.h /usr/include/libubox
+# cp libubox.so /usr/lib
+# cp libblobmsg_json.so /usr/lib
 
-cd $Basefolder/packages/uqmi
-sudo cmake CMakeLists.txt
-sudo make install
+# cd $Basefolder/packages/uqmi
+# sudo cmake CMakeLists.txt
+# sudo make install
 
-cd $Basefolder/packages/ser2net-3.4
-sudo autoreconf -f -i
-sudo ./configure && make
-sudo make install
-sudo make clean
+# cd $Basefolder/packages/ser2net-3.4
+# sudo autoreconf -f -i
+# sudo ./configure && make
+# sudo make install
+# sudo make clean
 
-printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"
+# printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"

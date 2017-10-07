@@ -4,7 +4,7 @@ const { spawn } = require('child_process');
 const child = spawn('pwd');
 const shell = require('shelljs');
 const fs = require('fs');
-var Promise = require('bluebird')
+// var Promise = require('bluebird')
 module.exports = {
     getUpTime: function (clb) {
         const child = spawn('uptime -p', { detached: true, shell: true });
