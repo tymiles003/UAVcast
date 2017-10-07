@@ -3,10 +3,16 @@
   "version": "0.3.1",
   "private": true,
   "dependencies": {
-    "bluebird": "^3.5.0",
     "compression": "^1.7.1",
     "express": "^4.15.5",
     "history": "^4.7.2",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "concurrently": "^3.5.0",
+    "toastr": "^2.1.2",
+    "uuid": "^3.1.0",
     "jquery": "^3.2.1",
     "material-ui": "^0.19.2",
     "react": "^15.6.2",
@@ -14,14 +20,7 @@
     "react-ga": "^2.3.5",
     "react-router-dom": "^4.2.2",
     "react-scripts": "0.9.5",
-    "socket.io": "^2.0.3",
-    "socket.io-client": "^2.0.3",
-    "toastr": "^2.1.2",
-    "uuid": "^3.1.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.12.1",
-    "concurrently": "^3.5.0"
+    "socket.io-client": "^2.0.3"
   },
   "scripts": {
     "start": "NODE_ENV=development && concurrently 'npm run react' 'npm run server'",
