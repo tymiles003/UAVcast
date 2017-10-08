@@ -29,15 +29,15 @@ const YesNo = [
     <MenuItem key={2} value={"No"} primaryText="No" />,
   ];
 const APM_type = [
-    <MenuItem key={1} value={"APMrover2"} primaryText="APM rover2" />,
-    <MenuItem key={2} value={"ArduPlane"} primaryText="ArduPlane" />,
-    <MenuItem key={3} value={"ArduCopter-quad"} primaryText="ArduCopter-quad" />,
-    <MenuItem key={4} value={"ArduCopter-tri"} primaryText="ArduCopter-tri" />,
-    <MenuItem key={5} value={"ArduCopter-y6"} primaryText="ArduCopter-y6" />,
-    <MenuItem key={6} value={"ArduCopter-octa"} primaryText="ArduCopter-octa" />,
-    <MenuItem key={7} value={"ArduCopter-octa-quad"} primaryText="ArduCopter-octa-quad" />,
-    <MenuItem key={8} value={"ArduCopter-heli"} primaryText="ArduCopter-heli" />,
-    <MenuItem key={9} value={"ArduCopter-single"} primaryText="ArduCopter-single" />,
+    <MenuItem key={1} value={"ardurover"} primaryText="APM rover2" />,
+    <MenuItem key={2} value={"arduplane"} primaryText="ArduPlane" />,
+    <MenuItem key={3} value={"arducopter-quad"} primaryText="ArduCopter-quad" />,
+    <MenuItem key={4} value={"arducopter-tri"} primaryText="ArduCopter-tri" />,
+    <MenuItem key={5} value={"arducopter-y6"} primaryText="ArduCopter-y6" />,
+    <MenuItem key={6} value={"arducopter-octa"} primaryText="ArduCopter-octa" />,
+    <MenuItem key={7} value={"arducopter-octa-quad"} primaryText="ArduCopter-octa-quad" />,
+    <MenuItem key={8} value={"arducopter-heli"} primaryText="ArduCopter-heli" />,
+    <MenuItem key={9} value={"arducopter-single"} primaryText="ArduCopter-single" />,
   ];
 class Config extends Component {
     constructor(props){
