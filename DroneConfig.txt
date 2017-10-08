@@ -1,6 +1,6 @@
 {
   "UseCam": "No",
-  "Cntrl": "Navio",
+  "Cntrl": "APM",
   "Telemetry_Type": "gpio",
   "GCS_address": "10.0.0.200",
   "PORT": "14550",
@@ -18,7 +18,7 @@
   "UDP_PORT": "9000",
   "BITRATE": "1500000",
   "FPS": "20",
-  "UseDns": "Yes",
+  "UseDns": "No",
   "Username": "",
   "Password": "",
   "Alias": "",

@@ -12,25 +12,25 @@ Basefolder="$(cd ../; pwd)"
 # WEB SERVICES INSTALLATION
 echo "Installing Node & NPM"
    if is_pione; then
-    
+      echo "Pi 1"
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.6/install.sh | bash
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
       nvm install node
 
    elif is_pione_w; then
-
+      echo "Pi0w"
       wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.31.6/install.sh | bash
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
       nvm install node
 
    elif is_pitwo; then
-
+      echo "Pi 2"
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
       sudo apt-get install -y nodejs 
    elif is_pithree; then
-
+      echo "Pi 3"
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
       sudo apt-get install -y nodejs 
    else
