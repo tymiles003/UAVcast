@@ -20,6 +20,7 @@ module.exports = {
         try {
             let _json = JSON.stringify(config, null, 2)
             let date = new Date()
+            console.log(_json);
             fs.writeFile('../DroneConfig.txt', _json, function (err) {
                 return clb(true)
             });
