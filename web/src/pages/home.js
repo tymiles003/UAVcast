@@ -84,9 +84,6 @@ class Home extends Component {
     render() {
         return (
             <div>
-            
-
-
                 <h1>UAVcast web portal {this.state.active === true ? <span>--- <span className="text-success">Running</span></span> : this.state.starting === true ? <span>&nbsp;&nbsp;<CircularProgress size={40}/></span> :''}</h1>
                 <div className="panel-group">
                     <div className="panel panel-primary panel-with">
