@@ -41,6 +41,13 @@ set_dtoverlay_pi_three
 #set config for cmdline.txt and config.txt
 do_serial
 
+# # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
+sudo apt-get update -y --force-yes
+
+# Get the required libraries
+sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
+                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+
 #Args Options  web
 args=$1
                                    
@@ -57,12 +64,6 @@ case $argsToLower in
 esac
 
 ################# COMPILE UAV software ############
-# # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
-sudo apt-get update -y --force-yes
-
-# Get the required libraries
-sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
 
 #UAVcast dependencies
 mkdir $Basefolder/packages
