@@ -30,23 +30,35 @@ esac
 }
 
 function StartBroadcast {
-ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && echo Seems like RPI is connected to Internet, all ok. || echo Seems like your RPI does not have internet connection. Trying to continue anyway.
-		   	pidof inadyn >/dev/null
-				 if [[ $? -ne 0 ]] ; then 
-				 inadyn
-				 fi
-			case $(jq -r '.Cntrl' $CONF) in
-				"APM")
-			       	Telemetry_Type
-					gstreamer
-			    ;;
-			    "Navio")
-					 gstreamer
-					 ArduPilot
-			   	;;
-			esac
-	
- }
+while true
+do
+sudo ping -c 1 google.com
+	if [[ $? == 0 ]];
+			then
+				echo "Network available."
+				ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null && echo Seems like RPI is connected to Internet, all ok. || echo Seems like your RPI does not have internet connection. Trying to continue anyway.
+							pidof inadyn >/dev/null
+								if [[ $? -ne 0 ]] ; then 
+								inadyn
+								fi
+							case $(jq -r '.Cntrl' $CONF) in
+								"APM")
+									Telemetry_Type
+									gstreamer
+								;;
+								"Navio")
+									gstreamer
+									ArduPilot
+								;;
+							esac
+				break;
+			else
+		echo "Network is not available, waiting.."
+	sleep 5
+	fi
+done
+echo "If you see this message, then Network was successfully loaded."
+}
 
 function Telemetry_Type {
 if [ $(jq -r '.Telemetry_Type' $CONF) == "ttl" ]; then
