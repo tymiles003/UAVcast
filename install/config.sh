@@ -129,7 +129,7 @@ get_serial_hw() {
   fi
 }
 set_dtoverlay_pi_three(){
-  if [ is_pithree ] || [ is_pione_w ] then
+  if [ is_pithree ] || [ is_pione_w ] ; then
       # echo "Adding 'dtoverlay=pi3-miniuart-bt' to /boot/config.txt (RPi3)"
       systemctl disable hciuart &>/dev/null
       if ! grep -q "dtoverlay=pi3-miniuart-bt" $CONFIG; then
