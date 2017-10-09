@@ -21,15 +21,17 @@ FILE=$DIR/"systemd/UAVcast.service"
 /bin/cat <<EOM >$FILE
 [Unit]
 Description=UAVcast Drone Software
-After=network.target
+Requires=network.target
+After=network-online.target
 [Service]
 WorkingDirectory=/home/pi/UAVcast
 Type=forking
 GuessMainPID=no
 ExecStart=/bin/bash DroneStart.sh start
 KillMode=control-group
+Restart=on-failure
 [Install]
-WantedBy=uavcast-user.target
+WantedBy=multi-user.target
 EOM
 
 cp $FILE /lib/systemd/system/
@@ -42,7 +44,7 @@ set_dtoverlay_pi_three
 do_serial
 
 # # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
-sudo apt-get update -y --force-yes
+sudo apt-get update -y 
 
 # Get the required libraries
 sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
