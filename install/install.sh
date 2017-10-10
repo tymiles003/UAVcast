@@ -74,7 +74,7 @@ cd $Basefolder/packages
 
 git clone https://github.com/UAVmatrix/libubox.git libubox
 git clone git://nbd.name/uqmi.git
-git clone https://github.com/cmavnode.git
+git clone https://github.com/UAVmatrix/cmavnode.git
 
 wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
 tar -xvf json-c-0.12.tar.gz
