@@ -50,7 +50,7 @@ sudo apt-get update -y
 # Get the required libraries
 sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
                                     cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
-                                    libboost-all-dev cmake libconfig++-dev libreadline-dev
+                                    libboost-all-dev libconfig++-dev libreadline-dev
 
 #Args Options  web
 args=$1
