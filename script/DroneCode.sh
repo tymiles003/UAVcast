@@ -46,7 +46,11 @@ sudo ping -c 1 google.com
 									Telemetry_Type
 									gstreamer
 								;;
-								"Navio")
+								"Navio+")
+									gstreamer
+									ArduPilot
+								;;
+								"Navio2")
 									gstreamer
 									ArduPilot
 								;;

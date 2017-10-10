@@ -12,6 +12,7 @@ class Home extends Component {
             active: false,
             enabled: false,
             config: {
+                Cntrl:'',
                 starting: false,
                 GCS_address: '',
                 PORT: '',
@@ -76,8 +77,8 @@ class Home extends Component {
     }
     hasErrors(){
         if(((this.state.config.UseCam === 'Yes' && !this.state.software.gStreamer) ||
-            (this.state.config.Telemetry_Type === 'gpio' && !this.state.software.ser2net) ||
-            (this.state.config.Telemetry_Type === 'ttl' && !this.state.software.udp_redirect) ||
+            (this.state.config.Telemetry_Type === 'gpio' && this.state.config.Cntrl === 'APM' && !this.state.software.ser2net) ||
+            (this.state.config.Telemetry_Type === 'ttl' && this.state.config.Cntrl === 'APM' && !this.state.software.udp_redirect) ||
             (this.state.config.UseDns === 'Yes' && !this.state.software.inadyn)) 
             && this.state.active) return true
     }
@@ -96,7 +97,8 @@ class Home extends Component {
                     {(this.state.enabled || this.state.active) && <span><h2>Hey, Cool!!</h2>
                         <h4>Seems like you have successfully started / Enabled UAVcast, and if all parameters are set correctly you should now be able to retrive telemetry or video on your Ground Control Station.<br /><br />
                             Telemetry Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.PORT}</span> {this.state.destination.telem_portIsOpen === true ? <span className="text-success">(port is open) </span>:''} <br /></h4>
-                        {this.state.config.UseCam === 'Yes' ? <h4>Video Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.UDP_PORT}</span></h4> : ''}  </span>}<br />
+                            {this.state.config.secondary_tele === 'Yes' ? <h4>Secondary Telemetry Target: <span className="text-success">{this.state.config.sec_ip_address}</span> on port: <span className="text-success">{this.state.config.sec_port}</span></h4> : ''} <br />
+                            {this.state.config.UseCam === 'Yes' ? <h4>Video Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.UDP_PORT}</span></h4> : ''}  </span>}<br />                        
 
                 </div>
                 <Errors hasError={this.hasErrors()} config={this.state.config} software={this.state.software} active={this.state.active} />

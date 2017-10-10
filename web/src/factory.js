@@ -4,6 +4,7 @@ const { spawn } = require('child_process');
 const child = spawn('pwd');
 const shell = require('shelljs');
 const fs = require('fs');
+const path = require("path");
 // var Promise = require('bluebird')
 module.exports = {
     getUpTime: function (clb) {
@@ -215,6 +216,34 @@ module.exports = {
                 (error, stdout, stderr) => {
                     return sta('Disabled')
                 });
+        } catch (ex) {
+            console.log(`exec error: ${ex.message}`);
+        }
+    },
+    checkIfAPMbinaryExsist: function (fcType, file, sta) {
+        try {
+            var naviofld = path.join(__dirname, '..', '..', 'emlid', fcType);
+            const child = spawn('test', ['-f', naviofld + '/' + 'ardu' + file.toLowerCase()], { detached: true, shell: true });
+            child.on('exit', (code) => {
+               if (code === 0) return sta(true)
+               return sta(false)
+            });
+        } catch (ex) {
+            console.log(`exec error: ${ex.message}`);
+        }
+    },
+    installBinary: function (fcType, file, sta) {
+        try {
+            let planeCopterRover = (file === 'Rover' || file === 'Plane') ?  file : file.substring(0, file.indexOf('-'))
+            let binaryFileName = 'ardu' + file.toLowerCase()
+            let frameType = (planeCopterRover === 'Plane' || planeCopterRover === 'Rover') ? fcType.toLowerCase() : fcType.toLowerCase() + '-' +  file.substring(file.indexOf('-')+1)
+            const child = spawn('wget', ['-P', path.join(__dirname, '..', '..', 'emlid', fcType),'http://firmware.eu.ardupilot.org/'+ planeCopterRover +'/stable/'+ frameType + '/' + binaryFileName], { detached: true, shell: true });
+
+            shell.exec('chmod 777 -R ' + path.join(__dirname, '..', '..', 'emlid/'))
+            child.on('exit', (code) => {
+                if (code === 0) return sta(true)
+                return sta(false)
+            });
         } catch (ex) {
             console.log(`exec error: ${ex.message}`);
         }

@@ -4,8 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {orange500} from 'material-ui/styles/colors';
-import {SAVE_DRONECONFIG, READ_DRONECONFIG} from '../Events.js'
+import {SAVE_DRONECONFIG, READ_DRONECONFIG, CHECK_BINARY_EXSIST, INSTALL_BINARY} from '../Events.js'
 import Toastr from 'toastr';
+import ApmDialog from '../modules/apmDialog'
 const style = {
     margin: 12,
     TextField:{
@@ -16,8 +17,9 @@ const style = {
       },
   }
 const CntrlList = [
-    <MenuItem key={1} value={"Navio"} primaryText="Emlid Navio" />,
-    <MenuItem key={2} value={"APM"} primaryText="ArduPilot version x" />,
+    <MenuItem key={1} value={"APM"} primaryText="ArduPilot version x" />,
+    <MenuItem key={2} value={"Navio"} primaryText="Navio+" />,
+    <MenuItem key={3} value={"Navio2"} primaryText="Navio2" />
   ];
 const TelemList = [
     <MenuItem key={1} value={"gpio"} primaryText="GPIO TX / RX pins" />,
@@ -29,15 +31,15 @@ const YesNo = [
     <MenuItem key={2} value={"No"} primaryText="No" />,
   ];
 const APM_type = [
-    <MenuItem key={1} value={"ardurover"} primaryText="APM rover2" />,
-    <MenuItem key={2} value={"arduplane"} primaryText="ArduPlane" />,
-    <MenuItem key={3} value={"arducopter-quad"} primaryText="ArduCopter-quad" />,
-    <MenuItem key={4} value={"arducopter-tri"} primaryText="ArduCopter-tri" />,
-    <MenuItem key={5} value={"arducopter-y6"} primaryText="ArduCopter-y6" />,
-    <MenuItem key={6} value={"arducopter-octa"} primaryText="ArduCopter-octa" />,
-    <MenuItem key={7} value={"arducopter-octa-quad"} primaryText="ArduCopter-octa-quad" />,
-    <MenuItem key={8} value={"arducopter-heli"} primaryText="ArduCopter-heli" />,
-    <MenuItem key={9} value={"arducopter-single"} primaryText="ArduCopter-single" />,
+    <MenuItem key={2} value={"Plane"} primaryText="ArduPlane" />,
+    <MenuItem key={1} value={"Rover"} primaryText="ArduRover" />,
+    <MenuItem key={3} value={"Copter-quad"} primaryText="ArduCopter-quad" />,
+    <MenuItem key={4} value={"Copter-tri"} primaryText="ArduCopter-tri" />,
+    <MenuItem key={5} value={"Copter-y6"} primaryText="ArduCopter-y6" />,
+    <MenuItem key={6} value={"Copter-octa"} primaryText="ArduCopter-octa" />,
+    <MenuItem key={7} value={"Copter-octa-quad"} primaryText="ArduCopter-octa-quad" />,
+    <MenuItem key={8} value={"Copter-heli"} primaryText="ArduCopter-heli" />,
+    // <MenuItem key={9} value={"Copter-single"} primaryText="ArduCopter-single" />,
   ];
 class Config extends Component {
     constructor(props){
@@ -48,13 +50,16 @@ class Config extends Component {
                 Cntrl:'',
                 Telemetry_Type:'',
                 GCS_address:'',
-            
                 PORT:'',
                 GSM_Connect:'',
                 APM_type:'',
                 secondary_tele:'',
                 sec_ip_address:'',
                 sec_port:''
+            },
+            ApmDownload:{
+                ApmModal:false,
+                frame:''
             }
         }
         this.configs = {}
@@ -62,11 +67,33 @@ class Config extends Component {
     componentWillMount(){
         this.initialvalues()
     }
+    checkIfBinaryExsist(e,i,value){
+        this.state.socket.emit(CHECK_BINARY_EXSIST, this.state.config.Cntrl, value, (status)=>{
+            if(!status) {
+               this.setState({ApmDownload:{ApmModal:true, frame:value}})
+               
+            }
+        })
+    }
+    ApmBinaryDownload(){
+     this.setState({ApmDownload:{ApmModal:false}})
+     this.state.socket.emit(INSTALL_BINARY, this.state.config.Cntrl, this.state.ApmDownload.frame, (call_status)=>{
+                    if(call_status){
+                        return Toastr.success('APM Binary successfully downloaded')
+                    } else{
+                        return Toastr.error('Ops! Something went wrong. Check your Internet Connnection')
+                    }
+                    
+                })
+    }
     handleChange(e,i,value) {
         if(e.target.value == null){
-            this.configs[i] = value
+            this.configs[i] = value 
         } else {
-            this.configs[e.target.name] = e.target.value
+            this.configs[e.target.name] = e.target.value      
+        }
+        if(value === 'Navio' || value === 'Navio2'){
+            this.checkIfBinaryExsist(e,i,value)
         }
         this.setState({config:this.configs});
     }
@@ -100,14 +127,59 @@ class Config extends Component {
                 <SelectField
                     name="Cntrl"
                     value={this.state.config.Cntrl}
-                    onChange={(e,i,v) => this.handleChange(e, 'Cntrl', v)}
+                    onChange={(e,i,v) => {
+                        this.handleChange(e, 'Cntrl', v)
+                        }
+                    }
                     floatingLabelText="Flight Controller Type"
                     floatingLabelStyle={style.floatingLabelStyle}
                     >
                     {CntrlList}
                 </SelectField>
                 <br /><br />
-                <h5><b>Choose RPI telemetry connection.<br />
+            
+               {(this.state.config.Cntrl === 'Navio' || this.state.config.Cntrl === 'Navio2') ? <span>
+                <SelectField
+                    name="APM_type"
+                    value={this.state.config.APM_type}
+                    onChange={(e,i,v) => {
+                        this.handleChange(e, 'APM_type', v);
+                        this.checkIfBinaryExsist(e, i, v)
+                        }
+                    }
+                    floatingLabelText="Ardupilot Model"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    >
+                    {APM_type}
+                </SelectField>
+                <br /><br />
+                <SelectField
+                    name="secondary_tele"
+                    value={this.state.config.secondary_tele}
+                    onChange={(e,i,v) => this.handleChange(e, 'secondary_tele', v)}
+                    floatingLabelText="Use Secondary Telemetry"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    >
+                    {YesNo}
+                </SelectField>
+                <br /><br />
+         {this.state.config.secondary_tele === 'Yes' && <span><TextField
+                    name="sec_ip_address"
+                    floatingLabelText="sec_ip_address"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    value={this.state.config.sec_ip_address}
+                    hintText="sec_ip_address"
+                    onChange={this.handleChange.bind(this)}
+                /><br /><br />
+                <TextField
+                    name="sec_port"
+                    floatingLabelText="sec_port"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    value={this.state.config.sec_port}
+                    hintText="Default: 14550"
+                    onChange={this.handleChange.bind(this)}
+                /></span>}</span> :  
+                <span><h5><b>Choose RPI telemetry connection.<br />
                 NOTE! GPIO uses pin 8_tx & 10_rx.</b></h5>
                 <SelectField
                     name="Telemetry_Type"
@@ -118,47 +190,10 @@ class Config extends Component {
                     >
                     {TelemList}
                 </SelectField>
-                <br /><br />
-               {this.state.config.Cntrl === 'Navio' && <span><h5>NAVIO CONFIG ONLY</h5>
-                <h5>Use secondary telemetry?</h5>
-                <SelectField
-                    name="APM_type"
-                    value={this.state.config.APM_type}
-                    onChange={(e,i,v) => this.handleChange(e, 'APM_type', v)}
-                    floatingLabelText="Ardupilot Model"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    >
-                    {APM_type}
-                </SelectField>
-                <br />
-                <SelectField
-                    name="secondary_tele"
-                    value={this.state.config.secondary_tele}
-                    onChange={(e,i,v) => this.handleChange(e, 'secondary_tele', v)}
-                    floatingLabelText="Use Secondary Telemetry"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    >
-                    {YesNo}
-                </SelectField>
-                <br />
-                <TextField
-                    name="sec_ip_address"
-                    floatingLabelText="sec_ip_address"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.sec_ip_address}
-                    hintText="sec_ip_address"
-                    onChange={this.handleChange.bind(this)}
-                /><br />
-                <TextField
-                    name="sec_port"
-                    floatingLabelText="sec_port"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.sec_port}
-                    hintText="Default: 14550"
-                    onChange={this.handleChange.bind(this)}
-                /></span>}<br /><br /><br />
+                <br /><br /></span>}<br /><br /><br />
                 <RaisedButton type="submit" label="Save parameters" primary={true} style={style} />
                 </form>
+                <ApmDialog download={() => this.ApmBinaryDownload()} binary={this.state.config.APM_type} open={this.state.ApmDownload.ApmModal} close={()=> this.setState({ApmDownload:{ApmModal:false}})} />
             </div>
         );
     }

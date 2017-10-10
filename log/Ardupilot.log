@@ -1,6 +1,7 @@
+/home/pi/UAVcast/script/../emlid/Navio2/./arduplane
 10.0.0.200
-Interrupted: ContinuedInterrupted: Terminated
-
-Interrupted: TerminatedInterrupted: Continued
-
+Using Secondary telemetry 10.0.0.161 : 14550
 Raspberry Pi 2/3 with BCM2709!
+MS5611 found on bus 1 address 0x77
+MS4525: no sensor found
+MPU: temp reset 5610 0
