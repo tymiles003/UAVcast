@@ -24,6 +24,7 @@ class Home extends Component {
             software:{
                 inadyn:false,
                 ser2net:false,
+                mavproxy:false,
                 gStreamer:false,
                 udp_redirect:false
             },
@@ -56,7 +57,7 @@ class Home extends Component {
     }
     UAVcastStatus() {
         this.state.socket.emit(UAVCAST_STATUS, (status) => {
-            this.setState({ active: status.active, enabled: status.enabled, starting:!status.active && this.state.starting, software:{udp_redirect:status.udp_redirect, ser2net:status.ser2net, gStreamer:status.gStreamer, inadyn:status.inadyn} })
+            this.setState({ active: status.active, enabled: status.enabled, starting:!status.active && this.state.starting, software:{udp_redirect:status.udp_redirect, ser2net:status.ser2net,mavproxy:status.mavproxy, gStreamer:status.gStreamer, inadyn:status.inadyn} })
         })
      
     }
@@ -77,7 +78,7 @@ class Home extends Component {
     }
     hasErrors(){
         if(((this.state.config.UseCam === 'Yes' && !this.state.software.gStreamer) ||
-            (this.state.config.Telemetry_Type === 'gpio' && this.state.config.Cntrl === 'APM' && !this.state.software.ser2net) ||
+            (this.state.config.Telemetry_Type === 'gpio' && this.state.config.Cntrl === 'APM' && !this.state.software.mavproxy) ||
             (this.state.config.Telemetry_Type === 'ttl' && this.state.config.Cntrl === 'APM' && !this.state.software.udp_redirect) ||
             (this.state.config.UseDns === 'Yes' && !this.state.software.inadyn)) 
             && this.state.active) return true
@@ -91,13 +92,12 @@ class Home extends Component {
                         <div className="panel-heading">Start and stop UAVcast</div>
                         <div className="panel-body"> <UavCastbutton starting={this.state.starting} enabled={this.state.enabled} active={this.state.active} onSubmit={(v) => this.UAVcastHandler(v)} /></div>
                     </div>
-
                 </div>
                 <div>
                     {(this.state.enabled || this.state.active) && <span><h2>Hey, Cool!!</h2>
                         <h4>Seems like you have successfully started / Enabled UAVcast, and if all parameters are set correctly you should now be able to retrive telemetry or video on your Ground Control Station.<br /><br />
                             Telemetry Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.PORT}</span> {this.state.destination.telem_portIsOpen === true ? <span className="text-success">(port is open) </span>:''} <br /></h4>
-                            {this.state.config.secondary_tele === 'Yes' ? <h4>Secondary Telemetry Target: <span className="text-success">{this.state.config.sec_ip_address}</span> on port: <span className="text-success">{this.state.config.sec_port}</span></h4> : ''} <br />
+                            {this.state.config.secondary_tele === 'Yes' && <h4>Secondary Telemetry Target: <span className="text-success">{this.state.config.sec_ip_address}</span> on port: <span className="text-success">{this.state.config.sec_port}</span></h4>} <br />
                             {this.state.config.UseCam === 'Yes' ? <h4>Video Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.UDP_PORT}</span></h4> : ''}  </span>}<br />                        
 
                 </div>

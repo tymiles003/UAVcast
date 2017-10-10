@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import {orange500} from 'material-ui/styles/colors';
 import {SAVE_DRONECONFIG, READ_DRONECONFIG} from '../Events.js'
 import Toastr from 'toastr';
@@ -13,6 +15,10 @@ const style = {
         color: orange500,
       },
   }
+  const YesNo = [
+    <MenuItem key={1} value={"Yes"} primaryText="Yes" />,
+    <MenuItem key={2} value={"No"} primaryText="No" />,
+  ];
 class Gcs extends Component {
     constructor(props){
         super(props)
@@ -21,6 +27,7 @@ class Gcs extends Component {
             config:{
                 GCS_address:'',
                 PORT:'',
+                secondary_tele:''
             }
         }
         this.configs = {}
@@ -79,7 +86,33 @@ class Gcs extends Component {
                     value={this.state.config.PORT}
                     hintText="PORT"
                     onChange={this.handleChange.bind(this)}
-                /><br /><br /><br /><br />
+                /><br /><br />
+                <SelectField
+                    name="secondary_tele"
+                    value={this.state.config.secondary_tele}
+                    onChange={(e,i,v) => this.handleChange(e, 'secondary_tele', v)}
+                    floatingLabelText="Use Secondary Telemetry"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    >
+                    {YesNo}
+                </SelectField>
+                <br /><br />
+                {this.state.config.secondary_tele === 'Yes' && <span><TextField
+                    name="sec_ip_address"
+                    floatingLabelText="sec_ip_address"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    value={this.state.config.sec_ip_address}
+                    hintText="sec_ip_address"
+                    onChange={this.handleChange.bind(this)}
+                /><br /><br />
+                <TextField
+                    name="sec_port"
+                    floatingLabelText="sec_port"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    value={this.state.config.sec_port}
+                    hintText="Default: 14550"
+                    onChange={this.handleChange.bind(this)}
+                /></span>}<br /><br />
                 <RaisedButton type="submit" label="Save parameters" primary={true} style={style} />
                 </form>
             </div>
