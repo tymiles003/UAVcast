@@ -43,8 +43,8 @@ module.exports = {
         }
     },
     StatusUAVcast: function (sta) {
-        var status = { active: false, enabled: false, ser2net: false, gStreamer: false, inadyn:false, udp_redirect:false }
-        let sta1 = null, sta2 = null, sta3 = null, sta4 = null, sta5 = false, sta6 = false
+        var status = { active: false, enabled: false, ser2net: false, mavproxy:false, gStreamer: false, inadyn:false, udp_redirect:false }
+        let sta1 = null, sta2 = null, sta3 = null, sta4 = null, sta5 = false, sta6 = false, sta7=false
         try {
             sta1 = new Promise((resolve, reject) => {
                 const child = spawn('systemctl is-active UAVcast', { detached: true, shell: true });
@@ -87,6 +87,19 @@ module.exports = {
                 });
             })
             sta4 = new Promise((resolve, reject) => {
+                const child = spawn('/bin/pidof', ['-x', 'cmavnode'], { detached: true, shell: true });
+                child.stdout.on('data', (data) => {
+                    status = Object.assign(status, { mavproxy: true })
+                    resolve()
+                });
+                child.stderr.on('data', (data) => {
+                    console.log(data.toString('utf8'));
+                });
+                child.on('close', (data) => {
+                    resolve()
+                });
+            })
+            sta5 = new Promise((resolve, reject) => {
                 const child = spawn('/bin/pidof', ['-x', 'inadyn'], { detached: true, shell: true });
                 child.stdout.on('data', (data) => {
                     status = Object.assign(status, { inadyn: true })
@@ -99,7 +112,7 @@ module.exports = {
                     resolve()
                 });
             })
-            sta5 = new Promise((resolve, reject) => {
+            sta6 = new Promise((resolve, reject) => {
                 const child = spawn('/bin/pidof', ['-x', 'gst-launch-1.0'], { detached: true, shell: true });
                 child.stdout.on('data', (data) => {
                     status = Object.assign(status, { gStreamer: true })
@@ -112,7 +125,7 @@ module.exports = {
                     resolve()
                 });
             })
-            sta6 = new Promise((resolve, reject) => {
+            sta7 = new Promise((resolve, reject) => {
                 const child = spawn('/bin/pidof', ['-x', 'udp_redirect'], { detached: true, shell: true });
                 child.stdout.on('data', (data) => {
                     status = Object.assign(status, { udp_redirect: true })
@@ -130,7 +143,7 @@ module.exports = {
             console.log(`exec error: ${ex.message}`);
         }
         finally {
-            Promise.all([sta1, sta2, sta3, sta4, sta5, sta6]).then(v => {
+            Promise.all([sta1, sta2, sta3, sta4, sta5, sta6, sta7]).then(v => {
                 return sta(status)
             });
         }

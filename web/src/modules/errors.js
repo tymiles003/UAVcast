@@ -15,10 +15,9 @@ class Errors extends Component {
                         
                             {this.props.config.Telemetry_Type === 'gpio' && !this.props.software.ser2net && this.props.active && 
                             <div className="panel-body">
-                            <span><h4><span className="text-danger">Error -> <b>ser2net</b> not running!!</span></h4><b>ser2net</b> should be running according to your configuration.<br /> 
+                            <span><h4><span className="text-danger">Error -> <b>MavProxy</b> not running!!</span></h4><b>MavProxy</b> should be running according to your configuration.<br /> 
                              you have choosen to use GPIO TX(Pin8) & RX(Pin10) as telemetry connection.</span>
                             </div>}   
-                        
                         
                             {this.props.config.UseDns === 'Yes' && !this.props.software.inadyn && this.props.active && 
                             <div className="panel-body">

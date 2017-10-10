@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
@@ -25,11 +24,6 @@ const TelemList = [
     <MenuItem key={1} value={"gpio"} primaryText="GPIO TX / RX pins" />,
     <MenuItem key={2} value={"ttl"} primaryText="TTL to Ethernet adapter" />,
   ];
-
-const YesNo = [
-    <MenuItem key={1} value={"Yes"} primaryText="Yes" />,
-    <MenuItem key={2} value={"No"} primaryText="No" />,
-  ];
 const APM_type = [
     <MenuItem key={2} value={"Plane"} primaryText="ArduPlane" />,
     <MenuItem key={1} value={"Rover"} primaryText="ArduRover" />,
@@ -53,7 +47,6 @@ class Config extends Component {
                 PORT:'',
                 GSM_Connect:'',
                 APM_type:'',
-                secondary_tele:'',
                 sec_ip_address:'',
                 sec_port:''
             },
@@ -152,33 +145,7 @@ class Config extends Component {
                     >
                     {APM_type}
                 </SelectField>
-                <br /><br />
-                <SelectField
-                    name="secondary_tele"
-                    value={this.state.config.secondary_tele}
-                    onChange={(e,i,v) => this.handleChange(e, 'secondary_tele', v)}
-                    floatingLabelText="Use Secondary Telemetry"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    >
-                    {YesNo}
-                </SelectField>
-                <br /><br />
-         {this.state.config.secondary_tele === 'Yes' && <span><TextField
-                    name="sec_ip_address"
-                    floatingLabelText="sec_ip_address"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.sec_ip_address}
-                    hintText="sec_ip_address"
-                    onChange={this.handleChange.bind(this)}
-                /><br /><br />
-                <TextField
-                    name="sec_port"
-                    floatingLabelText="sec_port"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.sec_port}
-                    hintText="Default: 14550"
-                    onChange={this.handleChange.bind(this)}
-                /></span>}</span> :  
+                <br /><br /></span> :  
                 <span><h5><b>Choose RPI telemetry connection.<br />
                 NOTE! GPIO uses pin 8_tx & 10_rx.</b></h5>
                 <SelectField

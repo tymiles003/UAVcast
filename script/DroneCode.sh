@@ -82,25 +82,42 @@ pidof udp_redirect >/dev/null
 		else
 	    echo "Another udp_redirect process already running"
         fi
+# elif [ $(jq -r '.Telemetry_Type' $CONF) == "gpio" ]; then
+# 		pidof ser2net >/dev/null
+#     	if [[ $? -ne 0 ]] ; then  
+# 			sudo $DIR/./ser2net.sh > $DIR/../log/BroadCast-GPIO.log 2>&1 & 
+# 			sleep 0.3
+# 			pidof ser2net >/dev/null
+# 			sleep 0.3
+# 				if [[ $? -eq 0 ]] ; then 
+# 					echo 'ser2net script started'
+# 					return 1
+# 					else
+# 					echo 'Another ser2net process already running'
+# 				fi
+# 				return 0
+# 		else
+# 	    echo "Another ser2net process already running"
+#        fi
+# fi
 elif [ $(jq -r '.Telemetry_Type' $CONF) == "gpio" ]; then
-		pidof ser2net >/dev/null
+		pidof cmavnode >/dev/null
     	if [[ $? -ne 0 ]] ; then  
-			sudo $DIR/./ser2net.sh > $DIR/../log/BroadCast-GPIO.log 2>&1 & 
+			sudo $DIR/./cmavnode.sh > $DIR/../log/BroadCast-GPIO.log 2>&1 & 
 			sleep 0.3
-			pidof ser2net >/dev/null
+			pidof cmavnode >/dev/null
 			sleep 0.3
 				if [[ $? -eq 0 ]] ; then 
-					echo 'ser2net script started'
+					echo 'Serial streaming script started'
 					return 1
 					else
-					echo 'Another ser2net process already running'
+					echo 'Another mavproxy process already running'
 				fi
 				return 0
 		else
-	    echo "Another ser2net process already running"
+	    echo "Another mavproxy process already running"
        fi
 fi
-
 }
 function gstreamer {
 if [ $(jq -r '.UseCam' $CONF) == "Yes" ]; then

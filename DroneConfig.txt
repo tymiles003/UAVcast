@@ -1,6 +1,6 @@
 {
   "UseCam": "No",
-  "Cntrl": "Navio2",
+  "Cntrl": "APM",
   "Telemetry_Type": "gpio",
   "GCS_address": "10.0.0.200",
   "PORT": "14550",
@@ -27,7 +27,7 @@
   "wv_init2": "ATE1",
   "wv_init3": "AT+CGDCONT=1",
   "APM_type": "Plane",
-  "secondary_tele": "Yes",
+  "secondary_tele": "No",
   "sec_ip_address": "10.0.0.161",
   "sec_port": "14550"
 }

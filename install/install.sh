@@ -95,10 +95,18 @@ cd $Basefolder/packages/uqmi
 sudo cmake CMakeLists.txt
 sudo make install
 
-cd $Basefolder/packages/ser2net-3.4
-sudo autoreconf -f -i
-sudo ./configure && make
+#ser2net depreciated over cmavnode
+# cd $Basefolder/packages/ser2net-3.4
+# sudo autoreconf -f -i
+# sudo ./configure && make
+# sudo make install
+# sudo make clean
+
+cd $Basefolder/packages/cmavnode
+sudo git submodule update --init
+sudo mkdir build && cd build
+cmake ..
 sudo make install
-sudo make clean
+sudo ln -s cmavnode /usr/bin/cmavnode
 
 printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"
