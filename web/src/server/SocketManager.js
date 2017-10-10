@@ -1,5 +1,5 @@
 const Factory = require('../factory')
-const {GET_UPTIME, SAVE_DRONECONFIG, READ_DRONECONFIG, UAVCAST_STATUS, START_UAVCAST, STOP_UAVCAST,AUTOSTART_UAVCAST, DISABLE_UAVCAST, DESTINATION_INFORMATION} = require('../Events')
+const {GET_UPTIME, SAVE_DRONECONFIG, READ_DRONECONFIG, UAVCAST_STATUS, START_UAVCAST, STOP_UAVCAST,AUTOSTART_UAVCAST, DISABLE_UAVCAST, DESTINATION_INFORMATION, CHECK_BINARY_EXSIST, INSTALL_BINARY} = require('../Events')
 const io = require('./index.js').io
 
 module.exports = (socket) => {
@@ -45,6 +45,16 @@ module.exports = (socket) => {
     })
     socket.on(DESTINATION_INFORMATION, (ip, obj, val)=>{
         Factory.destInformation(ip, obj, (sta)=>{
+            return val(sta)
+        })
+    })
+    socket.on(CHECK_BINARY_EXSIST, (fcType, file, val)=>{
+        Factory.checkIfAPMbinaryExsist(fcType ,file,  (sta)=>{
+            return val(sta)
+        })
+    })
+    socket.on(INSTALL_BINARY, (fcType, file, val)=>{
+        Factory.installBinary(fcType, file,  (sta)=>{
             return val(sta)
         })
     })

@@ -8,6 +8,7 @@ web/node_modules
 
 # production
 /packages
+/navio
 
 # misc
 .DS_Store
