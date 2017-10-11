@@ -110,6 +110,6 @@ sudo make install
 # cmake ..
 # sudo make install
 
-sudo ln -s cmavnode /usr/bin/cmavnode
+sudo ln -s $Basefolder/usr/bin/cmavnode /usr/bin/cmavnode
 
 printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"
