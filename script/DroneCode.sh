@@ -43,8 +43,8 @@ sudo ping -c 1 google.com
 								fi
 							case $(jq -r '.Cntrl' $CONF) in
 								"APM")
-									Telemetry_Type
 									gstreamer
+									Telemetry_Type
 								;;
 								"Navio+")
 									gstreamer
@@ -103,7 +103,7 @@ pidof udp_redirect >/dev/null
 elif [ $(jq -r '.Telemetry_Type' $CONF) == "gpio" ]; then
 		pidof cmavnode >/dev/null
     	if [[ $? -ne 0 ]] ; then  
-			sudo $DIR/./cmavnode.sh > $DIR/../log/BroadCast-GPIO.log 2>&1 & 
+			sudo $DIR/./cmavnode.sh > $DIR/../log/BroadCast-GPIO.log 2>&1 &
 			sleep 0.3
 			pidof cmavnode >/dev/null
 			sleep 0.3
@@ -123,7 +123,7 @@ function gstreamer {
 if [ $(jq -r '.UseCam' $CONF) == "Yes" ]; then
 pidof gst-launch-1.0 >/dev/null
 	if [[ $? -ne 0 ]] ; then 
-		sudo $DIR/./camera.sh > $DIR/../log/gstreamer.log 2>&1 & 
+		sudo $DIR/./camera.sh > $DIR/../log/gstreamer.log 2>&1 &
 		sleep 5
 		pidof gst-launch-1.0 >/dev/null
 			if [[ $? -eq 0 ]] ; then

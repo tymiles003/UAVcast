@@ -6,6 +6,7 @@ import {orange500} from 'material-ui/styles/colors';
 import {SAVE_DRONECONFIG, READ_DRONECONFIG, CHECK_BINARY_EXSIST, INSTALL_BINARY} from '../Events.js'
 import Toastr from 'toastr';
 import ApmDialog from '../modules/apmDialog'
+import RaspImage from '../images/RaspberryPi_Pixhawk_wire.jpg'
 const style = {
     margin: 12,
     TextField:{
@@ -114,50 +115,57 @@ class Config extends Component {
             <div>
                 <h2>Flight Controller configuration</h2>
                 <form onSubmit={e => this.submitHandler(e)}>
-                <br /><br />
-                <h5><b>Choose your FlightController</b></h5>
-                
-                <SelectField
-                    name="Cntrl"
-                    value={this.state.config.Cntrl}
-                    onChange={(e,i,v) => {
-                        this.handleChange(e, 'Cntrl', v)
-                        }
-                    }
-                    floatingLabelText="Flight Controller Type"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    >
-                    {CntrlList}
-                </SelectField>
-                <br /><br />
-            
-               {(this.state.config.Cntrl === 'Navio' || this.state.config.Cntrl === 'Navio2') ? <span>
-                <SelectField
-                    name="APM_type"
-                    value={this.state.config.APM_type}
-                    onChange={(e,i,v) => {
-                        this.handleChange(e, 'APM_type', v);
-                        this.checkIfBinaryExsist(e, i, v)
-                        }
-                    }
-                    floatingLabelText="Ardupilot Model"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    >
-                    {APM_type}
-                </SelectField>
-                <br /><br /></span> :  
-                <span><h5><b>Choose RPI telemetry connection.<br />
-                NOTE! GPIO uses pin 8_tx & 10_rx.</b></h5>
-                <SelectField
-                    name="Telemetry_Type"
-                    value={this.state.config.Telemetry_Type}
-                    onChange={(e,i,v) => this.handleChange(e, 'Telemetry_Type', v)}
-                    floatingLabelText="Telemetry Connection"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    >
-                    {TelemList}
-                </SelectField>
-                <br /><br /></span>}<br /><br /><br />
+                <div className="row">
+                    <div className="col-6 col-md-6">
+                        <br /><br />
+                        <h5><b>Choose your FlightController</b></h5>             
+                        <SelectField
+                            name="Cntrl"
+                            value={this.state.config.Cntrl}
+                            onChange={(e,i,v) => {
+                                this.handleChange(e, 'Cntrl', v)
+                                }
+                            }
+                            floatingLabelText="Flight Controller Type"
+                            floatingLabelStyle={style.floatingLabelStyle}
+                            >
+                            {CntrlList}
+                        </SelectField>
+                        <br /><br />
+                    {(this.state.config.Cntrl === 'Navio' || this.state.config.Cntrl === 'Navio2') ? <span>
+                        <SelectField
+                            name="APM_type"
+                            value={this.state.config.APM_type}
+                            onChange={(e,i,v) => {
+                                this.handleChange(e, 'APM_type', v);
+                                this.checkIfBinaryExsist(e, i, v)
+                                }
+                            }
+                            floatingLabelText="Ardupilot Model"
+                            floatingLabelStyle={style.floatingLabelStyle}
+                            >
+                            {APM_type}
+                        </SelectField>
+                        <br /><br /></span> :  
+                        <span><h5><b>Choose RPI telemetry connection.<br />
+                        NOTE! GPIO uses pin 8_tx & 10_rx.</b></h5>
+                    
+                        <SelectField
+                            name="Telemetry_Type"
+                            value={this.state.config.Telemetry_Type}
+                            onChange={(e,i,v) => this.handleChange(e, 'Telemetry_Type', v)}
+                            floatingLabelText="Telemetry Connection"
+                            floatingLabelStyle={style.floatingLabelStyle}
+                            >
+                            {TelemList}
+                        </SelectField>
+                        <br /><br /></span>}
+                        </div>
+                            <div className="col-6 col-md-6">
+                                <img src={RaspImage} width="100%" />
+                        </div>
+                    </div>
+                <br /><br /><br />
                 <RaisedButton type="submit" label="Save parameters" primary={true} style={style} />
                 </form>
                 <ApmDialog download={() => this.ApmBinaryDownload()} binary={this.state.config.APM_type} open={this.state.ApmDownload.ApmModal} close={()=> this.setState({ApmDownload:{ApmModal:false}})} />

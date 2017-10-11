@@ -14,6 +14,7 @@ class Home extends Component {
             config: {
                 Cntrl:'',
                 starting: false,
+                disabling:false,
                 GCS_address: '',
                 PORT: '',
                 GSM_Connect: '',
@@ -86,16 +87,15 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>UAVcast web portal {this.state.active === true ? <span>--- <span className="text-success">Running</span></span> : this.state.starting === true ? <span>&nbsp;&nbsp;<CircularProgress size={40}/></span> :''}</h1>
-                <div className="panel-group">
-                    <div className="panel panel-primary panel-with">
-                        <div className="panel-heading">Start and stop UAVcast</div>
-                        <div className="panel-body"> <UavCastbutton starting={this.state.starting} enabled={this.state.enabled} active={this.state.active} onSubmit={(v) => this.UAVcastHandler(v)} /></div>
-                    </div>
-                </div>
+                <h1>UAVcast web portal {this.state.active === true ? <span> ( <span className="text-success">Running</span> )</span> : this.state.starting === true ? <span>&nbsp;&nbsp;<CircularProgress size={40}/></span> :''}</h1>
+                <h4>Simply set your configuration in the setup tab, and start casting.</h4>
+                <UavCastbutton starting={this.state.starting} enabled={this.state.enabled} active={this.state.active} onSubmit={(v) => this.UAVcastHandler(v)} />
                 <div>
-                    {(this.state.enabled || this.state.active) && <span><h2>Hey, Cool!!</h2>
-                        <h4>Seems like you have successfully started / Enabled UAVcast, and if all parameters are set correctly you should now be able to retrive telemetry or video on your Ground Control Station.<br /><br />
+                    {this.state.enabled && <span>
+                    <h4>UAVcast is enabled and will start automatically during reboot.</h4>
+                    </span>}
+                    {this.state.active && <span><h2>Hey, Cool!!</h2>
+                        <h4>UAVcast is currently running, and if all parameters are set correctly you should now be able to retrive telemetry or video on your Ground Control Station.<br /><br />
                             Telemetry Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.PORT}</span> {this.state.destination.telem_portIsOpen === true ? <span className="text-success">(port is open) </span>:''} <br /></h4>
                             {this.state.config.secondary_tele === 'Yes' && <h4>Secondary Telemetry Target: <span className="text-success">{this.state.config.sec_ip_address}</span> on port: <span className="text-success">{this.state.config.sec_port}</span></h4>} <br />
                             {this.state.config.UseCam === 'Yes' ? <h4>Video Target: <span className="text-success">{this.state.config.GCS_address}</span> on port: <span className="text-success">{this.state.config.UDP_PORT}</span></h4> : ''}  </span>}<br />                        
