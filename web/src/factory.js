@@ -250,10 +250,9 @@ module.exports = {
             let planeCopterRover = (file === 'Rover' || file === 'Plane') ?  file : file.substring(0, file.indexOf('-'))
             let binaryFileName = 'ardu' + file.toLowerCase()
             let frameType = (planeCopterRover === 'Plane' || planeCopterRover === 'Rover') ? fcType.toLowerCase() : fcType.toLowerCase() + '-' +  file.substring(file.indexOf('-')+1)
-            const child = spawn('wget', ['-P', path.join(__dirname, '..', '..', 'emlid', fcType),'http://firmware.eu.ardupilot.org/'+ planeCopterRover +'/stable/'+ frameType + '/' + binaryFileName], { detached: true, shell: true });
-
-            shell.exec('chmod 777 -R ' + path.join(__dirname, '..', '..', 'emlid/'))
+            const child = spawn('wget', ['-P', path.join(__dirname, '..', '..', 'emlid', fcType),'http://firmware.eu.ardupilot.org/'+ planeCopterRover +'/stable/'+ frameType + '/' + binaryFileName], { detached: true, shell: true });           
             child.on('exit', (code) => {
+                shell.exec('chmod 777 -R ' + path.join(__dirname, '..', '..', 'emlid/'))
                 if (code === 0) return sta(true)
                 return sta(false)
             });
