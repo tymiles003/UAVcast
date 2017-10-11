@@ -15,7 +15,7 @@ if [ ! -d "$Systemd" ]
 then
  mkdir systemd
 fi
-
+# Generate UAVcast.service file
 FILE=$DIR/"systemd/UAVcast.service"
 
 /bin/cat <<EOM >$FILE
@@ -35,16 +35,21 @@ Restart=on-failure
 WantedBy=network-online.target
 EOM
 
+# Copy generated UAVcast.service file to systemd
 cp $FILE /lib/systemd/system/
 sudo systemctl daemon-reload
-#sudo systemctl enable $FILE
+# sudo systemctl enable $FILE
 
-#If RPI 3, we need to remap the UART pins
+# If RPI 3, we need to remap the UART pins
 set_dtoverlay_pi_three
-#set config for cmdline.txt and config.txt
+
+# set config for cmdline.txt and config.txt
 do_serial
 
-# # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
+# This will ensure that all configured network devices are up and have an IP address assigned before boot continues.
+sudo systemctl enable systemd-networkd-wait-online.service
+
+# Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
 sudo apt-get update -y 
 
 # Get the required libraries
@@ -52,9 +57,8 @@ sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modes
                                     cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
 #                                   libboost-all-dev libconfig++-dev libreadline-dev
 
-#Args Options  web
-args=$1
-                                   
+#Args Options for installing web interface
+args=$1                           
 argsToLower=$(echo "$args" | tr '[:upper:]' '[:lower:]')
 case $argsToLower in
           "web")
@@ -68,7 +72,6 @@ case $argsToLower in
 esac
 
 ################# COMPILE UAV software ############
-
 #UAVcast dependencies
 mkdir $Basefolder/packages
 cd $Basefolder/packages
@@ -96,20 +99,19 @@ cd $Basefolder/packages/uqmi
 sudo cmake CMakeLists.txt
 sudo make install
 
-#ser2net depreciated over cmavnode
-# cd $Basefolder/packages/ser2net-3.4
-# sudo autoreconf -f -i
-# sudo ./configure && make
-# sudo make install
-# sudo make clean
+######################################
+# Using prebuildt binary in /usr/bin #
+# use code below to compile cmavnode #
+######################################
 
-#Using prebuildt binary in /usr/bin
-# cd $Basefolder/packages/cmavnode
+# cd $Basefolder/packages/cmavnode   
 # sudo git submodule update --init
 # sudo mkdir build && cd build
 # cmake ..
 # sudo make install
 
+# Create symlink to cmavnode
 sudo ln -s $Basefolder/usr/bin/cmavnode /usr/bin/cmavnode
 
+# Completed
 printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"
