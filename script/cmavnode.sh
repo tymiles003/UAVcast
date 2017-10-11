@@ -21,11 +21,11 @@ FILE="$DIR/./cmav.conf"
     baud=57600
 [audplink]
     type=udp
-    targetip=$(getIP $(jq -r '.GCS_address' $CONF)) 
+    targetip=uavmatrix.com
     targetport=$(jq -r '.PORT' $CONF)
 [audplink1]
     type=udp
-    targetip=$(getIP $(jq -r '.sec_ip_address' $CONF)) 
+    targetip=10.0.0.210
     targetport=$(jq -r '.sec_port' $CONF)
 EOM
 else
@@ -42,4 +42,4 @@ FILE="$DIR/./cmav.conf"
 EOM
 fi
 sleep 1
-sudo cmavnode -f $DIR/./cmav.conf > $DIR/../log/cmavnode.log &
+sudo cmavnode -f $DIR/./cmav.conf > $DIR/../log/cmavnode.log 2>&1

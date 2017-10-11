@@ -2,7 +2,7 @@
   "UseCam": "No",
   "Cntrl": "APM",
   "Telemetry_Type": "gpio",
-  "GCS_address": "10.0.0.200",
+  "GCS_address": "uavmatrix.com",
   "PORT": "14550",
   "GSM_Connect": "Ethernet",
   "DroneCheck": "No",
@@ -28,6 +28,6 @@
   "wv_init3": "AT+CGDCONT=1",
   "APM_type": "Plane",
   "secondary_tele": "No",
-  "sec_ip_address": "10.0.0.161",
+  "sec_ip_address": "uavmatrix.com",
   "sec_port": "14550"
 }
