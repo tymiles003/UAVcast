@@ -49,8 +49,8 @@ sudo apt-get update -y
 
 # Get the required libraries
 sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
-                                    libboost-all-dev libconfig++-dev libreadline-dev
+                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+#                                   libboost-all-dev libconfig++-dev libreadline-dev
 
 #Args Options  web
 args=$1
@@ -103,11 +103,13 @@ sudo make install
 # sudo make install
 # sudo make clean
 
-cd $Basefolder/packages/cmavnode
-sudo git submodule update --init
-sudo mkdir build && cd build
-cmake ..
-sudo make install
+#Using prebuildt binary in /usr/bin
+# cd $Basefolder/packages/cmavnode
+# sudo git submodule update --init
+# sudo mkdir build && cd build
+# cmake ..
+# sudo make install
+
 sudo ln -s cmavnode /usr/bin/cmavnode
 
 printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"
