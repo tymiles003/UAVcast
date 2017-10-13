@@ -1,7 +1,11 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 CONF=$DIR/../DroneConfig.txt
-#source $DIR/../DroneConfig.cfg
+
+#Include date time for logging
+dt=$(date '+%d/%m/%Y %H:%M:%S');
+echo "$dt"
+
 gcs_ip=$(jq -r '.GCS_address' $CONF)
 if [[ $gcs_ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]];
  then

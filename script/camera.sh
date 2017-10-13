@@ -1,7 +1,11 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 CONF=$DIR/../DroneConfig.txt
-#source $DIR/../DroneConfig.cfg
+
+#Include date time for logging
+dt=$(date '+%d/%m/%Y %H:%M:%S');
+echo "$dt"
+
 function usepicam {
 raspivid  -n -w $(jq -r '.WIDTH' $CONF) -h $(jq -r '.HEIGHT' $CONF) -b $(jq -r '.BITRATE' $CONF) -fps $(jq -r '.FPS' $CONF) -t 0 -o - | \
     gst-launch-1.0 --gst-debug-level=0 -v \
