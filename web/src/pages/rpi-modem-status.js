@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import { fullWhite } from 'material-ui/styles/colors';
-import Reboot from 'material-ui/svg-icons/action/cached';
-import Shutdown from 'material-ui/svg-icons/action/flight-land';
 import { RPI_COMMANDS, STREAM_FROM_RPI } from '../Events.js'
 import Toastr from 'toastr';
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 const style = {
     margin: 12,
 };
@@ -32,7 +29,8 @@ class Rpi extends Component {
                 MM_Connect:'nmcli r wwan on',
                 MM_Init:'sudo /home/pi/UAVcast/script/./ModemManager.sh',
                 MM_Saved_Con:'nmcli connection show',
-                MM_Delete_Con:'nmcli connection delete UAVcast'
+                MM_Delete_Con:'nmcli connection delete UAVcast',
+                SpeedTest:'/home/pi/UAVcast/packages/./speedtest-cli'
             },
             UAVcastStatus:{
                 systemd:'systemctl status UAVcast',
@@ -48,12 +46,7 @@ class Rpi extends Component {
             }
         }
         this.StreamOutput = ''
-        this.state.socket.on(STREAM_FROM_RPI, (status)=>{
-            for (var property in status) {
-                this.StreamOutput += status[property].toString().replace(/(?:\r\n|\r|\n)/g, '<br />')
-            }
-            this.setState({ result: { stream: this.StreamOutput, error: status.error, completed: status.completed } })
-        })
+      
     }
     submitHandler(command) {
         this.StreamOutput = ''
@@ -61,70 +54,28 @@ class Rpi extends Component {
                  Toastr.success('Command sent')
         })
     }
-
+    componentDidMount(){
+        this.state.socket.on(STREAM_FROM_RPI, (status)=>{
+            for (var property in status) {
+                this.StreamOutput += status[property].toString().replace(/(?:\r\n|\r|\n)/g, '<br />')
+            }
+            this.setState({ result: { stream: this.StreamOutput, error: status.error, completed: status.completed } })
+        })
+    }
+    componentWillUnmount(){
+        this.state.socket.removeListener(STREAM_FROM_RPI)
+    }
     render() {
        
         return (
             <div>
-                <div className="row">   
-                    <div className="col-md-8">
-                    <h3>Raspberry Status</h3>
-                        <RaisedButton
-                            label="List USB devices"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.lsusb)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="Kernel Messages"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.dmesg)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="RPI Temp"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.temp)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="Network"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.network)}
-                            style={style}
-                        />
-                    </div>
-                    <div className="col-md-4">
-                    <h3>Restart / Shutdown</h3>
-                    <RaisedButton
-                            label="Reboot"
-                            name="reboot"
-                            target="_blank"
-                            onClick={() => this.submitHandler(this.state.commands.reboot)}
-                            backgroundColor="rgb(206, 193, 42)"
-                            icon={<Reboot color={fullWhite} />}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="Shutdown"
-                            name="shutdown"
-                            backgroundColor="#d03f3f"
-                            onClick={() => this.submitHandler(this.state.commands.shutdown)}
-                            icon={<Shutdown color={fullWhite} />}
-                            style={style}
-                        />
-                    </div>
-                </div>
-                <br />
                 <div className="row">  
-                    <div className="col-md-8">
+                    <div className="col-md-10">
                     <h3>Modem Information</h3>
-                    <h5>Use these commands to get information from Modem Manager.</h5>
-
+                    <h5>Modem manager needs a profile before connecting. This is automatically added when UAVcast starts, or you can add New Profile manually then try to press connect.<br />
+                    Supported Devices can be found <a href="https://www.freedesktop.org/wiki/Software/ModemManager/SupportedDevices/">here</a></h5>
                         <RaisedButton
-                            label="Initialize Profile"
+                            label="New Profile"
                             backgroundColor="#a4c639"
                             onClick={() => this.submitHandler(this.state.commands.MM_Init)}
                             style={style}
@@ -142,6 +93,7 @@ class Rpi extends Component {
                             onClick={() => this.submitHandler(this.state.commands.MM_Disconnect)}
                             style={style}
                         /><br />
+                      
                         <RaisedButton
                             label="Modem Information"
                             primary={true}
@@ -163,7 +115,7 @@ class Rpi extends Component {
                             style={style}
                         />
                         <RaisedButton
-                            label="Connection Profiles"
+                            label="List Profiles"
                             backgroundColor="#a4c639"
                             primary={true}
                             onClick={() => this.submitHandler(this.state.commands.MM_Saved_Con)}
@@ -176,65 +128,26 @@ class Rpi extends Component {
                             onClick={() => this.submitHandler(this.state.commands.MM_Delete_Con)}
                             style={style}
                         />
-                    </div> 
-                </div>
-                <br />
-                <div className="row">  
-                    <div className="col-md-8">
-                    <h3>UAVcast Logfiles</h3>
-                    <h5>Read logfiles generated from UAVcast. <br />
-                    Post content on UAVcast <a target="__blank" href="http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi">main disscussion thread</a> if you experience any problems</h5>
                         <RaisedButton
-                            label="Systemd"
+                            label="SpeedTest"
                             backgroundColor="#a4c639"
                             primary={true}
-                            onClick={() => this.submitHandler(this.state.UAVcastStatus.systemd)}
+                            onClick={() => this.submitHandler(this.state.commands.SpeedTest)}
                             style={style}
-                        />
+                        /><br /><br />
+                        <h5>Logfiles generated when new profile (initialization) is added.</h5>
                         <RaisedButton
-                            label="Inadyn"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.UAVcastStatus.inadyn)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="gStreamer"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.UAVcastStatus.gStreamer)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="MavProxy"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.UAVcastStatus.MavProxy)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="Navio"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.UAVcastStatus.NavioArdupilot)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="TTL/ETH redirect"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.UAVcastStatus.TTLRedirect)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="ModemManager"
+                            label="Init Log"
                             backgroundColor="#a4c639"
                             primary={true}
                             onClick={() => this.submitHandler(this.state.UAVcastStatus.ModemManager)}
                             style={style}
                         />
+                        
                     </div> 
                 </div>
+                <br />
+               
                 <div className="col-md-10">
                     <br /><br /><br />
                     <h4>

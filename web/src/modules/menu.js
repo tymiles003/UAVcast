@@ -30,11 +30,14 @@ class Menu extends Component {
               <Link to="camera"><li>Camera</li></Link>
               <Link to="dns"><li>DNS</li></Link>
             </ul>
-            <Link to="/rpi" >
-              <li>
-                <i className="fa fa-cog fa-lg"></i>Raspberry
+            <li data-toggle="collapse" data-target="#settings" className="collapsed">
+              <a href="#"><i className="fa fa-cog fa-lg"></i>Raspberry <span className="arrow"></span></a>
             </li>
-            </Link>
+            <ul className="sub-menu collapse" id="settings">
+              <Link to="rpi-status"><li>Rpi Status</li></Link>
+              <Link to="rpi-uavcast-status"><li>UAVcast Diagnostic</li></Link>
+              <Link to="rpi-modem-status"><li>Modem Diagnostic</li></Link>
+            </ul>
           </ul>
         </div>
         <div className="text-center text-success"><h5>{this.props.uptime}</h5></div>

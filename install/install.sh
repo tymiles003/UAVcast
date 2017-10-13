@@ -76,29 +76,14 @@ esac
 mkdir $Basefolder/packages
 cd $Basefolder/packages
 
-# git clone https://github.com/UAVmatrix/libubox.git libubox
-# git clone git://nbd.name/uqmi.git
+#Mavproxy
 git clone https://github.com/UAVmatrix/cmavnode.git
 
-# wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
-# tar -xvf json-c-0.12.tar.gz
-# cd $Basefolder/packages/json-c-0.12
-# sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
-# make install
-
-# cd $Basefolder/packages/libubox
-# cmake CMakeLists.txt -DBUILD_LUA=OFF
-# make
-# sudo make install
-# mkdir -p /usr/include/libubox
-# cp *.h /usr/include/libubox
-# cp libubox.so /usr/lib
-# cp libblobmsg_json.so /usr/lib
-
-# cd $Basefolder/packages/uqmi
-# sudo cmake CMakeLists.txt
-# sudo make install
-
+#Speedtest Cli
+cd $Basefolder/usr/bin
+wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
+sudo chmod +x speedtest-cli
+#sudo ln -s $Basefolder/usr/bin/speedtest-cli /usr/bin/speedtest-cli
 ######################################
 # Using prebuildt binary in /usr/bin #
 # use code below to compile cmavnode #
