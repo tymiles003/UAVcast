@@ -1,7 +1,7 @@
 # UAVcast
 
 
-##This version will soon be depcreiated.
+## This version will soon be depcreiated.
 Check out our [new Branch](https://github.com/UAVmatrix/UAVcast/tree/Web_UI) with updated software and Web Interface. 
 
 
