@@ -17,8 +17,11 @@ import RpiModemStatus from './pages/rpi-modem-status';
 import './index.css'
 import ReactGA from 'react-ga';
 
-// Google Analytics
-ReactGA.initialize('UA-107582726-1');
+// Google Analytics UA-107582726-1
+ReactGA.initialize('UA-107582726-1', {
+  debug: false,
+  titleCase: true
+});
 
 function extractHostname(url) {
   var hostname;
