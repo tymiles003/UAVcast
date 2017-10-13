@@ -11,7 +11,9 @@ import Gcs from './pages/gcs';
 import Modem from './pages/modem';
 import Camera from './pages/camera';
 import Dns from './pages/dns';
-import Rpi from './pages/rpi';
+import RpiStatus from './pages/rpi-status';
+import RpiUavcastStatus from './pages/rpi-uavcast-status';
+import RpiModemStatus from './pages/rpi-modem-status';
 import './index.css'
 import ReactGA from 'react-ga';
 
@@ -36,7 +38,6 @@ function extractHostname(url) {
 
 // const socketUrl = "http://10.0.0.162"
 const socketUrl = extractHostname(window.location.href)
-console.log(socketUrl);
 const socket = io(socketUrl)
 
 var HomesWrapper = React.createClass({
@@ -81,10 +82,24 @@ var CameraWrapper = React.createClass({
     );
   }
 });
-var RpiWrapper = React.createClass({
+var RpiStatusWrapper = React.createClass({
   render: function () {
     return (
-        <Rpi socket={socket} />
+        <RpiStatus socket={socket} />
+    );
+  }
+});
+var RpiUavcastStatusWrapper = React.createClass({
+  render: function () {
+    return (
+        <RpiUavcastStatus socket={socket} />
+    );
+  }
+});
+var RpiModemStatusWrapper = React.createClass({
+  render: function () {
+    return (
+        <RpiModemStatus socket={socket} />
     );
   }
 });
@@ -99,7 +114,9 @@ ReactDOM.render(
         <Route path="/modem" component={ModemWrapper} ></Route>
         <Route path="/dns" component={DnsWrapper} ></Route>
         <Route path="/camera" component={CameraWrapper} ></Route>
-        <Route path="/rpi" component={RpiWrapper} ></Route>
+        <Route path="/rpi-status" component={RpiStatusWrapper} ></Route>
+        <Route path="/rpi-uavcast-status" component={RpiUavcastStatusWrapper} ></Route>
+        <Route path="/rpi-modem-status" component={RpiModemStatusWrapper} ></Route>
       </Layout>
     </BrowserRouter>
   </MuiThemeProvider>,

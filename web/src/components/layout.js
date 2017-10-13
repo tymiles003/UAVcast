@@ -39,7 +39,6 @@ class Layout extends Component {
             console.log("Raspberry PI connected ");
         })
         this.setState({ socket })
-
     }
     getUptime() {
         const { socket } = this.state

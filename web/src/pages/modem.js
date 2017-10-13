@@ -15,10 +15,8 @@ const style = {
         color: orange500,
       },
   }
-const GsmList = [
-    <MenuItem key={1} value={"ModemManager"} primaryText="ModemManager (Most Common)" />,
-  ];
-  const YesNo = [
+
+const YesNo = [
     <MenuItem key={1} value={"Yes"} primaryText="Yes" />,
     <MenuItem key={2} value={"No"} primaryText="No" />,
   ];

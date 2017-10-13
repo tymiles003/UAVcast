@@ -60,7 +60,6 @@ class Home extends Component {
         this.state.socket.emit(UAVCAST_STATUS, (status) => {
             this.setState({ active: status.active, enabled: status.enabled, starting:!status.active && this.state.starting, software:{udp_redirect:status.udp_redirect, ser2net:status.ser2net,mavproxy:status.mavproxy, gStreamer:status.gStreamer, inadyn:status.inadyn} })
         })
-     
     }
     initialvalues() {
         this.state.socket.emit(READ_DRONECONFIG, (data) => {
