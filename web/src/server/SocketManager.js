@@ -1,5 +1,5 @@
 const Factory = require('../factory')
-const {GET_UPTIME, SAVE_DRONECONFIG, READ_DRONECONFIG, UAVCAST_STATUS, START_UAVCAST, STOP_UAVCAST,AUTOSTART_UAVCAST, DISABLE_UAVCAST, DESTINATION_INFORMATION, CHECK_BINARY_EXSIST, INSTALL_BINARY} = require('../Events')
+const {GET_UPTIME,STREAM_FROM_RPI, SAVE_DRONECONFIG, READ_DRONECONFIG, UAVCAST_STATUS, START_UAVCAST, STOP_UAVCAST,AUTOSTART_UAVCAST, DISABLE_UAVCAST, DESTINATION_INFORMATION, CHECK_BINARY_EXSIST, INSTALL_BINARY, RPI_COMMANDS} = require('../Events')
 const io = require('./index.js').io
 
 module.exports = (socket) => {
@@ -56,6 +56,12 @@ module.exports = (socket) => {
     socket.on(INSTALL_BINARY, (fcType, file, val)=>{
         Factory.installBinary(fcType, file,  (sta)=>{
             return val(sta)
+        })
+    })
+    socket.on(RPI_COMMANDS, (commands, done)=>{
+        Factory.RpiCommands(commands, (stream)=>{
+            socket.emit(STREAM_FROM_RPI, stream)
+            done()
         })
     })
 }

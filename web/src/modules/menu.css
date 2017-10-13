@@ -1,6 +1,9 @@
 .content{
   margin-left:300px
 }
+.top-buffer{
+  padding: 30px;
+}
 .nav-side-menu {
   overflow: auto;
   font-family: verdana;

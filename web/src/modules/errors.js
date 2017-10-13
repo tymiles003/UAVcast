@@ -12,8 +12,7 @@ class Errors extends Component {
                             <span><h4><span className="text-danger">Error -> <b>gstreamer</b> not running!!</span></h4><b>gstreamer</b> should be running according to your configuration. Please check your camera and config.</span>
                             </div>}   
                        
-                        
-                            {this.props.config.Telemetry_Type === 'gpio' && !this.props.software.ser2net && this.props.active && 
+                            {this.props.config.Telemetry_Type === 'gpio' && !this.props.config.Cntrl === 'Navio' && !this.props.software.mavproxy && this.props.active && 
                             <div className="panel-body">
                             <span><h4><span className="text-danger">Error -> <b>MavProxy</b> not running!!</span></h4><b>MavProxy</b> should be running according to your configuration.<br /> 
                              you have choosen to use GPIO TX(Pin8) & RX(Pin10) as telemetry connection.</span>

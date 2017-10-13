@@ -259,5 +259,22 @@ module.exports = {
         } catch (ex) {
             console.log(`exec error: ${ex.message}`);
         }
+    },
+    RpiCommands: function (commands, sta) {
+        var status = {}
+        try {
+            const child = spawn(commands, { detached: true, shell: true }); 
+            child.stdout.on('data', (data) => {
+                sta(Object.assign(status, { stream: data.toString('utf8')}))
+                console.log(data.toString('utf8'));
+            });  
+            child.stderr.on('data', (error) => {
+                sta(Object.assign(status, { error: error.toString('utf8')}))
+                console.log(error.toString('utf8'));
+            });        
+  
+        } catch (ex) {
+            console.log(`exec error: ${ex.message}`);
+        }
     }
 }
