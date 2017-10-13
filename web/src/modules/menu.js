@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import Uavmatrix from '../images/uavmatrix.png'
 import './menu.css'
 
 class Menu extends Component {
@@ -41,6 +42,7 @@ class Menu extends Component {
           </ul>
         </div>
         <div className="text-center text-success"><h5>{this.props.uptime}</h5></div>
+        <div className="logo text-center"><a target="_blank" href="http://uavmatrix.com"><img alt="UAVmatrix.com" src={Uavmatrix} width="90%"/></a></div>
       </div>
 
     );
