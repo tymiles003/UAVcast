@@ -53,9 +53,9 @@ sudo systemctl enable systemd-networkd-wait-online.service
 sudo apt-get update -y 
 
 # Get the required libraries
-sudo apt-get install -y --force-yes jq build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
-#                                   libboost-all-dev libconfig++-dev libreadline-dev
+sudo apt-get install -y --force-yes jq dnsutils inadyn usb-modeswitch modemmanager network-manager \
+                                     dh-autoreconf gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+#                                 wvdial build-essential cmake libboost-all-dev libconfig++-dev libreadline-dev
 
 #Args Options for installing web interface
 args=$1                           
@@ -76,28 +76,28 @@ esac
 mkdir $Basefolder/packages
 cd $Basefolder/packages
 
-git clone https://github.com/UAVmatrix/libubox.git libubox
-git clone git://nbd.name/uqmi.git
+# git clone https://github.com/UAVmatrix/libubox.git libubox
+# git clone git://nbd.name/uqmi.git
 git clone https://github.com/UAVmatrix/cmavnode.git
 
-wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
-tar -xvf json-c-0.12.tar.gz
-cd $Basefolder/packages/json-c-0.12
-sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
-make install
+# wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
+# tar -xvf json-c-0.12.tar.gz
+# cd $Basefolder/packages/json-c-0.12
+# sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
+# make install
 
-cd $Basefolder/packages/libubox
-cmake CMakeLists.txt -DBUILD_LUA=OFF
-make
-sudo make install
-mkdir -p /usr/include/libubox
-cp *.h /usr/include/libubox
-cp libubox.so /usr/lib
-cp libblobmsg_json.so /usr/lib
+# cd $Basefolder/packages/libubox
+# cmake CMakeLists.txt -DBUILD_LUA=OFF
+# make
+# sudo make install
+# mkdir -p /usr/include/libubox
+# cp *.h /usr/include/libubox
+# cp libubox.so /usr/lib
+# cp libblobmsg_json.so /usr/lib
 
-cd $Basefolder/packages/uqmi
-sudo cmake CMakeLists.txt
-sudo make install
+# cd $Basefolder/packages/uqmi
+# sudo cmake CMakeLists.txt
+# sudo make install
 
 ######################################
 # Using prebuildt binary in /usr/bin #
