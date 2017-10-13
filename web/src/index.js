@@ -11,6 +11,7 @@ import Gcs from './pages/gcs';
 import Modem from './pages/modem';
 import Camera from './pages/camera';
 import Dns from './pages/dns';
+import Rpi from './pages/rpi';
 import './index.css'
 import ReactGA from 'react-ga';
 
@@ -80,6 +81,13 @@ var CameraWrapper = React.createClass({
     );
   }
 });
+var RpiWrapper = React.createClass({
+  render: function () {
+    return (
+        <Rpi socket={socket} />
+    );
+  }
+});
 const app = document.getElementById('root')
 ReactDOM.render(
   <MuiThemeProvider>
@@ -91,6 +99,7 @@ ReactDOM.render(
         <Route path="/modem" component={ModemWrapper} ></Route>
         <Route path="/dns" component={DnsWrapper} ></Route>
         <Route path="/camera" component={CameraWrapper} ></Route>
+        <Route path="/rpi" component={RpiWrapper} ></Route>
       </Layout>
     </BrowserRouter>
   </MuiThemeProvider>,

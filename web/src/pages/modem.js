@@ -16,9 +16,7 @@ const style = {
       },
   }
 const GsmList = [
-    <MenuItem key={1} value={"uqmi"} primaryText="UQMI" />,
-    <MenuItem key={2} value={"wvdial"} primaryText="wvdial (Most Common)" />,
-    <MenuItem key={3} value={"Ethernet"} primaryText="Ethernet cable connected" />,
+    <MenuItem key={1} value={"ModemManager"} primaryText="ModemManager (Most Common)" />,
   ];
   const YesNo = [
     <MenuItem key={1} value={"Yes"} primaryText="Yes" />,
@@ -31,16 +29,13 @@ class Modem extends Component {
             socket:this.props.socket,
             config:{
                 GSM_Connect:'',
-                wv_init1:"",
-                wv_init2:"",
-                wv_init3:"",
-                wv_Phone:"",
-                wv_Modem:"",
-                wv_Username:"",
-                wv_Password:"",
-                wv_Baud:"",
+                MM_Phone:"",
+                MM_Modem:"",
+                MM_Username:"",
+                MM_Password:"",
+                MM_Pin:"",
                 APN_name:'',
-                DroneCheck:'',
+                MM_Con_Check:'',
             }
         }
         this.configs = {}
@@ -80,29 +75,31 @@ class Modem extends Component {
             <div>
                 <h2>Modem Configuration</h2>
                 <form onSubmit={e => this.submitHandler(e)}>  
-                <h5>Options; uqmi, wvdial, Ethernet</h5>
+                <h5>Choose whether or not you will connect online using modem.
+                There is also varoius modem diagnostics in <a href="/rpi">RPI</a> page <br />
+                Modem will be activated when you start UAVcast. However, it will not be disconnected when you stop UAVcast, do this manually in RPI page under modem section </h5>
                 <SelectField
                     name="GSM_Connect"
                     value={this.state.config.GSM_Connect}
                     onChange={(e,i,v) => this.handleChange(e, 'GSM_Connect', v)}
-                    floatingLabelText="Cell Connection Software"
+                    floatingLabelText="Use Modem?"
                     floatingLabelStyle={style.floatingLabelStyle}
                     >
-                    {GsmList}
+                    {YesNo}
                 </SelectField>
                 <br /><br />
-                <h5><b>Run continuously Online Check?<br /> 
+                 {this.state.config.GSM_Connect === 'Yes' && <span><h5><b>Run continuously Online Check?<br /> 
                  If Online connection fails, it will try to reconnect. <span className="text-danger">BETA!</span></b></h5>
                 <SelectField
-                    name="DroneCheck"
-                    value={this.state.config.DroneCheck}
-                    onChange={(e,i,v) => this.handleChange(e, 'DroneCheck', v)}
-                    floatingLabelText="Connection Checks"
+                    name="MM_Con_Check"
+                    value={this.state.config.MM_Con_Check}
+                    onChange={(e,i,v) => this.handleChange(e, 'MM_Con_Check', v)}
+                    floatingLabelText="Connection Autoconnect"
                     floatingLabelStyle={style.floatingLabelStyle}
                     >
                     {YesNo}
                 </SelectField><br /><br />
-        {this.state.config.GSM_Connect === 'wvdial' && <span><h5>Access Point Name given by your operator. Make sure you use a APN with public ip. #Set your Cell operators APN name. Example, Telenor Norway use "internet.public"</h5>
+                <h5>Access Point Name given by your operator. Make sure you use a APN with public ip. #Set your Cell operators APN name. Example, Telenor Norway use "internet.public"</h5>
                 <TextField
                     name="APN_name"
                     floatingLabelText="Access Point Name (APN)"
@@ -111,69 +108,37 @@ class Modem extends Component {
                     hintText="APN"
                     onChange={this.handleChange.bind(this)}
                 /><br /><br />
-                <h5><b>WvDial</b> configuration. <br />These are standard values, and should not be changed. However, some operators uses diffrent Phone number and credentials. </h5>
+                <h5><b>ModemManager</b> configuration. <br />These are standard values, and should not be changed. However, some operators uses diffrent Phone number and credentials. </h5>
                 <TextField
-                    name="wv_Phone"
-                    floatingLabelText="wv_Phone"
+                    name="MM_Modem"
+                    floatingLabelText="Device Address"
                     floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_Phone}
-                    hintText="Default: *99#"
+                    value={this.state.config.MM_Modem}
+                    hintText="Default: cdc-wdm0"
                     onChange={this.handleChange.bind(this)}
                 /><br />
                 <TextField
-                    name="wv_init1"
-                    floatingLabelText="wv_init1"
+                    name="MM_Username"
+                    floatingLabelText="MM_Username"
                     floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_init1}
-                    hintText="Default: ATZ"
-                    onChange={this.handleChange.bind(this)}
-                /><br />
-                <TextField
-                    name="wv_init2"
-                    floatingLabelText="wv_init2"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_init2}
-                    hintText="Default: ATE1"
-                    onChange={this.handleChange.bind(this)}
-                /><br />
-                <TextField
-                    name="wv_init3"
-                    floatingLabelText="wv_init3"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_init3}
-                    hintText="Default: AT+CGDCONT=1"
-                    onChange={this.handleChange.bind(this)}
-                /><br />
-                <TextField
-                    name="wv_Modem"
-                    floatingLabelText="wv_Modem"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_Modem}
-                    hintText="Default: /dev/ttyUSB0"
-                    onChange={this.handleChange.bind(this)}
-                /><br />
-                <TextField
-                    name="wv_Username"
-                    floatingLabelText="wv_Username"
-                    floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_Username}
+                    value={this.state.config.MM_Username}
                     hintText="Default: {test}"
                     onChange={this.handleChange.bind(this)}
                 /><br />
                 <TextField
-                    name="wv_Password"
-                    floatingLabelText="wv_Password"
+                    name="MM_Password"
+                    floatingLabelText="MM_Password"
                     floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_Password}
+                    value={this.state.config.MM_Password}
                     hintText="Default: {test}"
                     onChange={this.handleChange.bind(this)}
                 /><br />
                 <TextField
-                    name="wv_Baud"
-                    floatingLabelText="wv_Baud"
+                    name="MM_Pin"
+                    floatingLabelText="Sim Pin Code"
                     floatingLabelStyle={style.floatingLabelStyle}
-                    value={this.state.config.wv_Baud}
-                    hintText="default: 460800"
+                    value={this.state.config.MM_Pin}
+                    hintText="PIN"
                     onChange={this.handleChange.bind(this)}
                 /></span>}
                <br /><br /><br />

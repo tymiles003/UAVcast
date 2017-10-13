@@ -162,7 +162,7 @@ class Config extends Component {
                         <br /><br /></span>}
                         </div>
                             <div className="col-6 col-md-6">
-                                <img src={RaspImage} width="100%" />
+                                <img alt="Raspberry PI Connection overview" src={RaspImage} width="100%" />
                         </div>
                     </div>
                 <br /><br /><br />
