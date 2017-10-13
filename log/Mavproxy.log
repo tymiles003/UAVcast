@@ -1,0 +1,5 @@
+Found 2 links
+Valid Serial Link: aseriallink Found at: /dev/ttyAMA0, baud: 57600
+Valid UDP Link: audplink Found at 10.0.0.200:14550 -> 0
+Command line arguments parsed succesfully.
+Links Initialized, routing loop starting.
