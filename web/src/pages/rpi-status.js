@@ -33,7 +33,7 @@ class Rpi extends Component {
                 MM_Init:'sudo /home/pi/UAVcast/script/./ModemManager.sh',
                 MM_Saved_Con:'nmcli connection show',
                 MM_Delete_Con:'nmcli connection delete UAVcast',
-                SpeedTest:'/home/pi/UAVcast/packages/./speedtest-cli'
+                SpeedTest:'/home/pi/UAVcast/usr/bin/./speedtest-cli'
             },
             UAVcastStatus:{
                 systemd:'systemctl status UAVcast',
