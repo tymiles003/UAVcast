@@ -1,5 +1,10 @@
 # UAVcast
 
+
+##This version will soon be depcreiated.
+Check out our [new Branch](https://github.com/UAVmatrix/UAVcast/tree/Web_UI) with updated software and Web Interface. 
+
+
 Complete Drone casting software for Raspberry PI in conjuction with 3G / 4G or WiFi. Can be used with Ardupilot or Navio boards (Emlid.com)
 
 Discussion forum thread
