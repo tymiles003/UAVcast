@@ -1,8 +1,8 @@
 {
-  "main.css": "static/css/main.cd3dfc3f.css",
-  "main.css.map": "static/css/main.cd3dfc3f.css.map",
-  "main.js": "static/js/main.5aa457b8.js",
-  "main.js.map": "static/js/main.5aa457b8.js.map",
+  "main.css": "static/css/main.461ed692.css",
+  "main.css.map": "static/css/main.461ed692.css.map",
+  "main.js": "static/js/main.19b664f1.js",
+  "main.js.map": "static/js/main.19b664f1.js.map",
   "static/media/RaspberryPi_Pixhawk_wire.jpg": "static/media/RaspberryPi_Pixhawk_wire.57f85c2a.jpg",
   "static/media/fontawesome-webfont.eot?v=4.2.0": "static/media/fontawesome-webfont.674f50d2.eot",
   "static/media/fontawesome-webfont.svg?v=4.2.0": "static/media/fontawesome-webfont.b8e4dbe6.svg",
@@ -12,5 +12,6 @@
   "static/media/glyphicons-halflings-regular.svg": "static/media/glyphicons-halflings-regular.3b31e1de.svg",
   "static/media/glyphicons-halflings-regular.ttf": "static/media/glyphicons-halflings-regular.e18bbf61.ttf",
   "static/media/glyphicons-halflings-regular.woff": "static/media/glyphicons-halflings-regular.fa277232.woff",
-  "static/media/glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2"
+  "static/media/glyphicons-halflings-regular.woff2": "static/media/glyphicons-halflings-regular.448c34a5.woff2",
+  "static/media/uavmatrix.png": "static/media/uavmatrix.29feecd9.png"
 }

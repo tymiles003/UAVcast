@@ -1,6 +1,10 @@
 .content{
   margin-left:300px
 }
+.logo{
+  position: absolute;
+  bottom: 0;
+}
 .top-buffer{
   padding: 30px;
 }
@@ -121,6 +125,9 @@
   transition: all 1s ease;
 }
 @media (max-width: 767px) {
+  .logo{
+    display: none;
+  }
   .nav-side-menu {
     position: relative;
     width: 100%;
