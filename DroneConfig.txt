@@ -24,5 +24,6 @@
   "Username": "user",
   "Password": "pass",
   "Alias": "uavcast.no-ip.info",
-  "dyndns_system": "default@no-ip.com"
+  "dyndns_system": "default@no-ip.com",
+  "APM_type": "Plane"
 }
