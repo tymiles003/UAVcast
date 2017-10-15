@@ -1,20 +1,20 @@
 # UAVcast
 
 ### See [UAVcast docs](http://uavcast.uavmatrix.com) for detailed information
-Complete Drone casting software for Raspberry PI in conjuction with 3G / 4G or WiFi. Can be used with Ardupilot or Navio boards (Emlid.com)
+Complete Drone casting software for Raspberry PI in conjuction with 3G / 4G or WiFi. Can be used with Ardupilot based board, APM, Pixhawk, Navio (Emlid.com)
 
 Discussion forum thread
-[UAVcast docs](http://uavmatrix.com/viewpost/5/110/741/0/Raspberry-Pi/UAVcast.-Casting-software-for-Raspberry-PI.-Supports-3G-/-4G-/-WiFi.)
+[UAVcast](http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi)
 
 
 ### Installation
 
 ```
 sudo apt-get update
-sudo apt-get install git
+sudo apt-get install git -y
 sudo git clone -b Web_UI https://github.com/UAVmatrix/UAVcast.git
 cd UAVcast/install
-sudo ./install.sh web (notice the web argument)
+sudo ./install.sh web
 ```
 
 ## Commands
