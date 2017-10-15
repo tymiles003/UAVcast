@@ -11,10 +11,10 @@ Discussion forum thread
 
 ```
 sudo apt-get update
-sudo apt-get install git
+sudo apt-get install git -y
 sudo git clone -b Web_UI https://github.com/UAVmatrix/UAVcast.git
 cd UAVcast/install
-sudo ./install.sh web (notice the web argument)
+sudo ./install.sh web
 ```
 
 ## Commands
