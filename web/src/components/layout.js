@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Menu from '../modules/menu';
+import Menu from '../modules/menus';
 import { GET_UPTIME } from '../Events.js'
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
@@ -13,7 +13,7 @@ class Layout extends Component {
         super(props)
 
         this.state = {
-            AppVersion:'0.3.6',
+            AppVersion:'0.4.0',
             socket: null,
             uptime: null,
         }
@@ -49,15 +49,7 @@ class Layout extends Component {
         const { uptime } = this.state
         return (
             <div>
-                <Menu uptime={uptime} />
-                <div className="container" id="main">
-                 <div className="pull-right"><p className="text-danger">v{this.state.AppVersion}</p></div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="container top-buffer"> {this.props.children} </div>
-                        </div>
-                    </div>
-                </div>
+                <Menu uptime={uptime} children={this.props.children} AppVersion={this.state.AppVersion} />
             </div>
         );
     }

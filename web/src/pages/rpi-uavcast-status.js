@@ -33,7 +33,7 @@ class Rpi extends Component {
                 SpeedTest:'/home/pi/UAVcast/usr/bin/./speedtest-cli'
             },
             UAVcastStatus:{
-                systemd:'systemctl status UAVcast',
+                systemd:'systemctl status UAVcast -l',
                 inadyn:'cat /home/pi/UAVcast/log/inadyn.log',
                 gStreamer:'cat /home/pi/UAVcast/log/gstreamer.log',
                 MavProxy:'cat /home/pi/UAVcast/log/Mavproxy.log',

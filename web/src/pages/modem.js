@@ -74,7 +74,7 @@ class Modem extends Component {
                 <h2>Modem Configuration</h2>
                 <form onSubmit={e => this.submitHandler(e)}>  
                 <h5>Choose whether or not you will connect online using modem.
-                There is also varoius modem diagnostics in <a href="/rpi">RPI</a> page <br />
+                There is also varoius modem diagnostics in <a href="rpi-status">RPI</a> page <br />
                 Modem will be activated when you start UAVcast. However, it will not be disconnected when you stop UAVcast, do this manually in RPI page under modem section </h5>
                 <SelectField
                     name="GSM_Connect"
