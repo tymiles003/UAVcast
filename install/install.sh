@@ -79,22 +79,6 @@ cd $Basefolder/packages
 #Mavproxy
 git clone https://github.com/UAVmatrix/cmavnode.git
 
-#Speedtest Cli
-cd $Basefolder/usr/bin
-wget -O speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
-sudo chmod +x speedtest-cli
-#sudo ln -s $Basefolder/usr/bin/speedtest-cli /usr/bin/speedtest-cli
-######################################
-# Using prebuildt binary in /usr/bin #
-# use code below to compile cmavnode #
-######################################
-
-# cd $Basefolder/packages/cmavnode   
-# sudo git submodule update --init
-# sudo mkdir build && cd build
-# cmake ..
-# sudo make install
-
 # Create symlink to cmavnode
 sudo ln -s $Basefolder/usr/bin/cmavnode /usr/bin/cmavnode
 
