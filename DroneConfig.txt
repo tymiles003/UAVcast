@@ -13,7 +13,7 @@
   "MM_Username": "test",
   "MM_Password": "test",
   "MM_Pin": "1234",
-  "UseCam": "No",
+  "UseCam": "Yes",
   "CameraType": "picam",
   "WIDTH": "1280",
   "HEIGHT": "720",
