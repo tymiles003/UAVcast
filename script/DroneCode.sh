@@ -52,6 +52,15 @@ echo "If you see this message, then Network was successfully loaded."
 }
 function ModemManager {
     sudo $DIR/./ModemManager.sh > $DIR/../log/ModemManager.log 2>&1
+	if [ $(jq -r '.vpn_use' $CONF) == "Yes" ]; then
+		ip a show tun0 up  >/dev/null
+		if [[ $? == 0 ]]; then
+		echo "VPN network already up"
+		else
+		 echo "Starting VPN"
+		 sudo $DIR/./openvpn.sh init > $DIR/../log/openvpn.log 2>&1 
+		fi
+    fi
 }
 function Telemetry_Type {
 if [ $(jq -r '.Telemetry_Type' $CONF) == "ttl" ]; then

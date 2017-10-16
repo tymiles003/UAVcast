@@ -89,6 +89,7 @@ class Config extends Component {
                 /><br />
                 <TextField
                     name="Password"
+                    type="password"
                     floatingLabelText="Password"
                     floatingLabelStyle={style.floatingLabelStyle}
                     value={this.state.config.Password}

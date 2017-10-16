@@ -13,3 +13,4 @@ if [ $(jq -r '.MM_Con_Check' $CONF) == "Yes" ]; then
 sudo nmcli c modify UAVcast connection.autoconnect yes
 fi
 sudo nmcli r wwan on
+

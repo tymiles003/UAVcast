@@ -30,6 +30,7 @@ class Menu extends Component {
                     <li><Link to="modem">Cellular Modem</Link></li>
                     <li><Link to="camera">Camera</Link></li>
                     <li><Link to="dns">DNS</Link></li>
+                    <li><Link to="vpn">VPN</Link></li>
                   </ul>
                 </li>
                 <li className="dropdown">
@@ -38,6 +39,7 @@ class Menu extends Component {
                     <li><Link to="rpi-status">Rpi Status</Link></li>
                     <li><Link to="rpi-uavcast-status">UAVcast Diagnostic</Link></li>
                     <li><Link to="rpi-modem-status">Modem Diagnostic</Link></li>
+                    <li><Link to="rpi-vpn-status">VPN Diagnostic</Link></li>
                   </ul>
                 </li>
                 <div className="logo text-center"><a target="_blank" href="http://uavmatrix.com"><img alt="UAVmatrix.com" src={Uavmatrix} width="90%" /></a></div>

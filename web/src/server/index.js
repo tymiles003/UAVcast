@@ -4,7 +4,7 @@ const compression = require('compression')
 const express = require('express');
 const path = require('path');
 const app = express();
-
+var fs = require('fs')
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
     app.use(compression())
