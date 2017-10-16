@@ -3,7 +3,7 @@ import Menu from '../modules/menus';
 import { GET_UPTIME } from '../Events.js'
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
-
+// import "./bootstrap.min.css"
 // toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!')
 class Layout extends Component {
     static contextTypes = {
@@ -13,7 +13,7 @@ class Layout extends Component {
         super(props)
 
         this.state = {
-            AppVersion:'0.4.0',
+            AppVersion:'0.4.1',
             socket: null,
             uptime: null,
         }

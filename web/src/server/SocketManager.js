@@ -1,6 +1,7 @@
 const Factory = require('../factory')
-const {GET_UPTIME,STREAM_FROM_RPI, SAVE_DRONECONFIG, READ_DRONECONFIG, UAVCAST_STATUS, START_UAVCAST, STOP_UAVCAST,AUTOSTART_UAVCAST, DISABLE_UAVCAST, DESTINATION_INFORMATION, CHECK_BINARY_EXSIST, INSTALL_BINARY, RPI_COMMANDS} = require('../Events')
+const {GET_UPTIME,STREAM_FROM_RPI, SAVE_OVPN, STATUS_OVPN, GET_VPN_IP, SAVE_DRONECONFIG, READ_DRONECONFIG, UAVCAST_STATUS, START_UAVCAST, STOP_UAVCAST,AUTOSTART_UAVCAST, DISABLE_UAVCAST, DESTINATION_INFORMATION, CHECK_BINARY_EXSIST, INSTALL_BINARY, RPI_COMMANDS} = require('../Events')
 const io = require('./index.js').io
+const ss = require('socket.io-stream');
 
 module.exports = (socket) => {
     socket.on(GET_UPTIME, (clb)=>{
@@ -64,4 +65,14 @@ module.exports = (socket) => {
             done()
         })
     })
+    socket.on(GET_VPN_IP, (send_ip)=>{
+        Factory.getVpnIp((ip)=>{
+            send_ip(ip)
+        })
+    })
+    ss(socket).on(SAVE_OVPN, function(stream, data) {
+        Factory.saveVPNovpn(stream, data, (status)=>{
+            if (status) return socket.emit(STATUS_OVPN, status)
+        })
+    });
 }

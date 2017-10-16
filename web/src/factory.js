@@ -1,6 +1,7 @@
 "use strict";
 const exec = require('child_process').exec;
 const { spawn } = require('child_process');
+
 const child = spawn('pwd');
 const shell = require('shelljs');
 const fs = require('fs');
@@ -181,15 +182,6 @@ module.exports = {
             child.stdout.on('data', (data) => {
                 return sta({ UAVcast: data.toString('utf8') });
             });
-            //   let e = shell.exec('systemctl start UAVcast',
-            //         (error, stdout, stderr) => {
-            //             console.log(stdout);
-            //             sta({ UAVcast: stdout });
-            //             if (error !== null) {
-            //                 console.log(`exec error: ${error}`);
-            //             }
-            //             e.kill()
-            //         });
         } catch (ex) {
             console.log(`exec error: ${ex.message}`);
         }
@@ -200,15 +192,6 @@ module.exports = {
             child.stdout.on('data', (data) => {
                 return sta({ UAVcast: 'Stopping' });
             });
-
-            // shell.exec('systemctl stop UAVcast',
-            //     (error, stdout, stderr) => {
-            //         sta({ UAVcast: 'Stopping' });
-            //         if (error !== null) {
-
-            //             console.log(`exec error: ${error}`);
-            //         }
-            //     });
         } catch (ex) {
             console.log(`exec error: ${ex.message}`);
         }
@@ -273,6 +256,32 @@ module.exports = {
                 console.log(error.toString('utf8'));
             });        
   
+        } catch (ex) {
+            console.log(`exec error: ${ex.message}`);
+        }
+    },
+    saveVPNovpn: function(stream, data, status){
+        var result = {}
+        let filename = path.basename(data.name);
+        if(filename.split('.').pop() != 'ovpn') return status(Object.assign(result, {error:"Wrong fileformat, has to be *.ovpn"}))
+
+        fs.writeFile('../packages/openvpn/openvpn.ovpn', data.data, function (err) {
+            if (err) {
+                return status(Object.assign(result, {error:"There was a problem uploading the file"}))
+            }
+            return status(Object.assign(result, {success: data.name + "<br /> Successfully saved"}))
+           
+        });
+    },
+    getVpnIp: function(status){
+        try {
+            const child = spawn("ifconfig tun0 | awk '/inet /{print substr($2,1)}'", { detached: true, shell: true }); 
+            child.stdout.on('data', (ip) => {
+                return status(ip.toString('utf8'))
+            });  
+            child.stderr.on('data', (error) => {
+                return status('')
+            });        
         } catch (ex) {
             console.log(`exec error: ${ex.message}`);
         }

@@ -11,9 +11,11 @@ import Gcs from './pages/gcs';
 import Modem from './pages/modem';
 import Camera from './pages/camera';
 import Dns from './pages/dns';
+import Vpn from './pages/vpn';
 import RpiStatus from './pages/rpi-status';
 import RpiUavcastStatus from './pages/rpi-uavcast-status';
 import RpiModemStatus from './pages/rpi-modem-status';
+import VpnStatus from './pages/rpi-vpn-status';
 import './index.css'
 import ReactGA from 'react-ga';
 
@@ -85,6 +87,13 @@ var CameraWrapper = React.createClass({
     );
   }
 });
+var VpnWrapper = React.createClass({
+  render: function () {
+    return (
+        <Vpn socket={socket} />
+    );
+  }
+});
 var RpiStatusWrapper = React.createClass({
   render: function () {
     return (
@@ -106,6 +115,14 @@ var RpiModemStatusWrapper = React.createClass({
     );
   }
 });
+var VpnStatusWrapper = React.createClass({
+  render: function () {
+    return (
+        <VpnStatus socket={socket} />
+    );
+  }
+});
+
 const app = document.getElementById('root')
 ReactDOM.render(
   <MuiThemeProvider>
@@ -117,9 +134,11 @@ ReactDOM.render(
         <Route path="/modem" component={ModemWrapper} ></Route>
         <Route path="/dns" component={DnsWrapper} ></Route>
         <Route path="/camera" component={CameraWrapper} ></Route>
+        <Route path="/vpn" component={VpnWrapper} ></Route>
         <Route path="/rpi-status" component={RpiStatusWrapper} ></Route>
         <Route path="/rpi-uavcast-status" component={RpiUavcastStatusWrapper} ></Route>
         <Route path="/rpi-modem-status" component={RpiModemStatusWrapper} ></Route>
+        <Route path="/rpi-vpn-status" component={VpnStatusWrapper} ></Route>
       </Layout>
     </BrowserRouter>
   </MuiThemeProvider>,
