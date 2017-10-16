@@ -27,6 +27,6 @@
   "dyndns_system": "default@no-ip.com",
   "APM_type": "Plane",
   "vpn_use": "No",
-  "vpn_username": "openvpn",
-  "vpn_password": "openvpn"
+  "vpn_username": "",
+  "vpn_password": ""
 }

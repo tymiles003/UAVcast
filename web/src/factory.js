@@ -265,7 +265,7 @@ module.exports = {
         let filename = path.basename(data.name);
         if(filename.split('.').pop() != 'ovpn') return status(Object.assign(result, {error:"Wrong fileformat, has to be *.ovpn"}))
 
-        fs.writeFile('../packages/openvpn/openvpn.ovpn', data.data, function (err) {
+        fs.writeFile('../usr/etc/openvpn.ovpn', data.data, function (err) {
             if (err) {
                 return status(Object.assign(result, {error:"There was a problem uploading the file"}))
             }
