@@ -12,7 +12,7 @@ do
                     setPasswordFile
                     sudo nmcli c modify openvpn connection.autoconnect yes
                     echo "Contacting OpenVPN server..."
-                    sudo nmcli conn up openvpn passwd-file $DIR/../packages/openvpn/pass.conf
+                    sudo nmcli conn up openvpn passwd-file $DIR/../usr/etc/pass.conf
                 break;
                 else
             echo "Network is not available for VPN, waiting.."
@@ -31,7 +31,7 @@ sudo nmcli con | grep openvpn >/dev/null
   echo "Profile already exsist, Delete Profile and then create a new one."
  else 
     echo "Creating new Profile.."
-    sudo nmcli connection import type openvpn file $DIR/../packages/openvpn/openvpn.ovpn
+    sudo nmcli connection import type openvpn file $DIR/../usr/etc/openvpn.ovpn
     sudo nmcli con modify id openvpn vpn.user-name openvpn
  fi
 }
@@ -50,7 +50,7 @@ function init {
     StartOpenVPN
 }
 function setPasswordFile {
-FILE="$DIR/../packages/openvpn/pass.conf"
+FILE="$DIR/../usr/etc/pass.conf"
 /bin/cat <<EOM >$FILE
 vpn.secrets.password:$(jq -r '.vpn_password' $CONF)
 EOM
