@@ -93,7 +93,7 @@ class Modem extends Component {
                 <p>Use OpenVpn</p>
                 <SelectField
                     name="vpn_use"
-                    value={this.state.config.GSM_Connect}
+                    value={this.state.config.vpn_use}
                     onChange={(e,i,v) => this.handleChange(e, 'vpn_use', v)}
                     floatingLabelText="Use VPN?"
                     floatingLabelStyle={style.floatingLabelStyle}
