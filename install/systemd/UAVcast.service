@@ -1,13 +1,14 @@
 [Unit]
 Description=UAVcast Drone Software
-After=network.target user.slice
-
+Requires=network-online.target
+Wants=network-online.target
+After=network-online.target
 [Service]
+WorkingDirectory=/home/pi/UAVcast
 Type=forking
-ExecStart=/home/pi/UAVcast/DroneStart.sh
-#ExecReload=/bin/kill -HUP ""
-Restart=always
-
+GuessMainPID=no
+ExecStart=/bin/bash DroneStart.sh start
+KillMode=control-group
+Restart=on-failure
 [Install]
-WantedBy=multi-user.target
-Alias=UAVcast.services
+WantedBy=network-online.target

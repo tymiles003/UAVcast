@@ -1,14 +1,12 @@
-#!/bin/bash 
+#!/bin/bash
+
 . config.sh
-# Create a log file of the build as well as displaying the build on the tty as it runs
-exec > >(tee build_UAV.log)
-exec 2>&1
 
 # Get current Directory
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Get Parrent Directory
-Basefolder="$(cd ../; pwd)"
+Basefolder="$(cd ../; pwd)" 
 
 # Create systemctl for easy stop/start/restart
 Systemd=$DIR/"systemd"
@@ -17,100 +15,72 @@ if [ ! -d "$Systemd" ]
 then
  mkdir systemd
 fi
-
+# Generate UAVcast.service file
 FILE=$DIR/"systemd/UAVcast.service"
 
 /bin/cat <<EOM >$FILE
 [Unit]
 Description=UAVcast Drone Software
-After=network.target user.slice
-
+Requires=network-online.target
+Wants=network-online.target
+After=network-online.target
 [Service]
+WorkingDirectory=/home/pi/UAVcast
 Type=forking
-ExecStart=$Basefolder/DroneStart.sh
-#ExecReload=/bin/kill -HUP "$MAINPID"
-Restart=always
-
+GuessMainPID=no
+ExecStart=/bin/bash DroneStart.sh start
+KillMode=control-group
+Restart=on-failure
 [Install]
-WantedBy=multi-user.target
-Alias=UAVcast.services
+WantedBy=network-online.target
 EOM
 
+# Copy generated UAVcast.service file to systemd
 cp $FILE /lib/systemd/system/
 sudo systemctl daemon-reload
-#sudo systemctl enable $FILE
+# sudo systemctl enable $FILE
 
-#Get Pitype
-get_pi_type
-#If RPI 3, we need to remap the UART pins
+# If RPI 3, we need to remap the UART pins
 set_dtoverlay_pi_three
-#set config for cmdline.txt and config.txt
+
+# set config for cmdline.txt and config.txt
 do_serial
 
+# This will ensure that all configured network devices are up and have an IP address assigned before boot continues.
+sudo systemctl enable systemd-networkd-wait-online.service
 
-#Navio Options
-Navio=$1
-echo Installing UAVcast $Navio
-################# COMPILE UAV software ############
- 
- 
-# # Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
- 
-sudo apt-get update -y --force-yes
+# Update and Upgrade the Pi, otherwise the build may fail due to inconsistencies
+sudo apt-get update -y 
 
 # Get the required libraries
-sudo apt-get install -y --force-yes build-essential dnsutils inadyn usb-modeswitch \
-                                    cmake dh-autoreconf wvdial gstreamer1.0
-                                    
-cd /home/pi
-Lower=$(echo "$Navio" | tr '[:upper:]' '[:lower:]')
-echo $Lower 
-case $Lower in
-          "navio2")
-          echo Installing Navio2
-          wget 'http://files.emlid.com/apm/apm-navio2_3.3.2-rc2-beta-1.2_armhf.deb' -O apm-navio2.deb
-	  sudo dpkg -i apm-navio2.deb
+sudo apt-get install -y --force-yes jq dnsutils inadyn usb-modeswitch modemmanager network-manager network-manager-openvpn \
+                                     dh-autoreconf gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
+#                                 wvdial build-essential cmake libboost-all-dev libconfig++-dev libreadline-dev
+
+#Args Options for installing web interface
+args=$1                           
+argsToLower=$(echo "$args" | tr '[:upper:]' '[:lower:]')
+case $argsToLower in
+          "web")
+            echo Installing UAVcast including Web interface
+            #Run Web instalation
+            sudo sh $DIR/./web.sh
         ;;
-        "navio")
-          Installing Navio
-          wget 'http://files.emlid.com/apm/apm.deb' -O apm.deb
-          sudo dpkg -i apm.deb
+        *)
+         printf "\n\n NOTE!!!  Installing UAVcast without Web Interface \n\n\n use web argurment ( ./install.sh web ) to install web UI.\n\n\n\n"
         ;;
 esac
 
-mkdir packages
-cd packages
+################# COMPILE UAV software ############
+#UAVcast dependencies
+mkdir $Basefolder/packages
+cd $Basefolder/packages
 
-	git clone https://github.com/UAVmatrix/libubox.git libubox
-	git clone git://nbd.name/uqmi.git
-  git clone https://github.com/UAVmatrix/ser2net.git
+#Mavproxy
+git clone https://github.com/UAVmatrix/cmavnode.git
 
-wget  https://s3.amazonaws.com/json-c_releases/releases/json-c-0.12.tar.gz
-tar -xvf json-c-0.12.tar.gz
-cd json-c-0.12
-sed -i s/-Werror// Makefile.in   && ./configure --prefix=/usr --disable-static  && make -j1
-make install
-cd ..
+# Create symlink to cmavnode
+sudo ln -s $Basefolder/usr/bin/cmavnode /usr/bin/cmavnode
 
-
-cd libubox
-cmake CMakeLists.txt -DBUILD_LUA=OFF
-make
-sudo make install
-mkdir -p /usr/include/libubox
-cp *.h /usr/include/libubox
-cp libubox.so /usr/lib
-cp libblobmsg_json.so /usr/lib
-cd ..
-
-cd uqmi
-sudo cmake CMakeLists.txt
-sudo make install
-cd ..
-
-cd ser2net
-sudo autoreconf -f -i
-sudo ./configure && make
-sudo make install
-sudo make clean
-cd ..
+# Completed
+printf "\n\n\nInstallastion completed. \n Reboot RPI and access UAVcast webinterface \n by opening your browser and type the IP of RPI.\n"
