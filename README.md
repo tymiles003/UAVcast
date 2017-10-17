@@ -20,25 +20,6 @@ sudo ./install.sh web
 Open UAVcast in your favorite web browser and start casting. http://ip-to-your-raspberry
 ![UAVcast Web](http://uavmatrix.com/assets/files/2017-10-17/1508203664-0-2017-10-17-03-25-35.png)
 
-## Commands
-UAVcast uses systemd process handler. use the below commands if you want to start stopp service from comand line.
-
-### Start
-```sudo systemctl start UAVcast```
-
-### Stop
-```sudo systemctl stop UAVcast```
-
-### Restart
-```sudo systemctl restart UAVcast```
-
-### Start on boot 
-```sudo systemctl enable UAVcast```
-
-### Not run on boot (for troubleshooting or other tasks)
-```sudo systemctl disable UAVcast```
-
-
  
 ### Video
 If you are using UAVcast with camera, its highly recommended to use gstreamer on the receiver end to achieve minimal latency.
