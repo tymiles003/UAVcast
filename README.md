@@ -17,6 +17,9 @@ cd UAVcast/install
 sudo ./install.sh web
 ```
 
+Open UAVcast in your favorite web browser and start casting. http://ip-to-your-raspberry
+![UAVcast Web](http://uavmatrix.com/assets/files/2017-10-17/1508203664-0-2017-10-17-03-25-35.png)
+
 ## Commands
 UAVcast uses systemd process handler. use the below commands if you want to start stopp service from comand line.
 
