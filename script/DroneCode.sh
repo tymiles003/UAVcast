@@ -11,6 +11,7 @@ case $(jq -r '.GSM_Connect' $CONF) in
 	"No")
 			ip="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
 			echo "Ethernet ip is $ip"
+			ModemManager
 			StartBroadcast
 	;;
 esac
@@ -58,8 +59,14 @@ function ModemManager {
 		echo "VPN network already up"
 		else
 		 echo "Starting VPN"
-		 sudo $DIR/./openvpn.sh init > $DIR/../log/openvpn.log 2>&1 
+		 if [ $(jq -r '.vpn_type' $CONF) == "NM_Openvpn" ]; then
+		  sudo $DIR/./openvpn/nm_openvpn.sh init > $DIR/../log/openvpn.log 2>&1 
+		  else
+		  if [ $(jq -r '.vpn_type' $CONF) == "Openvpn" ]; then
+		  sudo $DIR/./openvpn/openvpn.sh start > $DIR/../log/openvpn.log 2>&1 
+		  fi
 		fi
+	  fi
     fi
 }
 function Telemetry_Type {

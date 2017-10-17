@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
-import { RPI_COMMANDS, STREAM_FROM_RPI, GET_VPN_IP } from '../Events.js'
+import { RPI_COMMANDS, STREAM_FROM_RPI, GET_VPN_IP, READ_DRONECONFIG } from '../Events.js'
 import Toastr from 'toastr';
 // const uuidv4 = require('uuid/v4');
 const style = {
@@ -13,21 +13,25 @@ class Rpi extends Component {
         super(props)
         this.state = {
             socket: this.props.socket,
+            config:{
+                vpn_type:'',
+            },
             commands: {
-                ListVPN:'nmcli con | grep openvpn',
-                NMdevices:'nmcli dev',
-                VPN_Disconnect:'sudo /home/pi/UAVcast/script/./openvpn.sh StopOpenVPN',
-                VPN_Connect:'sudo /home/pi/UAVcast/script/./openvpn.sh StartOpenVPN',
-                VPN_Profile:'sudo /home/pi/UAVcast/script/./openvpn.sh importOpenVpn',
-                VPN_Saved_Con:'nmcli con show openvpn',
-                VPN_Delete_Con:'sudo /home/pi/UAVcast/script/./openvpn.sh deleteOpenVpn',
-                VPN_Interface:'ifconfig tun0'
+                Interface:'ifconfig tun0',
+                VPN_Disconnect:'sudo /home/pi/UAVcast/script/openvpn/./openvpn.sh stop',
+                VPN_Connect:'sudo /home/pi/UAVcast/script/openvpn/./openvpn.sh start',
+                VPN_Interface:'ifconfig tun0',
+
+                NM_VPN_Disconnect:'sudo /home/pi/UAVcast/script/openvpn/./nm_openvpn.sh StopOpenVPN',
+                NM_VPN_Connect:'sudo /home/pi/UAVcast/script/openvpn/./nm_openvpn.sh StartOpenVPN',
+                NM_VPN_Saved_Con:'nmcli con show openvpn',        
             },
             result: {
                 stream: ''
             },
             intervalId:''
         }
+        this.configs = {}
         this.StreamOutput = ''
     }
     submitHandler(command) {
@@ -40,6 +44,9 @@ class Rpi extends Component {
         this.state.socket.emit(GET_VPN_IP, (ip) => {
             this.setState({vpn_ip: ip})
         })
+    }
+    componentWillMount(){
+        this.initialvalues()
     }
     componentDidMount(){
         this.state.socket.on(STREAM_FROM_RPI, (status)=>{
@@ -56,6 +63,15 @@ class Rpi extends Component {
         this.state.socket.removeListener(STREAM_FROM_RPI)
         clearInterval(this.state.intervalId);
     }
+    initialvalues(){
+        this.state.socket.emit(READ_DRONECONFIG, (data)=>{
+            Object.keys(data).map((key, val)=>{
+                this.configs[key] = data[key]
+                return true
+            })
+            this.setState({config:this.configs});
+        })     
+    }
     render() {
        
         return (
@@ -65,12 +81,23 @@ class Rpi extends Component {
                     <span><h3>VPN Information &nbsp;&nbsp; {this.state.vpn_ip && <span className="text-warning" >Connected: {this.state.vpn_ip}</span>} </h3></span>
                     <h5>OpenVpn needs a profile before connecting. This is automatically added when UAVcast starts, or you can add New Profile manually then try to press connect.<br />
                     Make sure to import the <b>*.ovpn</b> file in setup </h5>
+                    {this.state.config.vpn_type == 'NM_Openvpn' ? <span>
                         <RaisedButton
-                            label="New Profile"
+                            label="Connect"
                             backgroundColor="#a4c639"
-                            onClick={() => this.submitHandler(this.state.commands.VPN_Profile)}
+                            onClick={() => this.submitHandler(this.state.commands.NM_VPN_Connect)}
                             style={style}
                         />
+                        <RaisedButton
+                            label="Disconnect"
+                            backgroundColor="#a4c639"
+                            secondary={true}
+                            onClick={() => this.submitHandler(this.state.commands.NM_VPN_Disconnect)}
+                            style={style}
+                        /></span> : 
+
+                        // OpenVpn Selected
+                        <span>
                         <RaisedButton
                             label="Connect"
                             backgroundColor="#a4c639"
@@ -83,35 +110,14 @@ class Rpi extends Component {
                             secondary={true}
                             onClick={() => this.submitHandler(this.state.commands.VPN_Disconnect)}
                             style={style}
-                        /><br />
-                        <RaisedButton
-                            label="View Profile"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.ListVPN)}
-                            style={style}
-                        />                
-                        <RaisedButton
-                            label="*.opvn"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.VPN_Saved_Con)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="Delete Profile"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.VPN_Delete_Con)}
-                            style={style}
-                        />
-                        <RaisedButton
+                        /></span>}
+                        {this.state.vpn_ip && <RaisedButton
                             label="View VPN Interface"
                             backgroundColor="#a4c639"
                             primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.VPN_Interface)}
+                            onClick={() => this.submitHandler(this.state.commands.Interface)}
                             style={style}
-                        />
+                        />}
                     </div> 
                 </div>
                 <br />
