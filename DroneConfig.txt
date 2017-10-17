@@ -1,7 +1,7 @@
 {
   "Cntrl": "APM",
   "Telemetry_Type": "gpio",
-  "GCS_address": "172.27.224.4",
+  "GCS_address": "uavmatrix.com",
   "PORT": "14550",
   "secondary_tele": "No",
   "sec_ip_address": "10.0.0.100",
@@ -20,13 +20,14 @@
   "UDP_PORT": "5600",
   "BITRATE": "1500000",
   "FPS": "20",
-  "UseDns": "No",
+  "UseDns": "Yes",
   "Username": "dns",
-  "Password": "dns",
+  "Password": "",
   "Alias": "uavcast.no-ip.info",
   "dyndns_system": "default@no-ip.com",
   "APM_type": "Plane",
   "vpn_use": "No",
-  "vpn_username": "",
-  "vpn_password": ""
+  "vpn_username": "openvpn",
+  "vpn_password": "",
+  "vpn_type": "NM_Openvpn"
 }

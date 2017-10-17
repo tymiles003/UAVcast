@@ -53,7 +53,7 @@ sudo systemctl enable systemd-networkd-wait-online.service
 sudo apt-get update -y 
 
 # Get the required libraries
-sudo apt-get install -y --force-yes jq dnsutils inadyn usb-modeswitch modemmanager network-manager network-manager-openvpn \
+sudo apt-get install -y --force-yes jq dnsutils inadyn usb-modeswitch modemmanager network-manager openvpn network-manager-openvpn \
                                      dh-autoreconf gstreamer1.0-tools gstreamer1.0-plugins-good gstreamer1.0-plugins-bad
 #                                 wvdial build-essential cmake libboost-all-dev libconfig++-dev libreadline-dev
 

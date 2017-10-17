@@ -23,6 +23,10 @@ const YesNo = [
     <MenuItem key={1} value={"Yes"} primaryText="Yes" />,
     <MenuItem key={2} value={"No"} primaryText="No" />,
   ];
+const VpnType = [
+    <MenuItem key={1} value={"NM_Openvpn"} primaryText="Network Manager Openvpn" />,
+    <MenuItem key={2} value={"Openvpn"} primaryText="Openvpn" />,
+  ];
 class Modem extends Component {
     constructor(props){
         super(props)
@@ -30,7 +34,9 @@ class Modem extends Component {
             socket:this.props.socket,
             config:{
                 vpn_use:'',
-            
+                vpn_type:'',
+                vpn_username:'',
+                vpn_pasword:''
             },
             files:[]
             
@@ -101,6 +107,17 @@ class Modem extends Component {
                     {YesNo}
                 </SelectField><br /><br /><br /><br />
                  {this.state.config.vpn_use === 'Yes' && <span>
+                 <p>Select openvpn or Network Manager OpenVpn plugin. The latter is conrolled by integrated Network Manager and will probably be the most realiable.<br />
+                 <span className="text-danger">NOTE!: Network Manager openvpn plugin does not work on Pi0w.</span></p>
+                 <SelectField
+                    name="vpn_type"
+                    value={this.state.config.vpn_type}
+                    onChange={(e,i,v) => this.handleChange(e, 'vpn_type', v)}
+                    floatingLabelText="VPN Type"
+                    floatingLabelStyle={style.floatingLabelStyle}
+                    >
+                    {VpnType}
+                </SelectField><br /><br /><br /><br />
                 <TextField
                     name="vpn_username"
                     floatingLabelText="Openvpn Username"
