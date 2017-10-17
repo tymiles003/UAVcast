@@ -1,0 +1,4 @@
+* * * * * /home/pi/UAVcast/script/./DroneCheck.sh > /home/pi/UAVcast/log/cron.log 2>&1
+* * * * * sleep 15; /home/pi/UAVcast/script/./DroneCheck.sh >> /home/pi/UAVcast/log/cron.log 2>&1
+* * * * * sleep 30; /home/pi/UAVcast/script/./DroneCheck.sh >> /home/pi/UAVcast/log/cron.log 2>&1
+* * * * * sleep 45; /home/pi/UAVcast/script/./DroneCheck.sh >> /home/pi/UAVcast/log/cron.log 2>&1

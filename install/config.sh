@@ -1,8 +1,4 @@
-#!/bin/sh
-# Part of raspi-config https://github.com/RPi-Distro/raspi-config
-#
-# See LICENSE file for copyright and license details
-
+#!/bin/bash
 INTERACTIVE=false
 ASK_TO_REBOOT=0
 BLACKLIST=/etc/modprobe.d/raspi-blacklist.conf
@@ -28,7 +24,10 @@ is_pione() {
       return 1
    fi
 }
-
+is_pione_w() {
+   grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]0c[0-9a-fA-F]$" /proc/cpuinfo
+   return $?
+}
 is_pitwo() {
    grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]04[0-9a-fA-F]$" /proc/cpuinfo
    return $?
@@ -40,18 +39,6 @@ is_pithree() {
 is_pizero() {
    grep -q "^Revision\s*:\s*[ 123][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]0[9cC][0-9a-fA-F]$" /proc/cpuinfo
    return $?
-}
-
-get_pi_type() {
-   if is_pione; then
-      echo "RPI 1 Detected"
-   elif is_pitwo; then
-      echo "RPI 2 Detected"
-   elif is_pithree; then
-      echo "RPI 3 Detected"
-   else
-      echo 0
-   fi
 }
 
 
@@ -142,7 +129,7 @@ get_serial_hw() {
   fi
 }
 set_dtoverlay_pi_three(){
-  if is_pithree; then
+  if [ is_pithree ] || [ is_pione_w ] ; then
       # echo "Adding 'dtoverlay=pi3-miniuart-bt' to /boot/config.txt (RPi3)"
       systemctl disable hciuart &>/dev/null
       if ! grep -q "dtoverlay=pi3-miniuart-bt" $CONFIG; then

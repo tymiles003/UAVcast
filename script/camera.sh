@@ -1,41 +1,47 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/../DroneConfig.cfg
+CONF=$DIR/../DroneConfig.txt
+
+#Include date time for logging
+dt=$(date '+%d/%m/%Y %H:%M:%S');
+echo "$dt"
+
 function usepicam {
-raspivid  -n -w $WIDTH -h $HEIGHT -b $BITRATE -fps $FPS -t 0 -o - | \
+raspivid  -n -w $(jq -r '.WIDTH' $CONF) -h $(jq -r '.HEIGHT' $CONF) -b $(jq -r '.BITRATE' $CONF) -fps $(jq -r '.FPS' $CONF) -t 0 -o - | \
     gst-launch-1.0 --gst-debug-level=0 -v \
     fdsrc !  \
     h264parse ! \
     rtph264pay config-interval=10 pt=96 ! \
-    udpsink host=$GCS_address port=$UDP_PORT
+    udpsink host=$(jq -r '.GCS_address' $CONF) port=$(jq -r '.UDP_PORT' $CONF)
 }
 function C615 {
 gst-launch-1.0 -v rtpbin name=rtpbin v4l2src device=/dev/video0 ! \
-        video/x-raw,width=$WIDTH,height=$HEIGHT,framerate=30/1 ! queue ! \
+        video/x-raw,width=$(jq -r '.WIDTH' $CONF),height=$(jq -r '.HEIGHT' $CONF),framerate=30/1 ! queue ! \
         omxh264enc target-bitrate=500000 control-rate=1 ! \
         "video/x-h264,profile=main" ! h264parse ! \
         queue max-size-bytes=10000000 ! \
         rtph264pay pt=96 config-interval=1 ! \
         rtpbin.send_rtp_sink_0 rtpbin.send_rtp_src_0 ! \
-        udpsink port=$UDP_PORT host=$GCS_address ts-offset=0 \
+        udpsink port=$(jq -r '.UDP_PORT' $CONF) host=$(jq -r '.GCS_address' $CONF) ts-offset=0 \
         name=vrtpsink rtpbin.send_rtcp_src_0 ! \
         rtpbin.recv_rtcp_sink_0
 }
 function C920 {
 gst-launch-1.0 -v rtpbin name=rtpbin v4l2src device=/dev/video0 \
-        ! video/x-raw,width=$WIDTH,height=$HEIGHT,framerate=30/1 \
+        ! video/x-raw,width=$(jq -r '.WIDTH' $CONF),height=$(jq -r '.HEIGHT' $CONF),framerate=30/1 \
         ! queue \
-        ! omxh264enc target-bitrate=$BITRATE control-rate=3 \
+        ! omxh264enc target-bitrate=$(jq -r '.BITRATE' $CONF) control-rate=3 \
         ! "video/x-h264,profile=high" \
         ! h264parse \
         ! queue max-size-bytes=10000000 \
         ! rtph264pay pt=96 config-interval=1 \
         ! rtpbin.send_rtp_sink_0 rtpbin.send_rtp_src_0 \
-	! udpsink port=$UDP_PORT host=$GCS_address ts-offset=0 name=vrtpsink rtpbin.send_rtcp_src_0 \
-    	! udpsink port=$UDP_PORT host=$GCS_address sync=false async=false name=vrtcpsink udpsrc port=5000 name=vrtpsrc \
+	! udpsink port=$(jq -r '.UDP_PORT' $CONF) host=$(jq -r '.GCS_address' $CONF) ts-offset=0 name=vrtpsink rtpbin.send_rtcp_src_0 \
+    	! udpsink port=$(jq -r '.UDP_PORT' $CONF) host=$(jq -r '.GCS_address' $CONF) sync=false async=false name=vrtcpsink udpsrc port=5000 name=vrtpsrc \
         ! rtpbin.recv_rtcp_sink_0
 }
-case "$CameraType" in
+echo $(jq -r '.CameraType' $CONF)
+case "$(jq -r '.CameraType' $CONF)" in
         "picam")
         usepicam
         ;;

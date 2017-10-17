@@ -1,9 +1,12 @@
 #!/bin/bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/./DroneConfig.cfg
 source $DIR/script/DroneCode.sh
+CONF=$DIR/../DroneConfig.txt
+
+#source $DIR/./DroneConfig.cfg
+echo $(jq -r '.DroneCheck' $CONF)
 #Add 15sec checktime to cron.
-	if [ $DroneCheck == "Yes" ]; then
+	if [ $(jq -r '.DroneCheck' $CONF) == "Yes" ]; then
 		#write out current crontab
 		crontab -l > $DIR/mycron
 		#echo new cron into cron file
