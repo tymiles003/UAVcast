@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 import { fullWhite } from 'material-ui/styles/colors';
 import Reboot from 'material-ui/svg-icons/action/cached';
@@ -19,6 +20,7 @@ class Rpi extends Component {
         this.state = {
             socket: this.props.socket,
             commands: {
+                CustomCommand:'yt',
                 shutdown: 'shutdown now',
                 reboot: 'shutdown -r now',
                 network: 'ifconfig',
@@ -35,6 +37,7 @@ class Rpi extends Component {
             ShutdownModal:false
         }
         this.StreamOutput = ''
+        this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount(){
         this.state.socket.on(STREAM_FROM_RPI, (status)=>{
@@ -48,6 +51,7 @@ class Rpi extends Component {
         this.state.socket.removeListener(STREAM_FROM_RPI)
     }
     submitHandler(command) {
+        console.log(command);
         this.StreamOutput = ''
         this.state.socket.emit(RPI_COMMANDS, command, (done) => {
                  Toastr.success('Command sent')
@@ -58,6 +62,10 @@ class Rpi extends Component {
     }
     _ShutdownModal(){
         this.setState({ShutdownModal:!this.state.ShutdownModal})
+    }
+    handleChange(e,i,v){
+        console.log(e.target.value);
+        this.setState({commands:{CustomCommand:e.target.value}})
     }
     render() {
        
@@ -102,9 +110,10 @@ class Rpi extends Component {
                         />
                     </div>
                 </div>
+                <br />
                 <div className="row">   
-                    <div className="col-md-4">
-                    <h3>Restart / Shutdown</h3>
+                    <div className="col-md-3">
+                    <h4>Restart / Shutdown</h4>
                     <RebootModal open={this.state.RebootModal} yes={() => this.submitHandler(this.state.commands.reboot)} no={()=>{this._RebootModal()}} noLabel="cancel" yesLabel="Reboot Now" title="Do you want to Restart Raspberry PI" content={"Make sure you have saved everyting!"}/>
                     <ShutdownModal open={this.state.ShutdownModal} yes={() => this.submitHandler(this.state.commands.shutdown)} no={()=>{this._ShutdownModal()}} noLabel="cancel" yesLabel="Shutdown Now" title="Do you want to Shutdown Raspberry PI" content={"Make sure you have saved everyting!"}/>
                     <RaisedButton
@@ -122,9 +131,25 @@ class Rpi extends Component {
                             onClick={() => {this._ShutdownModal()}}
                             icon={<Shutdown color={fullWhite} />}
                             style={style}
-                        />
+                        /> 
                     </div>
-                   
+                    <div className="col-md-3">
+                    <h4>Custom Terminal Command</h4>
+                        <TextField
+                        hintText="Custom Command"
+                        value={this.state.commands.CustomCommand}
+                        onChange={(e,i,v) => this.handleChange(e, i, v)}
+                        floatingLabelText="Type a command"
+                      />
+                      <RaisedButton
+                            label="Submit"
+                            type="submit"
+                            primary={true}
+                            onClick={() => this.submitHandler(this.state.commands.CustomCommand)}
+                            backgroundColor="rgb(206, 193, 42)"
+                            style={style}
+                        />
+                    </div>   
                 </div>
                 <br />
                 <div className="col-md-10">

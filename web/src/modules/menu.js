@@ -35,12 +35,12 @@ class Menu extends Component {
                 </li>
                 
                 <li className="dropdown">
-                  <a href="#" className="dropdown-toggle" data-toggle="dropdown"><i className="fa fa-caret-square-o-down"></i> Raspberry<b className="caret"></b></a>
+                  <a href="#" className="dropdown-toggle" data-toggle="dropdown"><i className="fa fa-caret-square-o-down"></i> Diagnostic<b className="caret"></b></a>
                   <ul className="dropdown-menu">
-                    <li><Link to="rpi-status">Rpi Status</Link></li>
-                    <li><Link to="rpi-uavcast-status">UAVcast Diagnostic</Link></li>
-                    <li><Link to="rpi-modem-status">Modem Diagnostic</Link></li>
-                    <li><Link to="rpi-vpn-status">VPN Diagnostic</Link></li>
+                    <li><Link to="rpi-status">Raspberry</Link></li>
+                    <li><Link to="rpi-uavcast-status">UAVcast</Link></li>
+                    <li><Link to="rpi-modem-status">Modem</Link></li>
+                    <li><Link to="rpi-vpn-status">VPN</Link></li>
                   </ul>
                 </li>
                 <div className="logo text-center"><a target="_blank" href="http://uavmatrix.com"><img alt="UAVmatrix.com" src={Uavmatrix} width="90%" /></a></div>
