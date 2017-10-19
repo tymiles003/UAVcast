@@ -61,7 +61,7 @@ function deleteOpenVpn {
 }
 
 function DeletePasswordFile {
-    sudo rm $DIR/$VPN_pass_file >/dev/null 2>&1
+   sudo rm $DIR/$VPN_pass_file >/dev/null 2>&1
 }
 function init {
     StopOpenVPN
@@ -76,7 +76,7 @@ vpn.secrets.password:$(jq -r '.vpn_password' $CONF)
 EOM
 
 #Set persmission
-sudo chmod 777 $DIR/../../usr/etc/
+sudo chmod 600 -R $DIR/../../usr/etc/
 }
 case "$1" in
         "StartOpenVPN")

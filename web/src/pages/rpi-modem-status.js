@@ -25,28 +25,19 @@ class Rpi extends Component {
                 dmesg:'dmesg',
                 ListModems:'mmcli -L',
                 NMdevices:'nmcli dev',
-                MM_Disconnect:'nmcli r wwan off',
-                MM_Connect:'nmcli r wwan on',
-                MM_Init:'sudo /home/pi/UAVcast/script/./ModemManager.sh',
-                MM_Saved_Con:'nmcli connection show',
-                MM_Delete_Con:'nmcli connection delete UAVcast',
-                SpeedTest:'/home/pi/UAVcast/usr/bin/./speedtest-cli'
+                MM_Disconnect:'sudo ../script/ModemManager/./ModemManager.sh stopConnection',
+                MM_Connect:'sudo ../script/ModemManager/./ModemManager.sh Autostart',
+                SpeedTest:'../usr/bin/./speedtest-cli'
             },
             UAVcastStatus:{
                 systemd:'systemctl status UAVcast',
-                inadyn:'cat /home/pi/UAVcast/log/inadyn.log',
-                gStreamer:'cat /home/pi/UAVcast/log/gstreamer.log',
-                MavProxy:'cat /home/pi/UAVcast/log/Mavproxy.log',
-                NavioArdupilot:'cat /home/pi/UAVcast/log/Ardupilot.log',
-                TTLRedirect:'cat /home/pi/UAVcast/log/TTLRedirect.log',
-                ModemManager: 'cat /home/pi/UAVcast/log/ModemManager.log'
+                ModemManager:'cat ../log/ModemManager.log'
             },
             result: {
                 stream: ''
             }
         }
         this.StreamOutput = ''
-      
     }
     submitHandler(command) {
         this.StreamOutput = ''
@@ -75,12 +66,6 @@ class Rpi extends Component {
                     <h5>Modem manager needs a profile before connecting. This is automatically added when UAVcast starts, or you can add New Profile manually then try to press connect.<br />
                     Supported Devices can be found <a href="https://www.freedesktop.org/wiki/Software/ModemManager/SupportedDevices/">here</a></h5>
                         <RaisedButton
-                            label="New Profile"
-                            backgroundColor="#a4c639"
-                            onClick={() => this.submitHandler(this.state.commands.MM_Init)}
-                            style={style}
-                        />
-                        <RaisedButton
                             label="Connect"
                             backgroundColor="#a4c639"
                             onClick={() => this.submitHandler(this.state.commands.MM_Connect)}
@@ -108,24 +93,10 @@ class Rpi extends Component {
                             style={style}
                         />
                         <RaisedButton
-                            label="NManager devices"
+                            label="Connected devices"
                             backgroundColor="#a4c639"
                             primary={true}
                             onClick={() => this.submitHandler(this.state.commands.NMdevices)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="List Profiles"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.MM_Saved_Con)}
-                            style={style}
-                        />
-                        <RaisedButton
-                            label="Delete Profiles"
-                            backgroundColor="#a4c639"
-                            primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.MM_Delete_Con)}
                             style={style}
                         />
                         <RaisedButton
@@ -153,7 +124,7 @@ class Rpi extends Component {
                     <h4>
                       {(this.state.result.stream || this.state.result.error) &&  
                       <Paper zDepth={3}>
-                            <div className=" top-buffer">
+                            <div className="rpi-stream-output top-buffer">
                             <h3>Raspberry output stream::</h3>
                             <br />
                             <p className="text-success" dangerouslySetInnerHTML={{__html:this.state.result.stream}} />

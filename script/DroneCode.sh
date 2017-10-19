@@ -4,14 +4,16 @@ CONF=$DIR/../DroneConfig.txt
 function DroneInit {
 case $(jq -r '.GSM_Connect' $CONF) in
 	"Yes")	
+			#Check if Modem should be enabled
 			ModemManager
 			sleep 5
+			#Check if VPN should be enabled
+			OpenVpn
 			StartBroadcast
 	;;
 	"No")
-			ip="$(ifconfig | grep -A 1 'eth0' | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 1)"
-			echo "Ethernet ip is $ip"
-			ModemManager
+			#Check if VPN should be enabled
+			OpenVpn
 			StartBroadcast
 	;;
 esac
@@ -52,22 +54,24 @@ done
 echo "If you see this message, then Network was successfully loaded."
 }
 function ModemManager {
-    sudo $DIR/./ModemManager.sh > $DIR/../log/ModemManager.log 2>&1
-	if [ $(jq -r '.vpn_use' $CONF) == "Yes" ]; then
+    sudo $DIR/./ModemManager/ModemManager.sh Autostart > $DIR/../log/ModemManager.log 2>&1
+}
+function OpenVpn {
+if [ $(jq -r '.vpn_use' $CONF) == "Yes" ]; then
 		ip a show tun0 up  >/dev/null
 		if [[ $? == 0 ]]; then
 		echo "VPN network already up"
 		else
 		 echo "Starting VPN"
 		 if [ $(jq -r '.vpn_type' $CONF) == "NM_Openvpn" ]; then
-		  sudo $DIR/./openvpn/nm_openvpn.sh init > $DIR/../log/openvpn.log 2>&1 
+		  sudo $DIR/./openvpn/nm_openvpn.sh init > $DIR/../log/openvpn.log 2>&1 &
 		  else
 		  if [ $(jq -r '.vpn_type' $CONF) == "Openvpn" ]; then
-		  sudo $DIR/./openvpn/openvpn.sh start > $DIR/../log/openvpn.log 2>&1 
+		  sudo $DIR/./openvpn/openvpn.sh start > $DIR/../log/openvpn.log 2>&1 &
 		  fi
 		fi
-	  fi
-    fi
+	fi
+fi
 }
 function Telemetry_Type {
 if [ $(jq -r '.Telemetry_Type' $CONF) == "ttl" ]; then
@@ -157,4 +161,3 @@ pidof $(jq -r '.APM_type' $CONF) > /dev/null
 		echo "APM already running"
 	fi
 }
-

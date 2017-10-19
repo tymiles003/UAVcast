@@ -59,7 +59,7 @@ restart() {
 }  
 
 function DeletePasswordFile {
-    sudo rm $pass_file >/dev/null 2>&1
+   sudo rm $pass_file >/dev/null 2>&1
 }
 
 function setPasswordFile {
@@ -69,7 +69,7 @@ $(jq -r '.vpn_username' $CONF)
 $(jq -r '.vpn_password' $CONF)
 EOM
 #Set persmission
-sudo chmod 777 $DIR/../../usr/etc/
+sudo chmod 600 -R $DIR/../../usr/etc/
 }
 
 case "$1" in

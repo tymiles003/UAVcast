@@ -86,7 +86,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>UAVcast web portal {this.state.active === true ? <span> ( <span className="text-success">Running</span> )</span> : this.state.starting === true ? <span>&nbsp;&nbsp;<CircularProgress size={40}/></span> :''}</h1>
+                <h1><span className="media-hide" > UAVcast web portal </span>{this.state.active === true ? <span> ( <span className="text-success">Running</span> )</span> : this.state.starting === true ? <span>&nbsp;&nbsp;<CircularProgress size={40}/></span> :''}</h1>
                 <h4>Simply set your configuration in the setup tab, and start casting.</h4>
                 <UavCastbutton starting={this.state.starting} enabled={this.state.enabled} active={this.state.active} onSubmit={(v) => this.UAVcastHandler(v)} />
                 <div>
