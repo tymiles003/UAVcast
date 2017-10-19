@@ -20,7 +20,7 @@ class Rpi extends Component {
         this.state = {
             socket: this.props.socket,
             commands: {
-                CustomCommand:'yt',
+                CustomCommand:'',
                 shutdown: 'shutdown now',
                 reboot: 'shutdown -r now',
                 network: 'ifconfig',
@@ -30,6 +30,9 @@ class Rpi extends Component {
                 dmesg:'dmesg',
                 SpeedTest:'/home/pi/UAVcast/usr/bin/./speedtest-cli'
             },
+            custom:{
+                command:''
+            },
             result: {
                 stream: ''
             },
@@ -37,7 +40,7 @@ class Rpi extends Component {
             ShutdownModal:false
         }
         this.StreamOutput = ''
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
     }
     componentDidMount(){
         this.state.socket.on(STREAM_FROM_RPI, (status)=>{
@@ -51,7 +54,6 @@ class Rpi extends Component {
         this.state.socket.removeListener(STREAM_FROM_RPI)
     }
     submitHandler(command) {
-        console.log(command);
         this.StreamOutput = ''
         this.state.socket.emit(RPI_COMMANDS, command, (done) => {
                  Toastr.success('Command sent')
@@ -64,8 +66,7 @@ class Rpi extends Component {
         this.setState({ShutdownModal:!this.state.ShutdownModal})
     }
     handleChange(e,i,v){
-        console.log(e.target.value);
-        this.setState({commands:{CustomCommand:e.target.value}})
+        this.setState({custom:{command:e.target.value}})
     }
     render() {
        
@@ -137,7 +138,7 @@ class Rpi extends Component {
                     <h4>Custom Terminal Command</h4>
                         <TextField
                         hintText="Custom Command"
-                        value={this.state.commands.CustomCommand}
+                        value={this.state.custom.command}
                         onChange={(e,i,v) => this.handleChange(e, i, v)}
                         floatingLabelText="Type a command"
                       />
@@ -145,7 +146,7 @@ class Rpi extends Component {
                             label="Submit"
                             type="submit"
                             primary={true}
-                            onClick={() => this.submitHandler(this.state.commands.CustomCommand)}
+                            onClick={() => this.submitHandler(this.state.custom.command)}
                             backgroundColor="rgb(206, 193, 42)"
                             style={style}
                         />
