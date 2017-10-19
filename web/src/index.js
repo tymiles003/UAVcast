@@ -19,11 +19,13 @@ import VpnStatus from './pages/rpi-vpn-status';
 import './index.css'
 import ReactGA from 'react-ga';
 
-// Google Analytics UA-107582726-1
-ReactGA.initialize('UA-107582726-1', {
-  debug: false,
-  titleCase: true
-});
+if (process.env.NODE_ENV === 'production') {
+  // Google Analytics UA-107582726-1
+  ReactGA.initialize('UA-107582726-1', {
+    debug: false,
+    titleCase: true
+  });
+}
 
 function extractHostname(url) {
   var hostname;
@@ -41,87 +43,86 @@ function extractHostname(url) {
   return hostname;
 }
 
-// const socketUrl = "http://10.0.0.162"
 const socketUrl = extractHostname(window.location.href)
 const socket = io(socketUrl)
 
-var HomesWrapper = React.createClass({
-  render: function () {
+class HomesWrapper extends React.Component {
+  render(){
     return (
         <Home socket={socket} />
     );
   }
-});
-var FcWrapper = React.createClass({
-  render: function () {
+}
+class FcWrapper extends React.Component {
+  render(){
     return (
         <Fc socket={socket} />
     );
   }
-});
-var GcsWrapper = React.createClass({
-  render: function () {
+}
+class GcsWrapper extends React.Component {
+  render(){
     return (
         <Gcs socket={socket} />
     );
   }
-});
-var ModemWrapper = React.createClass({
-  render: function () {
+}
+class ModemWrapper extends React.Component {
+  render(){
     return (
         <Modem socket={socket} />
     );
   }
-});
-var DnsWrapper = React.createClass({
-  render: function () {
+}
+class DnsWrapper extends React.Component {
+  render(){
     return (
         <Dns socket={socket} />
     );
   }
-});
-var CameraWrapper = React.createClass({
-  render: function () {
+}
+class CameraWrapper extends React.Component {
+  render(){
     return (
         <Camera socket={socket} />
     );
   }
-});
-var VpnWrapper = React.createClass({
-  render: function () {
+}
+class VpnWrapper extends React.Component {
+  render(){
     return (
         <Vpn socket={socket} />
     );
   }
-});
-var RpiStatusWrapper = React.createClass({
-  render: function () {
+}
+class RpiStatusWrapper extends React.Component {
+  render(){
     return (
         <RpiStatus socket={socket} />
     );
   }
-});
-var RpiUavcastStatusWrapper = React.createClass({
-  render: function () {
+}
+class RpiUavcastStatusWrapper extends React.Component {
+  render(){
     return (
         <RpiUavcastStatus socket={socket} />
     );
   }
-});
-var RpiModemStatusWrapper = React.createClass({
-  render: function () {
+}
+class RpiModemStatusWrapper extends React.Component {
+  render(){
     return (
         <RpiModemStatus socket={socket} />
     );
   }
-});
-var VpnStatusWrapper = React.createClass({
-  render: function () {
+}
+class VpnStatusWrapper extends React.Component {
+  render(){
     return (
         <VpnStatus socket={socket} />
     );
   }
-});
+}
 
 const app = document.getElementById('root')
 ReactDOM.render(

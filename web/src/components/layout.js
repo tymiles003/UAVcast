@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Menu from '../modules/menus';
+import Menu from '../modules/menu';
 import { GET_UPTIME } from '../Events.js'
 import PropTypes from 'prop-types';
 import ReactGA from 'react-ga';
@@ -13,7 +13,7 @@ class Layout extends Component {
         super(props)
 
         this.state = {
-            AppVersion:'0.4.2',
+            AppVersion:'0.4.3',
             socket: null,
             uptime: null,
         }

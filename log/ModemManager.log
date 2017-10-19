@@ -1,4 +1,0 @@
-17/10/2017 14:59:52
-Initializing Modem...
-error: couldn't find sim at '/org/freedesktop/ModemManager1/SIM/0': 'no modems found'
-Connection 'UAVcast' (976a66b3-38e7-4341-83ae-f7dd861a44f2) successfully added.

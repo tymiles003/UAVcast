@@ -20,7 +20,7 @@
   "UDP_PORT": "5600",
   "BITRATE": "1500000",
   "FPS": "20",
-  "UseDns": "Yes",
+  "UseDns": "No",
   "Username": "dns",
   "Password": "",
   "Alias": "uavcast.no-ip.info",
@@ -29,5 +29,5 @@
   "vpn_use": "No",
   "vpn_username": "openvpn",
   "vpn_password": "",
-  "vpn_type": "NM_Openvpn"
+  "vpn_type": "Openvpn"
 }

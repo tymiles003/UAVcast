@@ -124,7 +124,7 @@ class Rpi extends Component {
                     <h4>
                       {(this.state.result.stream || this.state.result.error) &&  
                       <Paper zDepth={3}>
-                            <div className=" top-buffer">
+                            <div className="rpi-stream-output top-buffer">
                             <h3>Raspberry output stream::</h3>
                             <br />
                             <p className="text-success" dangerouslySetInnerHTML={{__html:this.state.result.stream}} />

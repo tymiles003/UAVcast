@@ -14,16 +14,18 @@ class Rpi extends Component {
         this.state = {
             socket: this.props.socket,
             config:{
+                AppDir:'',
                 vpn_type:'',
             },
             commands: {
                 Interface:'ifconfig tun0',
-                VPN_Disconnect:'sudo /home/pi/UAVcast/script/openvpn/./openvpn.sh stop',
-                VPN_Connect:'sudo /home/pi/UAVcast/script/openvpn/./openvpn.sh start',
+                LogFile:'cat ../log/openvpn.log',
+                VPN_Disconnect:'sudo ../script/openvpn/./openvpn.sh stop',
+                VPN_Connect:'sudo ../script/openvpn/./openvpn.sh start',
                 VPN_Interface:'ifconfig tun0',
 
-                NM_VPN_Disconnect:'sudo /home/pi/UAVcast/script/openvpn/./nm_openvpn.sh StopOpenVPN',
-                NM_VPN_Connect:'sudo /home/pi/UAVcast/script/openvpn/./nm_openvpn.sh StartOpenVPN',
+                NM_VPN_Disconnect:'sudo ../script/openvpn/./nm_openvpn.sh StopOpenVPN',
+                NM_VPN_Connect:'sudo ../script/openvpn/./nm_openvpn.sh StartOpenVPN',
                 NM_VPN_Saved_Con:'nmcli con show openvpn',        
             },
             result: {
@@ -81,7 +83,7 @@ class Rpi extends Component {
                     <span><h3>VPN Information &nbsp;&nbsp; {this.state.vpn_ip && <span className="text-warning" >Connected: {this.state.vpn_ip}</span>} </h3></span>
                     <h5>OpenVpn needs a profile before connecting. This is automatically added when UAVcast starts, or you can add New Profile manually then try to press connect.<br />
                     Make sure to import the <b>*.ovpn</b> file in setup </h5>
-                    {this.state.config.vpn_type == 'NM_Openvpn' ? <span>
+                    {this.state.config.vpn_type === 'NM_Openvpn' ? <span>
                         <RaisedButton
                             label="Connect"
                             backgroundColor="#a4c639"
@@ -118,6 +120,14 @@ class Rpi extends Component {
                             onClick={() => this.submitHandler(this.state.commands.Interface)}
                             style={style}
                         />}
+                        <br />
+                        <RaisedButton
+                            label="Logfile"
+                            backgroundColor="#a4c639"
+                            primary={true}
+                            onClick={() => this.submitHandler(this.state.commands.LogFile)}
+                            style={style}
+                        />
                     </div> 
                 </div>
                 <br />
@@ -127,7 +137,7 @@ class Rpi extends Component {
                     <h4>
                       {(this.state.result.stream || this.state.result.error) &&  
                       <Paper zDepth={3}>
-                            <div className=" top-buffer">
+                            <div className="rpi-stream-output top-buffer">
                             <h3>output::</h3>
                             <br />
                             <p className="text-success" dangerouslySetInnerHTML={{__html:this.state.result.stream}} />

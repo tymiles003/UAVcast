@@ -8,70 +8,74 @@ class Menu extends Component {
   render() {
     return (
       <div>
-
-
-            <div className="nav-side-menu nopadding">
-              <div className="brand text-warning">UAVcast</div>
-              <i className="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-
-              <div className="menu-list">
-
-                <ul id="menu-content" className="menu-content collapse out">
-                  <Link to="/" >
-                    <li>
-                      <i className="fa fa-home fa-lg"></i>Home
-                </li>
-                  </Link>
-
-
-                  <li data-toggle="collapse" data-target="#service" className="collapsed">
-                    <a href="#"><i className="fa fa-fighter-jet fa-lg"></i>UAV Setup <span className="arrow"></span></a>
-                  </li>
-                  <ul className="sub-menu collapse" id="service">
-                    <Link to="fc"><li>Flight Controller</li></Link>
-                    <Link to="gcs"><li>Ground Control Station</li></Link>
-                    <Link to="modem"><li>Cellular Modem</li></Link>
-                    <Link to="camera"><li>Camera</li></Link>
-                    <Link to="dns"><li>DNS</li></Link>
+        <div id="wrapper">
+          <nav className="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div className="navbar-header">
+            <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+                <span className="icon-bar"></span>
+              </button>
+              <a className="navbar-brand" href="#">UAVcast <span className="media-hide" > - Casting software for unmanned vehicles</span></a>
+            </div>
+            <div className="collapse navbar-collapse navbar-ex1-collapse">
+              <ul className="nav navbar-nav side-nav">
+                <li className="active"> <Link to="/" ><i className="fa fa-dashboard"></i> Home</Link></li>
+                <li className="dropdown">
+                  <a href="#" className="dropdown-toggle" data-toggle="dropdown"><i className="fa fa-caret-square-o-down"></i> Setup<b className="caret"></b></a>
+                  <ul className="dropdown-menu">
+                    <li><Link to="fc" >Flight Controller</Link></li>
+                    <li><Link to="gcs">Ground Control Station</Link></li>
+                    <li><Link to="modem">Cellular Modem</Link></li>
+                    <li><Link to="camera">Camera</Link></li>
+                    <li><Link to="dns">DNS</Link></li>
+                    <li><Link to="vpn">VPN</Link></li>
                   </ul>
-                  <li data-toggle="collapse" data-target="#settings" className="collapsed">
-                    <a href="#"><i className="fa fa-cog fa-lg"></i>Raspberry <span className="arrow"></span></a>
-                  </li>
-                  <ul className="sub-menu collapse" id="settings">
-                    <Link to="rpi-status"><li>Rpi Status</li></Link>
-                    <Link to="rpi-uavcast-status"><li>UAVcast Diagnostic</li></Link>
-                    <Link to="rpi-modem-status"><li>Modem Diagnostic</li></Link>
+                </li>
+                
+                <li className="dropdown">
+                  <a href="#" className="dropdown-toggle" data-toggle="dropdown"><i className="fa fa-caret-square-o-down"></i> Raspberry<b className="caret"></b></a>
+                  <ul className="dropdown-menu">
+                    <li><Link to="rpi-status">Rpi Status</Link></li>
+                    <li><Link to="rpi-uavcast-status">UAVcast Diagnostic</Link></li>
+                    <li><Link to="rpi-modem-status">Modem Diagnostic</Link></li>
+                    <li><Link to="rpi-vpn-status">VPN Diagnostic</Link></li>
                   </ul>
-                </ul>
-              </div>
-              <div className="text-center text-success"><h5>{this.props.uptime}</h5></div>
-              <div className="logo text-center"><a target="_blank" href="http://uavmatrix.com"><img alt="UAVmatrix.com" src={Uavmatrix} width="90%" /></a></div>
-        </div>
-
-     
-      <div className="col-xs-10 nopadding">
-          <div className="uavcast-header navbar navbar-dark bg-dark fixed-top">
-            <p className="navbar-brand">UAVcast - Casting software for unmanned vehicles </p>
-          
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" href="http://uavmatrix.com">UAVmatrix
-                  <span className="sr-only">(current)</span>
-                  </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi">Disuccsion Thread</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="https://github.com/UAVmatrix/UAVcast/tree/Web_UI">GitHub</a>
-                </li>
+                <div className="logo text-center"><a target="_blank" href="http://uavmatrix.com"><img alt="UAVmatrix.com" src={Uavmatrix} width="90%" /></a></div>
               </ul>
-        
+              
+              <ul className="nav navbar-nav navbar-right navbar-user menu-hide">
+                <li>
+                <a target="_blank" href="http://uavcast.uavmatrix.com"><i className="fa fa-newspaper-o"></i> Documentation </a>
+                </li>
+                <li>
+                  <a target="_blank" href="http://uavmatrix.com/d/5110-UAVcast-Casting-software-for-Raspberry-PI-Supports-3G-4G-WiFi"><i className="fa fa-comment"></i> Discussion Thread </a>
+                </li>
+                <li>
+                  <a target="_blank" href="https://github.com/UAVmatrix/UAVcast"><i className="fa fa-github"></i> GitHub </a>
+                </li>
+                <li>
+                 <span className="AppVersion">v{this.props.AppVersion}</span>
+                </li>
+                {/* <li className="dropdown user-dropdown">
+                  <a href=""><i className="fa fa-comment"></i> John Smith </a>
+                </li> */}
+              </ul>
+              
+            </div>
+
+          </nav>
+          <div id="page-wrapper">
+            {this.props.children}
           </div>
-          </div>
+        </div>
       </div>
     );
+
   }
 }
+
 
 export default Menu;

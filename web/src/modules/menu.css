@@ -2,7 +2,12 @@
 .content{
   margin-left:300px
 }
-
+.AppVersion {
+  color: #c76767;
+  font-size: 13px;
+  line-height: 49px;
+  margin-left: 20px;
+}
 .logo{
   position: absolute;
   bottom: 5%;
@@ -31,14 +36,16 @@
 
 #page-wrapper {
   width: 100%;
-  padding: 5px 15px;
+  padding: 35px 15px;
 }
 
 .toast-top-right {
   top: 60px;
   margin: 0 auto;
 }
-
+.rpi-stream-output{
+  word-break: break-all;
+}
 /* Nav Messages */
 .navbar-user{
   margin-right: 100px;
@@ -104,9 +111,24 @@ table.tablesorter thead tr th:hover {
   height: 100%;
 }
 
+@media (max-width:1050px) {
+  .media-hide{
+    display: none;
+  }
+}
+
 @media (max-width:768px) {
   .logo {
-    opacity: 0.1;
+    display: none;
+  }
+  #page-wrapper {
+	  padding: 50px 25px;
+  }
+  .AppVersion{
+    display: none;
+  }
+  .menu-hide{
+    display: none;
   }
 }
 /* Edit Below to Customize Widths > 768px */
@@ -134,10 +156,6 @@ table.tablesorter thead tr th:hover {
    
   #wrapper {
 	padding-left: 225px;
-  }
-
-  #page-wrapper {
-	  padding: 50px 25px;
   }
 
   /* Side Nav */
