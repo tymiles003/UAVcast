@@ -33,14 +33,12 @@ echo "Installing Node & NPM"
       sudo apt-get install -y nodejs 
       # install pm2 web server
       sudo npm install pm2@latest -g
-   elif is_pithree; then
+   else
       echo "Pi 3"
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
       sudo apt-get install -y nodejs 
       # install pm2 web server
       sudo npm install pm2@latest -g
-   else
-      echo 0
    fi
 
 

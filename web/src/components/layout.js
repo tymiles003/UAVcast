@@ -13,7 +13,7 @@ class Layout extends Component {
         super(props)
 
         this.state = {
-            AppVersion:'0.4.3',
+            AppVersion:'0.4.4',
             socket: null,
             uptime: null,
         }

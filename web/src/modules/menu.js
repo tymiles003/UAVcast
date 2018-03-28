@@ -43,6 +43,7 @@ class Menu extends Component {
                     <li><Link to="rpi-vpn-status">VPN</Link></li>
                   </ul>
                 </li>
+                <div className="uptime text-center">{this.props.uptime}</div>
                 <div className="logo text-center"><a target="_blank" href="http://uavmatrix.com"><img alt="UAVmatrix.com" src={Uavmatrix} width="90%" /></a></div>
               </ul>
               

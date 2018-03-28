@@ -19,6 +19,10 @@
   padding: 0 !important;
   margin: 0 !important;
 }
+.uptime{
+  color: green;
+  font-size: 14px;
+}
 .DropZoneOvpn{
     width: 200px;
     height: 100px;

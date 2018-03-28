@@ -81,8 +81,7 @@ class Rpi extends Component {
                 <div className="row">  
                     <div className="col-md-10">
                     <span><h3>VPN Information &nbsp;&nbsp; {this.state.vpn_ip && <span className="text-warning" >Connected: {this.state.vpn_ip}</span>} </h3></span>
-                    <h5>OpenVpn needs a profile before connecting. This is automatically added when UAVcast starts, or you can add New Profile manually then try to press connect.<br />
-                    Make sure to import the <b>*.ovpn</b> file in setup </h5>
+                    <h5>You can manually connect the VPN server accourding to the setting you specficed in the Setup Tab.</h5>
                     {this.state.config.vpn_type === 'NM_Openvpn' ? <span>
                         <RaisedButton
                             label="Connect"

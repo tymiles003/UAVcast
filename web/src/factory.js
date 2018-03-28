@@ -46,6 +46,14 @@ module.exports = {
         var status = { active: false, enabled: false, ser2net: false, mavproxy:false, gStreamer: false, inadyn:false, udp_redirect:false }
         let sta1 = null, sta2 = null, sta3 = null, sta4 = null, sta5 = false, sta6 = false, sta7=false
         try {
+            // This function has to be rebuild using status.sh
+            // sta1 = new Promise((resolve, reject) => {
+            //     const child = exec('sh ../script/Status/Status.sh', { detached: true, shell: true });
+            //     child.stdout.on('data', (data) => {
+            //         status = JSON.parse(data)
+            //         resolve()
+            //     })
+            // })
             sta1 = new Promise((resolve, reject) => {
                 const child = spawn('systemctl is-active UAVcast', { detached: true, shell: true });
                 child.stdout.on('data', (data) => {
