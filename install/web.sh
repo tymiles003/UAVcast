@@ -34,11 +34,13 @@ echo "Installing Node & NPM"
       # install pm2 web server
       sudo npm install pm2@latest -g
    else
-      echo "Pi 3"
-      curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-      sudo apt-get install -y nodejs 
+      echo "Pi0-Custom"
+      wget -O - https://raw.githubusercontent.com/sdesalas/node-pi-zero/master/install-node-v6.11.3.sh | bash
+      # Add support for node CLI tools
+      export PATH=$PATH:/opt/nodejs/bin
       # install pm2 web server
       sudo npm install pm2@latest -g
+      sudo ln -s /opt/nodejs/bin/pm2 /usr/bin/pm2
    fi
 
 
